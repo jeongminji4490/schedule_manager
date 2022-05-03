@@ -1,24 +1,23 @@
 package com.example.newcalendar
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
 import com.example.newcalendar.databinding.ActivityMainBinding
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
-import java.text.SimpleDateFormat
-import java.time.DayOfWeek
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.WeekFields
@@ -31,6 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val context by lazy { this }
     private lateinit var todayDate : String
     private lateinit var selectedDate: String
+    private val dateSaveModule : DateSaveModule by inject()
 
     //private val dateFormat by lazy { SimpleDateFormat("yyyy-mm-dd") }
 
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.addScheduleBtn.setOnClickListener(this)
 
         binding.calendarView.dayBinder=object : DayBinder<DayViewContainer> {
-            override fun create(view: View) = DayViewContainer(view, context)
+            override fun create(view: View) = DayViewContainer(view, context, dateSaveModule)
 
             @RequiresApi(Build.VERSION_CODES.O)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
@@ -119,5 +119,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val tDay = LocalDate.now().dayOfMonth
 
         todayDate = "$tYear-$tMonth-$tDay"
+        CoroutineScope(Dispatchers.IO).launch {
+            dateSaveModule.setDate(todayDate)
+        }
     }
 }

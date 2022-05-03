@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-class DataStoreModule (private val context: Context) {
+class DateSaveModule (private val context: Context) {
     private val Context.datastore by preferencesDataStore(name = "datastore")
 
     private val dateKey = stringPreferencesKey("DATE_KEY")

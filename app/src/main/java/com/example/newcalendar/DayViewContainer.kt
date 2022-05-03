@@ -3,18 +3,16 @@ package com.example.newcalendar
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
+import androidx.drawerlayout.widget.DrawerLayout
 import com.kizitonwose.calendarview.ui.ViewContainer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.Month
-import java.util.*
 
-class DayViewContainer(view: View, context: Context) : ViewContainer(view) {
+class DayViewContainer(view: View, context: Context, private val dateSaveModule: DateSaveModule) : ViewContainer(view) {
 
     val textView: TextView =view.findViewById<TextView>(R.id.calendarDayText)
     var year = 0
@@ -35,9 +33,10 @@ class DayViewContainer(view: View, context: Context) : ViewContainer(view) {
                 date = "$year $month $day"
 
                 coroutineScope.launch { //날짜 저장
-                    App.getInstance().getDataStore().setDate(date)
-                    Log.e("DayViewContainer2", date)
+                    dateSaveModule.setDate(date)
                 }
+
+
             }
         }
     }

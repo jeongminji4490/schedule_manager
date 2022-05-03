@@ -21,15 +21,29 @@
             android:textSize="17sp"
             android:textColor="@color/white"/>
 
-        <ImageButton
-            android:id="@+id/addScheduleBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/add"
-            android:backgroundTint="#00ff0000"
-            android:layout_gravity="end"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/openSchedules"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                android:backgroundTint="#00ff0000"
+                app:layout_constraintEnd_toStartOf="@id/addScheduleBtn"
+                android:src="@drawable/notebook"/>
+
+            <ImageButton
+                android:id="@+id/addScheduleBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/add"
+                android:backgroundTint="#00ff0000" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
