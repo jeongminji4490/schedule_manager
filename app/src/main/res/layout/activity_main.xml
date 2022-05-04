@@ -26,7 +26,17 @@
             android:layout_height="wrap_content">
 
             <ImageButton
-                android:id="@+id/openSchedules"
+                android:id="@+id/importantScheduleBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                android:backgroundTint="#00ff0000"
+                android:src="@drawable/exclamation"
+                app:layout_constraintEnd_toStartOf="@id/openScheduleBtn"
+                />
+
+            <ImageButton
+                android:id="@+id/openScheduleBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:scaleType="fitCenter"

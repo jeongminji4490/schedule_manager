@@ -1,6 +1,6 @@
 package com.example.newcalendar
 
-enum class Month {
+enum class Enum {
     NULL,
     JANUARY,
     FEBRUARY,
@@ -14,4 +14,10 @@ enum class Month {
     OCTOBER,
     NOVEMBER,
     DECEMBER
+}
+
+enum class Importance {
+    VERY,
+    MIDDLE,
+    LEAST
 }

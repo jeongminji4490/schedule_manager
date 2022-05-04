@@ -2,6 +2,7 @@ package com.example.newcalendar
 
 import android.app.Application
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
 class App : Application() {
@@ -15,7 +16,11 @@ class App : Application() {
         app = this
         startKoin {
             androidContext(this@App)
-            modules(module)
+            modules(
+                module,
+                scheduleModule,
+                viewModel
+            )
         }
     }
 }

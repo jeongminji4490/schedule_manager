@@ -2,10 +2,8 @@ package com.example.newcalendar
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.widget.TextView
-import androidx.drawerlayout.widget.DrawerLayout
 import com.kizitonwose.calendarview.ui.ViewContainer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

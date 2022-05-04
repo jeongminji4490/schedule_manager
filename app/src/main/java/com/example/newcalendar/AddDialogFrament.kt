@@ -46,14 +46,14 @@ class AddDialogFrament : DialogFragment() { // 수정 다이얼로그
             if (isChecked){
                 binding.timePicker.visibility = TimePicker.VISIBLE
                 binding.timePicker.setIs24HourView(true)
-                hour = binding.timePicker.hour.toString()
-                minute = binding.timePicker.minute.toString()
             }else{
                 binding.timePicker.visibility = TimePicker.GONE
             }
         }
 
         binding.saveScheduleBtn.setOnClickListener {
+            hour = binding.timePicker.hour.toString()
+            minute = binding.timePicker.minute.toString()
             setAlarm(hour, minute)
         }
     }
