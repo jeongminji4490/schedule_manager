@@ -57,9 +57,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 selectedDate = "$sYear-$sMonth-$sDay" //선택한 날짜
 
-                Log.e("today", todayDate)
-                Log.e("selected", selectedDate)
-
                 if (selectedDate.equals(todayDate)){ //오늘 날짜 표시
                     container.textView.setBackgroundResource(R.drawable.today_background)
                 }
@@ -116,11 +113,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             TODO("VERSION.SDK_INT < O")
         }
         val tMonth = LocalDate.now().month
+        val tMonthValue = tMonth.value
         val tDay = LocalDate.now().dayOfMonth
 
         todayDate = "$tYear-$tMonth-$tDay"
+        val todayDateForSave = "$tYear-$tMonthValue-$tDay"
         CoroutineScope(Dispatchers.IO).launch {
-            dateSaveModule.setDate(todayDate)
+            dateSaveModule.setDate(todayDateForSave)
         }
     }
 }

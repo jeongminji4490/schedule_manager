@@ -2,6 +2,8 @@ package com.example.newcalendar
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.kizitonwose.calendarview.ui.ViewContainer
@@ -13,8 +15,9 @@ import java.time.Month
 class DayViewContainer(view: View, context: Context, private val dateSaveModule: DateSaveModule) : ViewContainer(view) {
 
     val textView: TextView =view.findViewById<TextView>(R.id.calendarDayText)
+    lateinit var month :Month
+    var monthValue = 0
     var year = 0
-    lateinit var month : Month
     lateinit var day : String
     lateinit var date : String
     private val coroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
@@ -27,14 +30,15 @@ class DayViewContainer(view: View, context: Context, private val dateSaveModule:
             }else{
                 textView.setBackgroundResource(R.drawable.selected_background)
                 textView.setTextColor(Color.WHITE)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    monthValue = month.value
+                }
                 day = textView.text.toString()
-                date = "$year $month $day"
+                date = "$year-$monthValue-$day"
 
                 coroutineScope.launch { //날짜 저장
                     dateSaveModule.setDate(date)
                 }
-
-
             }
         }
     }

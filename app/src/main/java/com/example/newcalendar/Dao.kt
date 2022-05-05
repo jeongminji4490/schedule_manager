@@ -7,5 +7,5 @@ import androidx.room.OnConflictStrategy
 @Dao
 interface ScheduleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addItem(item : ScheduleData)
+    fun addItem(item : ScheduleDataModel)
 }

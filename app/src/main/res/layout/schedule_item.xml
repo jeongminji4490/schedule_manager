@@ -1,49 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    android:backgroundTint="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="schedule"
+            type="com.example.newcalendar.Schedule" />
+    </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
         android:layout_margin="10dp"
-        tools:ignore="MissingConstraints" >
+        android:backgroundTint="@color/white">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="내용"
-            android:textColor="@color/black" />
+            android:layout_margin="10dp"
+            tools:ignore="MissingConstraints" >
 
-        <TextView
-            android:id="@+id/alarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            android:text="00:00"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{schedule.content}"
+                android:textColor="@color/black" />
 
-        <ImageView
-            android:id="@+id/importance_img"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/title"
-            app:layout_constraintBottom_toBottomOf="@id/alarm"
-            android:scaleType="fitCenter"
-            android:background="#00ff0000"/>
+            <TextView
+                android:id="@+id/alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                android:text="@{schedule.alarm}"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
+            <ImageView
+                android:id="@+id/importance_img"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/title"
+                app:layout_constraintBottom_toBottomOf="@id/alarm"
+                android:scaleType="fitCenter"
+                android:background="#00ff0000"/>
+            
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</layout>
