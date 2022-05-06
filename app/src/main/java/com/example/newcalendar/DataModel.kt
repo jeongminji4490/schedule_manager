@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "schedule")
 data class ScheduleDataModel(
     @PrimaryKey(autoGenerate = true)
-    var serial_num : Int = 0, //일정일련번호
     var alarm_rqCode : Int = 0, //알람요청코드
     var date : String, //날짜(년/월/일)
     var content : String, //제목

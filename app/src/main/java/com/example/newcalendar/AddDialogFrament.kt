@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TimePicker
+import android.widget.*
 import androidx.fragment.app.DialogFragment
 import com.example.newcalendar.databinding.AddScheduleDialogBinding
 import kotlinx.coroutines.CoroutineScope
@@ -21,17 +21,18 @@ class AddDialogFrament : DialogFragment(), View.OnClickListener { // 수정 다�
     private lateinit var binding : AddScheduleDialogBinding
     private val dateSaveModule : DateSaveModule by inject()
     private val scope by lazy { CoroutineScope(Dispatchers.Main) }
+    private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
     private lateinit var hour : String
     private lateinit var minute : String
 
     //db
     //날짜 어떻게?
-    private var serialNum = 0
     private lateinit var selectedDate : String
     private lateinit var content : String
     private lateinit var alarm : String  //2000-00-00 hh:mm:ss
     private var rqCode = 0
     private var importance = 0
+    private val viewModel : ViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +52,6 @@ class AddDialogFrament : DialogFragment(), View.OnClickListener { // 수정 다�
 
         binding.timePicker.visibility = TimePicker.GONE // 타임피커 기본설정
 
-        //dynamic timepicker
         binding.alarmOnOffBtn.setOnCheckedChangeListener { compoundButton, isChecked ->
             if (isChecked){
                 binding.timePicker.visibility = TimePicker.VISIBLE
@@ -61,45 +61,47 @@ class AddDialogFrament : DialogFragment(), View.OnClickListener { // 수정 다�
             }
         }
 
+        binding.radioGroup.setOnCheckedChangeListener { radioGroup, id ->
+            when(id){
+                R.id.veryBtn -> {
+                    importance = Importance.VERY.ordinal
+                }
+                R.id.middleBtn -> {
+                    importance = Importance.MIDDLE.ordinal
+                }
+                R.id.lessBtn -> {
+                    importance = Importance.LEAST.ordinal
+                }
+            }
+        }
         binding.saveScheduleBtn.setOnClickListener(this)
-
-//        binding.saveScheduleBtn.setOnClickListener {
-//            hour = binding.timePicker.hour.toString()
-//            minute = binding.timePicker.minute.toString()
-//            setAlarm(hour, minute)
-//        }
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.saveScheduleBtn -> {
-                hour = binding.timePicker.hour.toString()
-                minute = binding.timePicker.minute.toString()
-                alarm = "$selectedDate $hour:$minute:00"
                 content = binding.content.text.toString()
-
-                binding.radioGroup.setOnCheckedChangeListener { radioGroup, id ->
-                    when(id){
-                        R.id.veryBtn -> {
-                            importance = Importance.VERY.ordinal
-                        }
-                        R.id.middleBtn -> {
-                            importance = Importance.MIDDLE.ordinal
-                        }
-                        R.id.lessBtn -> {
-                            importance = Importance.LEAST.ordinal
-                        }
+                if (binding.alarmOnOffBtn.isChecked){
+                    ioScope.launch {
+                        hour = binding.timePicker.hour.toString()
+                        minute = binding.timePicker.minute.toString()
+                        alarm = "$selectedDate $hour:$minute:00"
+                        viewModel.sDao.addItem(ScheduleDataModel(rqCode, selectedDate, content, alarm, importance))
+                    }
+                }else {
+                    ioScope.launch {
+                        alarm = "null"
+                        viewModel.sDao.addItem(ScheduleDataModel(rqCode, selectedDate, content, alarm, importance))
                     }
                 }
-
-                setAlarm(alarm)
+                //setAlarm(alarm)
             }
         }
     }
 
-    private fun setAlarm(alarm : String){
-        Log.i(TAG, alarm)
-    }
+//    private fun setAlarm(alarm : String){
+//        Log.i(TAG, "$alarm $importance")
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -108,4 +110,5 @@ class AddDialogFrament : DialogFragment(), View.OnClickListener { // 수정 다�
     companion object{
         const val TAG = "AddDialogFragment"
     }
+
 }

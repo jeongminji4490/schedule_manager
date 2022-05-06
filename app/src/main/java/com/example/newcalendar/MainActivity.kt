@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         binding.addScheduleBtn.setOnClickListener(this)
+        binding.openScheduleBtn.setOnClickListener(this)
 
         binding.calendarView.dayBinder=object : DayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view, context, dateSaveModule)
@@ -100,6 +101,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.addScheduleBtn -> {
                 val dialog = AddDialogFrament()
                 dialog.show(supportFragmentManager, "AddScheduleDialog")
+            }
+            R.id.openScheduleBtn -> {
+                val dialog = ShowListFragment()
+                dialog.show(supportFragmentManager, "ShowListFragment")
             }
         }
     }

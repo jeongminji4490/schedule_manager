@@ -1,15 +1,19 @@
 package com.example.newcalendar
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newcalendar.databinding.ScheduleItemBinding
 
 class ScheduleAdapter(private val context: Context) : RecyclerView.Adapter<ScheduleAdapter.Holder>() {
 
-    lateinit var list : ArrayList<Schedule>
+    private var list = ArrayList<Schedule>()
     lateinit var binding : ScheduleItemBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -34,8 +38,17 @@ class ScheduleAdapter(private val context: Context) : RecyclerView.Adapter<Sched
     }
 
     inner class Holder(val view: View) : RecyclerView.ViewHolder(view){
+        private var importanceImg = view.findViewById<ImageView>(R.id.importance_img)
+        private val redImg = ContextCompat.getDrawable(context, R.drawable.red_most_important)
+        private val blueImg = ContextCompat.getDrawable(context, R.drawable.blue_moderately_important)
+        private val yellowImg = ContextCompat.getDrawable(context, R.drawable.yellow_least_important)
         fun onBind(item : Schedule){
             binding.schedule = item
+            when(item.importance){
+                0 -> { importanceImg.setImageDrawable(redImg) }
+                1 -> { importanceImg.setImageDrawable(blueImg) }
+                2 -> { importanceImg.setImageDrawable(yellowImg) }
+            }
         }
     }
 }
