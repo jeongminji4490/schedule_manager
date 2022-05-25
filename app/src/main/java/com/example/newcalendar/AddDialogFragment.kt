@@ -1,6 +1,5 @@
 package com.example.newcalendar
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,14 +8,14 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.DialogFragment
 import com.example.newcalendar.databinding.AddScheduleDialogBinding
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.selects.select
 import org.koin.android.ext.android.inject
 
-class AddDialogFrament : DialogFragment(), View.OnClickListener { // 수정 다이얼로그
+class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다이얼로그
 
     private lateinit var binding : AddScheduleDialogBinding
     private val dateSaveModule : DateSaveModule by inject()
@@ -30,8 +29,8 @@ class AddDialogFrament : DialogFragment(), View.OnClickListener { // 수정 다�
     private lateinit var selectedDate : String
     private lateinit var content : String
     private lateinit var alarm : String  //2000-00-00 hh:mm:ss
-    private var rqCode = 0
-    private var importance = 0
+    private var rqCode = 0 // 알람요청코드
+    private var importance = 3 // 일정 중요도
     private val viewModel : ViewModel by inject()
 
     override fun onCreateView(
@@ -81,23 +80,30 @@ class AddDialogFrament : DialogFragment(), View.OnClickListener { // 수정 다�
         when(v?.id){
             R.id.saveScheduleBtn -> {
                 content = binding.content.text.toString()
-                if (binding.alarmOnOffBtn.isChecked){
-                    ioScope.launch {
-                        hour = binding.timePicker.hour.toString()
-                        minute = binding.timePicker.minute.toString()
-                        alarm = "$selectedDate $hour:$minute:00"
-                        viewModel.sDao.addItem(ScheduleDataModel(rqCode, selectedDate, content, alarm, importance))
+                if (content.isEmpty() || importance==3){ //내용 비었을 때, 중요도 설정 안하면 저장 X
+                    FancyToast.makeText(context,"내용 또는 중요도를 입력해주세요",FancyToast.LENGTH_SHORT,FancyToast.INFO,true).show()
+                }else{
+                    if (binding.alarmOnOffBtn.isChecked){ // alarm on
+                        ioScope.launch {
+                            hour = binding.timePicker.hour.toString()
+                            minute = binding.timePicker.minute.toString()
+                            alarm = "$selectedDate $hour:$minute:00"
+                            viewModel.sDao.addItem(ScheduleDataModel(rqCode, selectedDate, content, alarm, importance))
+                        }
+                    }else {
+                        ioScope.launch {
+                            alarm = "null"
+                            viewModel.sDao.addItem(ScheduleDataModel(rqCode, selectedDate, content, alarm, importance))
+                        }
                     }
-                }else {
-                    ioScope.launch {
-                        alarm = "null"
-                        viewModel.sDao.addItem(ScheduleDataModel(rqCode, selectedDate, content, alarm, importance))
-                    }
+                    FancyToast.makeText(context,"save",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show()
+                    this.dismiss()
                 }
                 //setAlarm(alarm)
             }
         }
     }
+
 
 //    private fun setAlarm(alarm : String){
 //        Log.i(TAG, "$alarm $importance")

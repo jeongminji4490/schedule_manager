@@ -15,7 +15,7 @@
 
     <dialog
         android:id="@+id/addDialogFrament"
-        android:name="com.example.newcalendar.AddDialogFrament"
+        android:name="com.example.newcalendar.AddDialogFragment"
         android:label="AddDialogFrament" />
 
 </navigation>

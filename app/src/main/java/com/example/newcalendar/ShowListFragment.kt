@@ -18,7 +18,7 @@ import org.koin.android.ext.android.inject
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ShowListFragment : DialogFragment(){
+class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 보여주는 다이얼로그
 
     private lateinit var binding : ScheduleListFragmentBinding
     private lateinit var selectedDate : String
@@ -39,14 +39,26 @@ class ShowListFragment : DialogFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = requireContext()
-        var adapter = ScheduleAdapter(context)
+        val adapter = ScheduleAdapter(context)
+
         binding.scheduleListview.layoutManager=LinearLayoutManager(context)
         scope.launch {
             selectedDate = dateSaveModule.date.first()
             binding.dateText.text = selectedDate
         }
 
+        adapter.itemClick = object : ScheduleAdapter.ItemClick{
+            override fun onClick(view: View, position: Int, list: ArrayList<Schedule>) {
+                val serialNum = list[position].rqCode
+                val dialog = DeleteDialogFragment(serialNum)
+                activity?.let {
+                    dialog.show(it.supportFragmentManager, "ShowListFragment")
+                }
+            }
+        }
+
         viewModel.getAllSchedule().observe(this, androidx.lifecycle.Observer {
+            adapter.removeAll()
             for(i in it.indices){
                 if (it[i].date == selectedDate){
                     val data = Schedule(

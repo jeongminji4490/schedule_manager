@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import com.example.newcalendar.databinding.ActivityMainBinding
@@ -99,7 +98,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.addScheduleBtn -> {
-                val dialog = AddDialogFrament()
+                val dialog = AddDialogFragment()
                 dialog.show(supportFragmentManager, "AddScheduleDialog")
             }
             R.id.openScheduleBtn -> {

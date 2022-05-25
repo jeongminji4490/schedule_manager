@@ -10,4 +10,8 @@ class ViewModel(val sDao : ScheduleDao) : ViewModel(){
     }
 
     fun getAllSchedule() : LiveData<List<ScheduleDataModel>> = sDao.getAllSchedule()
+
+    fun deleteSchedule(rqCode : Int){
+        sDao.deleteItem(rqCode)
+    }
 }

@@ -16,6 +16,11 @@ class ScheduleAdapter(private val context: Context) : RecyclerView.Adapter<Sched
     private var list = ArrayList<Schedule>()
     lateinit var binding : ScheduleItemBinding
 
+    interface ItemClick{
+        fun onClick(view: View, position: Int, list: ArrayList<Schedule>)
+    }
+    var itemClick : ItemClick? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         binding = ScheduleItemBinding.inflate(LayoutInflater.from(context))
         return Holder(binding.root)
@@ -23,6 +28,11 @@ class ScheduleAdapter(private val context: Context) : RecyclerView.Adapter<Sched
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.onBind(list[position])
+        if (itemClick!=null){
+            holder.view.setOnClickListener{ v ->
+                itemClick?.onClick(v, position, list)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
