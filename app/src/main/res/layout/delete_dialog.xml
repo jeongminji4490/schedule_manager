@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints"
             android:text="삭제하시겠습니까?"
+            android:fontFamily="@font/sc_dream4"
             android:textColor="@color/black"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
@@ -35,6 +36,7 @@
             android:backgroundTint="@color/black"
             android:textColor="@color/white"
             android:text="삭제"
+            android:fontFamily="@font/sc_dream4"
             tools:ignore="MissingConstraints" />
 
         <Button
@@ -47,6 +49,7 @@
             app:layout_constraintStart_toEndOf="@id/deleteOkBtn"
             android:textColor="@color/black"
             android:text="취소"
+            android:fontFamily="@font/sc_dream4"
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

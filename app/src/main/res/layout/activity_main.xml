@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textSize="17sp"
+            android:fontFamily="@font/sc_dream4"
             android:textColor="@color/white"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout

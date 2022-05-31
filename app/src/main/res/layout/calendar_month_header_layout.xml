@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
-        android:fontFamily="sans-serif-medium"
+        android:fontFamily="@font/sc_dream4"
         android:gravity="start"
         android:textColor="@color/white"
         android:textSize="28sp"

@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.Month
 
-class DayViewContainer(view: View, context: Context, private val dateSaveModule: DateSaveModule) : ViewContainer(view) {
+class DayViewContainer(module: DateSaveModule, view: View) : ViewContainer(view) {
 
     val textView: TextView =view.findViewById<TextView>(R.id.calendarDayText)
     lateinit var month :Month
@@ -37,7 +37,7 @@ class DayViewContainer(view: View, context: Context, private val dateSaveModule:
                 date = "$year-$monthValue-$day"
 
                 coroutineScope.launch { //날짜 저장
-                    dateSaveModule.setDate(date)
+                    module.setDate(date)
                 }
             }
         }

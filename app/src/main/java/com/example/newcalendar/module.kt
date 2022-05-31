@@ -14,13 +14,13 @@ val module = module {
 
 val scheduleModule = module {
 
-    fun provideDatabase(application: Application) : Database {
-        return Room.databaseBuilder(application, Database::class.java, "SCHEDULE_DB")
+    fun provideDatabase(application: Application) : AppDatabase {
+        return Room.databaseBuilder(application, AppDatabase::class.java, "SCHEDULE_DB")
             .fallbackToDestructiveMigration()
             .build()
     }
 
-    fun provideDao(database: Database) : ScheduleDao {
+    fun provideDao(database: AppDatabase) : ScheduleDao {
         return database.scheduleDao
     }
 

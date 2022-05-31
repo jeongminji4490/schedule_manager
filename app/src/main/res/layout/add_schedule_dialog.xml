@@ -12,12 +12,24 @@
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="@id/timePicker"
+        app:layout_constraintEnd_toEndOf="@id/timePicker"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="left"
+        android:textColor="@color/black"
+        android:textSize="22dp"
+        android:fontFamily="@font/sc_dream5"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/line_img"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@id/dateText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:background="@color/black"
+        android:src="@drawable/line_shape"
         tools:ignore="MissingConstraints" />
 
     <TimePicker
@@ -25,7 +37,7 @@
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:layout_constraintTop_toBottomOf="@id/dateText"
+        app:layout_constraintTop_toBottomOf="@id/line_img"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:timePickerMode="spinner"
@@ -38,6 +50,7 @@
         app:layout_constraintStart_toStartOf="@id/dateText"
         app:layout_constraintBottom_toBottomOf="@id/alarmOnOffBtn"
         android:text="alarm"
+        android:fontFamily="@font/sc_dream4"
         android:textColor="@color/black"
         tools:ignore="MissingConstraints" />
 
@@ -74,6 +87,7 @@
         app:layout_constraintEnd_toEndOf="@id/dateText"
         android:text="importance"
         android:textColor="@color/black"
+        android:fontFamily="@font/sc_dream4"
         tools:ignore="MissingConstraints" />
 
     <RadioGroup
@@ -91,6 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="매우"
+            android:fontFamily="@font/sc_dream4"
             android:textColor="@color/red"/>
 
         <RadioButton
@@ -98,6 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="중간"
+            android:fontFamily="@font/sc_dream4"
             android:textColor="@color/blue"/>
 
         <RadioButton
@@ -105,6 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="적음"
+            android:fontFamily="@font/sc_dream4"
             android:textColor="@color/tomato"/>
     </RadioGroup>
 

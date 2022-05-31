@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.openScheduleBtn.setOnClickListener(this)
 
         binding.calendarView.dayBinder=object : DayBinder<DayViewContainer> {
-            override fun create(view: View) = DayViewContainer(view, context, dateSaveModule)
+            override fun create(view: View) = DayViewContainer(dateSaveModule, view)
 
             @RequiresApi(Build.VERSION_CODES.O)
             override fun bind(container: DayViewContainer, day: CalendarDay) {

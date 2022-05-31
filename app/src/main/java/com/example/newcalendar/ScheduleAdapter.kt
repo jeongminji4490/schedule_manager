@@ -54,7 +54,7 @@ class ScheduleAdapter(private val context: Context) : RecyclerView.Adapter<Sched
         private val yellowImg = ContextCompat.getDrawable(context, R.drawable.yellow_least_important)
         fun onBind(item : Schedule){
             binding.schedule = item
-            when(item.importance){
+            when(item.importance){ // 중요도 이미지
                 0 -> { importanceImg.setImageDrawable(redImg) }
                 1 -> { importanceImg.setImageDrawable(blueImg) }
                 2 -> { importanceImg.setImageDrawable(yellowImg) }

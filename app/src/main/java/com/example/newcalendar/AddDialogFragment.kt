@@ -14,22 +14,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import java.util.*
 
 class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다이얼로그
 
     private lateinit var binding : AddScheduleDialogBinding
     private val dateSaveModule : DateSaveModule by inject()
+    private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private val scope by lazy { CoroutineScope(Dispatchers.Main) }
     private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
     private lateinit var hour : String
     private lateinit var minute : String
 
-    //db
-    //날짜 어떻게?
     private lateinit var selectedDate : String
     private lateinit var content : String
     private lateinit var alarm : String  //2000-00-00 hh:mm:ss
-    private var rqCode = 0 // 알람요청코드
+    private var serialNum = 0 // 일련번호
+    private var alarm_code = 0 //
+    // 알람요청코드
     private var importance = 3 // 일정 중요도
     private val viewModel : ViewModel by inject()
 
@@ -88,12 +90,15 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             hour = binding.timePicker.hour.toString()
                             minute = binding.timePicker.minute.toString()
                             alarm = "$selectedDate $hour:$minute:00"
-                            viewModel.sDao.addItem(ScheduleDataModel(rqCode, selectedDate, content, alarm, importance))
+                            val random = (1..100000) // 1~10000 범위에서 알람코드 랜덤으로 생성
+                            alarm_code = random.random()
+                            viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, alarm_code, importance))
+                            setAlarm(alarm_code, content, alarm)
                         }
                     }else {
                         ioScope.launch {
                             alarm = "null"
-                            viewModel.sDao.addItem(ScheduleDataModel(rqCode, selectedDate, content, alarm, importance))
+                            viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, alarm_code, importance))
                         }
                     }
                     FancyToast.makeText(context,"save",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show()
@@ -104,10 +109,9 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
         }
     }
 
-
-//    private fun setAlarm(alarm : String){
-//        Log.i(TAG, "$alarm $importance")
-//    }
+    private fun setAlarm(alarm_code : Int, content : String, alarm : String){
+        alarmFunctions.callAlarm(alarm, alarm_code, content)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

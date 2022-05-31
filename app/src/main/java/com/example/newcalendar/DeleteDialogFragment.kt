@@ -1,5 +1,6 @@
 package com.example.newcalendar
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,16 +8,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.newcalendar.databinding.DeleteDialogBinding
 import com.shashank.sony.fancytoastlib.FancyToast
+import kotlinx.android.synthetic.main.schedule_item.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class DeleteDialogFragment(private val serialNum : Int)  : DialogFragment(), View.OnClickListener{
+class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
 
+    private var alarm_code = 0
+    private lateinit var content: String
     private lateinit var binding : DeleteDialogBinding
+    private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
     private val viewModel : ViewModel by inject()
+
+    constructor(alarm_code: Int, content: String) : this() {
+        this.alarm_code = alarm_code
+        this.content = content
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,8 +48,9 @@ class DeleteDialogFragment(private val serialNum : Int)  : DialogFragment(), Vie
         val id = v?.id
         if (id == R.id.deleteOkBtn){ // 삭제
             ioScope.launch {
-                viewModel.deleteSchedule(serialNum)
+                viewModel.deleteSchedule(alarm_code)
             }
+            alarmFunctions.cancelAlarm(viewModel, alarm_code)
             FancyToast.makeText(context,"delete", FancyToast.LENGTH_SHORT, FancyToast.INFO,true).show()
             this.dismiss()
         }
