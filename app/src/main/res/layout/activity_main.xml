@@ -32,7 +32,7 @@
                 android:layout_height="40dp"
                 android:scaleType="fitCenter"
                 android:backgroundTint="#00ff0000"
-                android:src="@drawable/exclamation"
+                android:src="@drawable/red_most_important"
                 app:layout_constraintEnd_toStartOf="@id/openScheduleBtn"
                 />
 
@@ -64,6 +64,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:cv_dayViewResource="@layout/calendar_day_layout"
+        android:background="@color/black"
         app:cv_monthHeaderResource="@layout/calendar_month_header_layout"
         app:cv_scrollMode="continuous"
         tools:ignore="MissingConstraints" />

@@ -2,11 +2,10 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/layout_rectangle_shape"
+    android:background="@color/black"
     android:paddingTop="14dp">
 
     <TextView
@@ -15,10 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
-        android:fontFamily="@font/sc_dream4"
+        android:fontFamily="@font/multicorepro"
         android:gravity="start"
         android:textColor="@color/white"
-        android:textSize="28sp"
+        android:textSize="26sp"
         tools:text="June 2019" />
 
     <include

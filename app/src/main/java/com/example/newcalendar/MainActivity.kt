@@ -55,14 +55,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 container.month = sMonth
                 container.textView.text = sDay.toString()
 
+                // 여기서 이벤트 작업?
                 selectedDate = "$sYear-$sMonth-$sDay" //선택한 날짜
 
-                if (selectedDate.equals(todayDate)){ //오늘 날짜 표시
-                    container.textView.setBackgroundResource(R.drawable.today_background)
-                }
+//                if (selectedDate.equals(todayDate)){ //오늘 날짜 표시
+//                    //container.textView.setBackgroundResource(R.drawable.today_background)
+//                    container.textView.setTextColor(Color.WHITE)
+//                }
 
                 if (day.owner == DayOwner.THIS_MONTH) {
-                    container.textView.setTextColor(Color.BLACK)
+                    container.textView.setTextColor(Color.WHITE)
+                    if (selectedDate == todayDate){ //오늘 날짜 표시
+                        container.textView.setBackgroundResource(R.drawable.canceled_background)
+                        container.textView.setTextColor(Color.BLACK)
+                    }
                 } else {
                     container.textView.setTextColor(Color.GRAY)
                 }
