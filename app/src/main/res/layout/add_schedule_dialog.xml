@@ -16,9 +16,9 @@
         app:layout_constraintEnd_toEndOf="@id/timePicker"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="left"
-        android:textColor="@color/black"
-        android:textSize="22dp"
-        android:fontFamily="@font/sc_dream5"
+        android:textColor="@color/conflowerblue"
+        android:textSize="20dp"
+        android:fontFamily="@font/multicorepro"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -50,8 +50,9 @@
         app:layout_constraintStart_toStartOf="@id/dateText"
         app:layout_constraintBottom_toBottomOf="@id/alarmOnOffBtn"
         android:text="alarm"
-        android:fontFamily="@font/sc_dream4"
-        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:fontFamily="@font/multicorepro"
+        android:textColor="@color/conflowerblue"
         tools:ignore="MissingConstraints" />
 
     <androidx.appcompat.widget.SwitchCompat
@@ -86,8 +87,9 @@
         app:layout_constraintStart_toStartOf="@id/dateText"
         app:layout_constraintEnd_toEndOf="@id/dateText"
         android:text="importance"
-        android:textColor="@color/black"
-        android:fontFamily="@font/sc_dream4"
+        android:textSize="12sp"
+        android:textColor="@color/conflowerblue"
+        android:fontFamily="@font/multicorepro"
         tools:ignore="MissingConstraints" />
 
     <RadioGroup
@@ -133,7 +135,7 @@
         app:layout_constraintTop_toBottomOf="@id/radioGroup"
         app:layout_constraintEnd_toEndOf="@id/dateText"
         android:background="#00ff0000"
-        android:textColor="@color/black"
+        android:textColor="@color/conflowerblue"
         android:text="Save"
         android:gravity="end"
         tools:ignore="MissingConstraints" />

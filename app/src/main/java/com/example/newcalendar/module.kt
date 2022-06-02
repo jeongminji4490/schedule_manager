@@ -24,17 +24,27 @@ val scheduleModule = module {
         return database.scheduleDao
     }
 
+    fun provideEventDao(database: AppDatabase) : EventDao {
+        return database.eventDao
+    }
+
+    fun provideAlarmDao(database: AppDatabase) : AlarmDao {
+        return database.alarmDao
+    }
+
     single {
         provideDatabase(androidApplication())
     }
 
     single {
         provideDao(get())
+        provideEventDao(get())
+        provideAlarmDao(get())
     }
 }
 
 val viewModel = module {
     viewModel {
-        ViewModel(get())
+        ViewModel(get(), get(), get()) // 에러 해결
     }
 }

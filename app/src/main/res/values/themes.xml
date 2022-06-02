@@ -3,7 +3,7 @@
     <style name="Theme.Newcalendar" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorPrimaryVariant">@color/conflowerblue</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:textColorPrimary">@color/black</item>
         <!-- Status bar color. -->

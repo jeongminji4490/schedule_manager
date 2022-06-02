@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@color/conflowerblue"
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
@@ -14,12 +14,12 @@
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/white"
-        android:textColor="@color/black"
-        android:textSize="22dp"
+        android:background="@color/conflowerblue"
+        android:textColor="@color/white"
+        android:textSize="20dp"
         android:text="2000-00-00"
         android:gravity="left"
-        android:fontFamily="@font/sc_dream5"
+        android:fontFamily="@font/multicorepro"
         tools:ignore="MissingConstraints" />
 
     <ImageView

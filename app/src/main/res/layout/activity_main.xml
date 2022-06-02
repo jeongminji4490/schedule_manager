@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
+        android:background="@color/conflowerblue"
         tools:ignore="MissingConstraints" >
 
         <TextView
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:cv_dayViewResource="@layout/calendar_day_layout"
-        android:background="@color/black"
+        android:background="@color/white"
         app:cv_monthHeaderResource="@layout/calendar_month_header_layout"
         app:cv_scrollMode="continuous"
         tools:ignore="MissingConstraints" />

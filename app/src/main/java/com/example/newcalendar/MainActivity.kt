@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.example.newcalendar.databinding.ActivityMainBinding
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
@@ -64,10 +65,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 //                }
 
                 if (day.owner == DayOwner.THIS_MONTH) {
-                    container.textView.setTextColor(Color.WHITE)
+                    container.textView.setTextColor(Color.BLACK)
+                    //container.textView.setTextColor(ContextCompat.getColor(applicationContext, R.color.conflowerblue))
                     if (selectedDate == todayDate){ //오늘 날짜 표시
-                        container.textView.setBackgroundResource(R.drawable.canceled_background)
-                        container.textView.setTextColor(Color.BLACK)
+                        container.textView.setBackgroundResource(R.drawable.selected_background)
+                        container.textView.setTextColor(Color.WHITE)
                     }
                 } else {
                     container.textView.setTextColor(Color.GRAY)

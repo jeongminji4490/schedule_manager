@@ -13,3 +13,18 @@ data class ScheduleDataModel(
     var alarm_code : Int, // 알람요청코드
     var importance : Int //중요도
 )
+
+@Entity(tableName = "event")
+data class EventDataModel(
+    @PrimaryKey
+    var date: String
+)
+
+@Entity(tableName = "active_alarms")
+data class AlarmDataModel(
+    @PrimaryKey(autoGenerate = true)
+    var serialNum: Int,
+    var alarm_code : Int,
+    var time : String,
+    var title : String
+)

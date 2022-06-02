@@ -25,11 +25,11 @@ class DayViewContainer(module: DateSaveModule, view: View) : ViewContainer(view)
     init {
         textView.setOnClickListener {
             if (textView.currentTextColor == -1){ //두번째 클릭했을 때 원래대로
-                textView.setBackgroundResource(R.drawable.blackcircle)
-                textView.setTextColor(Color.WHITE)
-            }else{
                 textView.setBackgroundResource(R.drawable.canceled_background)
                 textView.setTextColor(Color.BLACK)
+            }else{
+                textView.setBackgroundResource(R.drawable.selected_background)
+                textView.setTextColor(Color.WHITE)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     monthValue = month.value
                 }
