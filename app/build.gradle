@@ -83,6 +83,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
-    // Motion Toast
+    // Toast
     implementation 'io.github.shashank02051997:FancyToast:2.0.1'
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
+    implementation 'io.github.muddz:styleabletoast:2.4.0'
 }

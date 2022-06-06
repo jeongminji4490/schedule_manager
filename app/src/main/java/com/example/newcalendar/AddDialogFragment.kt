@@ -9,6 +9,8 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import com.example.newcalendar.databinding.AddScheduleDialogBinding
 import com.shashank.sony.fancytoastlib.FancyToast
+import es.dmoral.toasty.Toasty
+import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -27,11 +29,12 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
     private lateinit var minute : String
 
     private lateinit var selectedDate : String
+    private lateinit var eventDate : String
+
     private lateinit var content : String
     private lateinit var alarm : String  //2000-00-00 hh:mm:ss
     private var serialNum = 0 // 일련번호
-    private var alarm_code = 0 //
-    // 알람요청코드
+    private var alarm_code = 0 // 알람요청코드
     private var importance = 3 // 일정 중요도
     private val viewModel : ViewModel by inject()
 
@@ -48,12 +51,13 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
         super.onViewCreated(view, savedInstanceState)
         scope.launch {
             selectedDate = dateSaveModule.date.first()
+            eventDate = dateSaveModule.event.first()
             binding.dateText.text = selectedDate
         }
 
         binding.timePicker.visibility = TimePicker.GONE // 타임피커 기본설정
 
-        binding.alarmOnOffBtn.setOnCheckedChangeListener { compoundButton, isChecked ->
+        binding.alarmOnOffBtn.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked){
                 binding.timePicker.visibility = TimePicker.VISIBLE
                 binding.timePicker.setIs24HourView(true)
@@ -62,7 +66,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
             }
         }
 
-        binding.radioGroup.setOnCheckedChangeListener { radioGroup, id ->
+        binding.radioGroup.setOnCheckedChangeListener { _, id ->
             when(id){
                 R.id.veryBtn -> {
                     importance = Importance.VERY.ordinal
@@ -93,18 +97,19 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             val random = (1..100000) // 1~10000 범위에서 알람코드 랜덤으로 생성
                             alarm_code = random.random()
                             viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, alarm_code, importance))
+                            viewModel.addDate(EventDataModel(eventDate))
                             setAlarm(alarm_code, content, alarm)
                         }
                     }else {
                         ioScope.launch {
                             alarm = "null"
                             viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, alarm_code, importance))
+                            viewModel.addDate(EventDataModel(eventDate))
                         }
                     }
-                    FancyToast.makeText(context,"save",FancyToast.LENGTH_SHORT,FancyToast.SUCCESS,true).show()
+                    context?.let { StyleableToast.makeText(it, "저장", R.style.saveToast).show() }
                     this.dismiss()
                 }
-                //setAlarm(alarm)
             }
         }
     }

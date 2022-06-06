@@ -12,8 +12,8 @@ import java.io.IOException
 
 class DateSaveModule (private val context: Context) {
     private val Context.datastore by preferencesDataStore(name = "datastore")
-
     private val dateKey = stringPreferencesKey("DATE_KEY")
+    private val eventKey = stringPreferencesKey("EVENT_KEY")
 
     val date : Flow<String> = context.datastore.data
         .catch { exception ->
@@ -26,9 +26,26 @@ class DateSaveModule (private val context: Context) {
             it[dateKey] ?: ""
         }
 
+    val event : Flow<String> = context.datastore.data
+        .catch { exception ->
+            if (exception is IOException){
+                emit(emptyPreferences())
+            }else{
+                throw exception
+            }
+        }.map {
+            it[eventKey] ?: ""
+        }
+
     suspend fun setDate(date : String){
         context.datastore.edit {
             it[dateKey] = date
+        }
+    }
+
+    suspend fun setEvent(date : String){
+        context.datastore.edit {
+            it[eventKey] = date
         }
     }
 }

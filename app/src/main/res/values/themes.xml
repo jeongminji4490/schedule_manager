@@ -10,4 +10,32 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="saveToast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#fff</item>
+        <item name="stFont">@font/sc_dream4</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">@color/conflowerblue</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">@color/conflowerblue</item>
+        <item name="stIconStart">@drawable/postit</item>
+        <item name="stLength">SHORT</item> LONG or SHORT
+        <item name="stGravity">center</item> top or center
+        <item name="stRadius">20dp</item>
+    </style>
+    <style name="deleteToast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#fff</item>
+        <item name="stFont">@font/sc_dream4</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">@color/red</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">@color/red</item>
+        <item name="stIconStart">@drawable/postit</item>
+        <item name="stLength">SHORT</item> LONG or SHORT
+        <item name="stGravity">center</item> top or center
+        <item name="stRadius">20dp</item>
+    </style>
 </resources>
