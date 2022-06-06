@@ -15,8 +15,8 @@ class ViewModel(private val sDao : ScheduleDao, private val eDao: EventDao, priv
         sDao.addItem(data)
     }
 
-    fun deleteSchedule(alarm_code : Int){ // 일정 삭제
-        sDao.deleteItem(alarm_code)
+    fun deleteSchedule(serialNum : Int){ // 일정 삭제
+        sDao.deleteItem(serialNum)
     }
 
     fun addDate(data : EventDataModel){ // 날짜 추가

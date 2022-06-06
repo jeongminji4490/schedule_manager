@@ -49,9 +49,10 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
 
         adapter.itemClick = object : ScheduleAdapter.ItemClick{
             override fun onClick(view: View, position: Int, list: ArrayList<Schedule>) {
-                val alarmCode = list[position].alarm_code
+                //val alarmCode = list[position].alarm_code
+                val serialNum = list[position].serialNum
                 val content = list[position].content
-                val dialog = DeleteDialogFragment(alarmCode, content)
+                val dialog = DeleteDialogFragment(serialNum, content)
                 activity?.let {
                     dialog.show(it.supportFragmentManager, "ShowListFragment")
                 }

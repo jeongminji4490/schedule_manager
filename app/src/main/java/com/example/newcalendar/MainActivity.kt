@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -22,6 +23,7 @@ import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.WeekFields
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var todayDate : String
     private lateinit var selectedDate: String
     private val dateSaveModule : DateSaveModule by inject()
+    private val viewModel : ViewModel by inject()
+    private var list = ArrayList<String>()
 
     //private val dateFormat by lazy { SimpleDateFormat("yyyy-mm-dd") }
 
@@ -42,6 +46,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         binding.addScheduleBtn.setOnClickListener(this)
         binding.openScheduleBtn.setOnClickListener(this)
+
+        viewModel.getAllDates().observe(this, androidx.lifecycle.Observer {
+            for (i in it.indices){
+                list.add(it[i].date)
+                Log.e("Main", it[i].date)
+            }
+        })
 
         binding.calendarView.dayBinder=object : DayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(dateSaveModule, view)
@@ -56,8 +67,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 container.month = sMonth
                 container.textView.text = sDay.toString()
 
-                // 여기서 이벤트 작업?
+                // 여기서 이벤트 작업?, 선택된 날짜가 테이블의 날짜와 같다면
                 selectedDate = "$sYear-$sMonth-$sDay" //선택한 날짜
+
+                for (i in list.indices){
+                    if (selectedDate == list[i]){
+                        container.textView.setBackgroundResource(R.drawable.event)
+                        //container.textView.setTextColor(Color.WHITE)
+                        //container.textView.setTextColor(ContextCompat.getColor(applicationContext, R.color.white))
+                    }
+                }
+                Log.e("selectedDate", selectedDate)
+
 
 //                if (selectedDate.equals(todayDate)){ //오늘 날짜 표시
 //                    //container.textView.setBackgroundResource(R.drawable.today_background)
@@ -66,7 +87,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 if (day.owner == DayOwner.THIS_MONTH) {
                     container.textView.setTextColor(Color.BLACK)
-                    //container.textView.setTextColor(ContextCompat.getColor(applicationContext, R.color.conflowerblue))
                     if (selectedDate == todayDate){ //오늘 날짜 표시
                         container.textView.setBackgroundResource(R.drawable.selected_background)
                         container.textView.setTextColor(Color.WHITE)
@@ -130,6 +150,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         todayDate = "$tYear-$tMonth-$tDay"
         val todayDateForSave = "$tYear-$tMonthValue-$tDay"
+        // 영문으로도 저장해야함
+        CoroutineScope(Dispatchers.IO).launch {
+            dateSaveModule.setEvent(todayDate)
+        }
         CoroutineScope(Dispatchers.IO).launch {
             dateSaveModule.setDate(todayDateForSave)
         }
