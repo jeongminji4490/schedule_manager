@@ -27,18 +27,18 @@ class DayViewContainer(module: DateSaveModule, view: View) : ViewContainer(view)
     init {
         textView.setOnClickListener {
             if (textView.currentTextColor == -1){ //두번째 클릭했을 때 원래대로
-                textView.setBackgroundResource(R.drawable.event)
-//                textView.setTextColor(Color.BLACK)
+                textView.setBackgroundResource(R.drawable.canceled_background)
+                textView.setTextColor(Color.BLACK)
             }else{
-                textView.setBackgroundResource(R.drawable.select_star)
-//                textView.setTextColor(Color.WHITE)
+                textView.setBackgroundResource(R.drawable.selected_background)
+                textView.setTextColor(Color.WHITE)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     monthValue = month.value
                     //Log.e("Day", month.toString())
                 }
                 day = textView.text.toString()
                 date = "$year-$monthValue-$day"
-                event = "$year-$month-$day"
+                event = "$year-$month-$day" // 월이 영문(ex MAY) 날짜
 
                 coroutineScope.launch { //날짜 저장
                     module.setDate(date)

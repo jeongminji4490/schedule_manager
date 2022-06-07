@@ -7,14 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.PopupMenu
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.newcalendar.databinding.ActivityMainBinding
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,14 +34,7 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding : ActivityMainBinding
-    private val context by lazy { this }
-    private lateinit var todayDate : String
-    private lateinit var selectedDate: String
-    private val dateSaveModule : DateSaveModule by inject()
-    private val viewModel : ViewModel by inject()
-    private var list = ArrayList<String>()
-
-    //private val dateFormat by lazy { SimpleDateFormat("yyyy-mm-dd") }
+    private lateinit var navController : NavController
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,83 +42,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+        navController = navHostFragment.navController
+
+        setupSmoothBottomMenu()
+
         binding.addScheduleBtn.setOnClickListener(this)
         binding.openScheduleBtn.setOnClickListener(this)
+    }
 
-        viewModel.getAllDates().observe(this, androidx.lifecycle.Observer {
-            for (i in it.indices){
-                list.add(it[i].date)
-                Log.e("Main", it[i].date)
-            }
-        })
-
-        binding.calendarView.dayBinder=object : DayBinder<DayViewContainer> {
-            override fun create(view: View) = DayViewContainer(dateSaveModule, view)
-
-            @RequiresApi(Build.VERSION_CODES.O)
-            override fun bind(container: DayViewContainer, day: CalendarDay) {
-                //container.textView.text = day.date.dayOfMonth.toString()
-                val sYear = day.date.year
-                val sMonth = day.date.month
-                val sDay = day.date.dayOfMonth
-                container.year = sYear
-                container.month = sMonth
-                container.textView.text = sDay.toString()
-
-                // 여기서 이벤트 작업?, 선택된 날짜가 테이블의 날짜와 같다면
-                selectedDate = "$sYear-$sMonth-$sDay" //선택한 날짜
-
-                for (i in list.indices){
-                    if (selectedDate == list[i]){
-                        container.textView.setBackgroundResource(R.drawable.event)
-                        //container.textView.setTextColor(Color.WHITE)
-                        //container.textView.setTextColor(ContextCompat.getColor(applicationContext, R.color.white))
-                    }
-                }
-                Log.e("selectedDate", selectedDate)
-
-
-//                if (selectedDate.equals(todayDate)){ //오늘 날짜 표시
-//                    //container.textView.setBackgroundResource(R.drawable.today_background)
-//                    container.textView.setTextColor(Color.WHITE)
-//                }
-
-                if (day.owner == DayOwner.THIS_MONTH) {
-                    container.textView.setTextColor(Color.BLACK)
-                    if (selectedDate == todayDate){ //오늘 날짜 표시
-                        container.textView.setBackgroundResource(R.drawable.selected_background)
-                        container.textView.setTextColor(Color.WHITE)
-                    }
-                } else {
-                    container.textView.setTextColor(Color.GRAY)
-                }
-            }
-        }
-
-        binding.calendarView.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthViewContainer> {
-            override fun create(view: View): MonthViewContainer = MonthViewContainer(view)
-            @SuppressLint("SetTextI18n")
-            override fun bind(container: MonthViewContainer, month: CalendarMonth) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    container.textView.text = "${
-                        month.yearMonth.month.name.lowercase(Locale.getDefault())
-                            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
-                    } ${month.year}"
-                }
-            }
-        }
-
-        val currentMonth = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            YearMonth.now()
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
-        val firstMonth = currentMonth.minusMonths(10)
-        val lastMonth = currentMonth.plusMonths(10)
-        val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
-        binding.calendarView.setup(firstMonth, lastMonth, firstDayOfWeek)
-        binding.calendarView.scrollToMonth(currentMonth)
-
+    private fun setupSmoothBottomMenu() { // smooth bottomBar & navController 연결
+        val popupMenu = PopupMenu(this, null)
+        popupMenu.inflate(R.menu.menu)
+        val menu = popupMenu.menu
+        binding.bottomBar.setupWithNavController(menu, navController)
     }
 
     override fun onClick(v: View?) {
@@ -138,24 +73,5 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
-        //오늘 날짜 미리 저장하기
-        val tYear = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDate.now().year
-        } else {
-            TODO("VERSION.SDK_INT < O")
-        }
-        val tMonth = LocalDate.now().month
-        val tMonthValue = tMonth.value
-        val tDay = LocalDate.now().dayOfMonth
-
-        todayDate = "$tYear-$tMonth-$tDay"
-        val todayDateForSave = "$tYear-$tMonthValue-$tDay"
-        // 영문으로도 저장해야함
-        CoroutineScope(Dispatchers.IO).launch {
-            dateSaveModule.setEvent(todayDate)
-        }
-        CoroutineScope(Dispatchers.IO).launch {
-            dateSaveModule.setDate(todayDateForSave)
-        }
     }
 }

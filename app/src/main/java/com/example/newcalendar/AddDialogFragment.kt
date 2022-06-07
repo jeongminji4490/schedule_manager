@@ -22,21 +22,21 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
     private lateinit var binding : AddScheduleDialogBinding
     private val dateSaveModule : DateSaveModule by inject()
-    private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private val scope by lazy { CoroutineScope(Dispatchers.Main) }
     private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
+    private val viewModel : ViewModel by inject()
+    private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
+
+    // 알람 데이터
     private lateinit var hour : String
     private lateinit var minute : String
-
-    private lateinit var selectedDate : String
-    private lateinit var eventDate : String
-
-    private lateinit var content : String
+    private lateinit var selectedDate : String // 선택된 날짜
+    private lateinit var eventDate : String // 특정 날짜
+    private lateinit var content : String // 알람 내용
     private lateinit var alarm : String  //2000-00-00 hh:mm:ss
     private var serialNum = 0 // 일련번호
     private var alarm_code = 0 // 알람요청코드
     private var importance = 3 // 일정 중요도
-    private val viewModel : ViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +66,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
             }
         }
 
+        // 일정 중요도 설정
         binding.radioGroup.setOnCheckedChangeListener { _, id ->
             when(id){
                 R.id.veryBtn -> {
@@ -88,7 +89,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                 content = binding.content.text.toString()
                 if (content.isEmpty() || importance==3){ //내용 비었을 때, 중요도 설정 안하면 저장 X
                     FancyToast.makeText(context,"내용 또는 중요도를 입력해주세요",FancyToast.LENGTH_SHORT,FancyToast.INFO,true).show()
-                }else{
+                }else{ // 알람 설정했을 때
                     if (binding.alarmOnOffBtn.isChecked){ // alarm on
                         ioScope.launch {
                             hour = binding.timePicker.hour.toString()
@@ -101,7 +102,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             setAlarm(alarm_code, content, alarm)
                         }
                     }else {
-                        ioScope.launch {
+                        ioScope.launch { // 알람 설정 안했을 때
                             alarm = "null"
                             viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, alarm_code, importance))
                             viewModel.addDate(EventDataModel(eventDate))
