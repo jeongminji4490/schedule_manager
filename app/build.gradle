@@ -87,4 +87,7 @@ dependencies {
     implementation 'io.github.shashank02051997:FancyToast:2.0.1'
     implementation 'com.github.GrenderG:Toasty:1.5.2'
     implementation 'io.github.muddz:styleabletoast:2.4.0'
+
+    // BottomBar
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
 }

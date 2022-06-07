@@ -3,7 +3,7 @@ package com.example.newcalendar
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "schedule")
+@Entity(tableName = "schedule") // 일정 테이블
 data class ScheduleDataModel(
     @PrimaryKey(autoGenerate = true)
     var serialNum : Int = 0, //일련번호
@@ -14,17 +14,17 @@ data class ScheduleDataModel(
     var importance : Int //중요도
 )
 
-@Entity(tableName = "event")
+@Entity(tableName = "event") // 특정 날짜(일정이 저정된) 저장용 테이블
 data class EventDataModel(
     @PrimaryKey
     var date: String
 )
 
-@Entity(tableName = "active_alarms")
+@Entity(tableName = "active_alarms") // 재부팅 시 활성화 되어야하는 알람 테이블
 data class AlarmDataModel(
     @PrimaryKey(autoGenerate = true)
-    var serialNum: Int,
-    var alarm_code : Int,
-    var time : String,
-    var title : String
+    var serialNum: Int, // 일련 번호
+    var alarm_code : Int, // 알람 요청코드
+    var time : String, // 시간
+    var content : String // 알람 내용
 )

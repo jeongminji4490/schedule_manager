@@ -14,14 +14,14 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AlarmFunctions(private val context: Context){
+class AlarmFunctions(private val context: Context?){
 
     private lateinit var pendingIntent: PendingIntent
     private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
 
     @SuppressLint("UnspecifiedImmutableFlag")
     fun callAlarm(from : String, alarm_code : Int, content : String){
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val receiverIntent = Intent(context, AlarmReceiver::class.java) //리시버로 전달될 인텐트 설정
         receiverIntent.putExtra("alarm_rqCode", alarm_code) //요청 코드를 리시버에 전달
         receiverIntent.putExtra("content", content) //수정_일정 제목을 리시버에 전달
@@ -52,7 +52,7 @@ class AlarmFunctions(private val context: Context){
     }
 
     fun cancelAlarm(viewModel: ViewModel, alarm_code: Int) {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
         //val pendingIntent : PendingIntent
 
@@ -69,4 +69,8 @@ class AlarmFunctions(private val context: Context){
             viewModel.deleteSchedule(alarm_code)
         }
     }
+
+//    fun rebootAlarms(viewModel: ViewModel){
+//
+//    }
 }

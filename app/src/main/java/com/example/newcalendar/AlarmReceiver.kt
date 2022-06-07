@@ -27,8 +27,8 @@ class AlarmReceiver() : BroadcastReceiver() {
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
-    override fun onReceive(context: Context, intent: Intent) {
-        manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    override fun onReceive(context: Context?, intent: Intent?) {
+        manager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { //Oreo 이상
             manager.createNotificationChannel( //NotificationChannel 인스턴스를 createNotificationChannel()에 전달하여 앱 알림 채널을 시스템에 등록
@@ -44,7 +44,7 @@ class AlarmReceiver() : BroadcastReceiver() {
         }
 
         val intent2 = Intent(context, AlarmService::class.java)
-        val requestCode = intent.extras!!.getInt("alarm_rqCode")
+        val requestCode = intent?.extras!!.getInt("alarm_rqCode")
         val title = intent.extras!!.getString("content")
 
         Log.e("AlarmReceiver is Called", requestCode.toString());

@@ -38,4 +38,5 @@
         <item name="stGravity">center</item> top or center
         <item name="stRadius">20dp</item>
     </style>
+
 </resources>
