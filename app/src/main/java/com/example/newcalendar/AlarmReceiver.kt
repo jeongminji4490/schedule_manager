@@ -13,9 +13,17 @@ import android.util.Log
 import android.view.View
 import androidx.core.app.NotificationCompat
 import androidx.room.Dao
+import androidx.room.Room
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class AlarmReceiver() : BroadcastReceiver() {
+
+    private val db by lazy { AppDatabase }
+    private val coroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
+    private lateinit var functions: AlarmFunctions
 
     private lateinit var manager: NotificationManager
     private lateinit var builder: NotificationCompat.Builder
@@ -48,6 +56,17 @@ class AlarmReceiver() : BroadcastReceiver() {
         val title = intent.extras!!.getString("content")
 
         Log.e("AlarmReceiver is Called", requestCode.toString());
+
+        functions = AlarmFunctions(context)
+        coroutineScope.launch {
+            val db = Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                "SCHEDULE_DB"
+            ).build()
+            db.alarmDao.deleteAlarm(requestCode)
+        }
+
         val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
             PendingIntent.getActivity(context,requestCode,intent2,PendingIntent.FLAG_IMMUTABLE); //Activity를 시작하는 인텐트 생성
         }else {
@@ -55,7 +74,7 @@ class AlarmReceiver() : BroadcastReceiver() {
         }
 
         val notification = builder.setContentTitle(title)
-            .setContentText("ALARM")
+            .setContentText("SIMSME")
             .setSmallIcon(R.drawable.btn_star)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)

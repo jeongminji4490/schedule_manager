@@ -55,7 +55,8 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
                 //val alarmCode = list[position].alarm_code
                 val serialNum = list[position].serialNum
                 val content = list[position].content
-                val dialog = DeleteDialogFragment(serialNum, content)
+                val alarmCode = list[position].alarm_code
+                val dialog = DeleteDialogFragment(serialNum, content, alarmCode)
                 activity?.let {
                     dialog.show(it.supportFragmentManager, "ShowListFragment")
                 }

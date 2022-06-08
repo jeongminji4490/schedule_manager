@@ -51,6 +51,6 @@ val scheduleModule = module {
 
 val viewModel = module {
     viewModel {
-        ViewModel(get(), get(), get()) // 에러 해결
+        ViewModel(get(), get(), get())
     }
 }

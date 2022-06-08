@@ -1,5 +1,6 @@
 package com.example.newcalendar
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
@@ -9,7 +10,6 @@ class ViewModel(private val sDao : ScheduleDao, private val eDao: EventDao, priv
 
     fun getAllDates() : LiveData<List<EventDataModel>> = eDao.getAllDates()
 
-    fun getAllAlarms() : LiveData<List<AlarmDataModel>> = aDao.getAllAlarms()
 
     fun addSchedule(data : ScheduleDataModel){ // 일정 추가
         sDao.addItem(data)
@@ -27,6 +27,8 @@ class ViewModel(private val sDao : ScheduleDao, private val eDao: EventDao, priv
         eDao.deleteDate(date)
     }
 
+    fun getAllAlarms() : List<AlarmDataModel> = aDao.getAllAlarms()
+
     fun addAlarm(data : AlarmDataModel){ // 날짜 추가
         aDao.addAlarm(data)
     }
@@ -34,4 +36,11 @@ class ViewModel(private val sDao : ScheduleDao, private val eDao: EventDao, priv
     fun deleteAlarm(alarm_code: Int){ // 날짜 삭제
         aDao.deleteAlarm(alarm_code)
     }
+
 }
+
+//class AlarmViewModel(application: Application) : ViewModel() {
+//
+//    private val dao= AppDatabase.getInstance(application)!!.alarmDao
+//
+//}
