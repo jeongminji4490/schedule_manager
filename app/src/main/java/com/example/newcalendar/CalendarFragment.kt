@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.room.Room
 import com.example.newcalendar.databinding.FragmentCalendarBinding
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
@@ -26,7 +27,7 @@ import java.time.temporal.WeekFields
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CalendarFragment : Fragment(){
+class CalendarFragment : Fragment(), View.OnClickListener{
 
     private lateinit var binding : FragmentCalendarBinding
     private lateinit var todayDate : String
@@ -34,6 +35,7 @@ class CalendarFragment : Fragment(){
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
     private var list = ArrayList<String>()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,6 +48,9 @@ class CalendarFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.addScheduleBtn.setOnClickListener(this)
+        binding.openScheduleBtn.setOnClickListener(this)
 
         // 일정이 저장된 특정 날짜들을 가져와서 리스트에 넣기
         viewModel.getAllDates().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
@@ -75,7 +80,7 @@ class CalendarFragment : Fragment(){
                         container.textView.setBackgroundResource(R.drawable.event) // 일정이 저장된 날짜만 별표시
                     }
                 }
-                Log.e("selectedDate", selectedDate)
+                //Log.e("selectedDate", selectedDate)
 
                 if (day.owner == DayOwner.THIS_MONTH) {
                     container.textView.setTextColor(Color.BLACK)
@@ -135,6 +140,19 @@ class CalendarFragment : Fragment(){
         }
         CoroutineScope(Dispatchers.IO).launch {
             dateSaveModule.setDate(todayDateForSave)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.addScheduleBtn -> {
+                val dialog = AddDialogFragment()
+                dialog.show(parentFragmentManager, "AddScheduleDialog")
+            }
+            R.id.openScheduleBtn -> {
+                val dialog = ShowListFragment()
+                dialog.show(parentFragmentManager, "ShowListFragment")
+            }
         }
     }
 }

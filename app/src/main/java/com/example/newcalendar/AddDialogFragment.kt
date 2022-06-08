@@ -1,5 +1,6 @@
 package com.example.newcalendar
 
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
     private val scope by lazy { CoroutineScope(Dispatchers.Main) }
     private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
     private val viewModel : ViewModel by inject()
+    //private val alarmViewModel by lazy { AlarmViewModel(context?.applicationContext as Application) }
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
 
     // 알람 데이터
@@ -99,6 +101,8 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             alarm_code = random.random()
                             viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, alarm_code, importance))
                             viewModel.addDate(EventDataModel(eventDate))
+                            viewModel.addAlarm(AlarmDataModel(serialNum, alarm_code, alarm, content))
+                            //viewModel.addAlarm(AlarmDataModel(serialNum, alarm_code, alarm, content))
                             setAlarm(alarm_code, content, alarm)
                         }
                     }else {

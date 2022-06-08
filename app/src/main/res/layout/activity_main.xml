@@ -7,56 +7,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/conflowerblue"
-        tools:ignore="MissingConstraints" >
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:id="@+id/importantScheduleBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitCenter"
-                android:backgroundTint="#00ff0000"
-                android:src="@drawable/red_most_important"
-                app:layout_constraintEnd_toStartOf="@id/openScheduleBtn"
-                />
-
-            <ImageButton
-                android:id="@+id/openScheduleBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitCenter"
-                android:backgroundTint="#00ff0000"
-                app:layout_constraintEnd_toStartOf="@id/addScheduleBtn"
-                android:src="@drawable/notebook"/>
-
-            <ImageButton
-                android:id="@+id/addScheduleBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/add"
-                android:backgroundTint="#00ff0000" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomBar"

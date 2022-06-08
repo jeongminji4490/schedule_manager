@@ -20,14 +20,16 @@ class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
     //private var alarm_code = 0
     private var serialNum = 0
     private lateinit var content: String
+    private var alarmCode : Int = 0
     private lateinit var binding : DeleteDialogBinding
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
     private val viewModel : ViewModel by inject()
 
-    constructor(serialNum: Int, content: String) : this() {
+    constructor(serialNum: Int, content: String, code: Int) : this() {
         this.serialNum = serialNum
         this.content = content
+        this.alarmCode = code
     }
 
     override fun onCreateView(
@@ -51,9 +53,9 @@ class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
         if (id == R.id.deleteOkBtn){ // 삭제
             ioScope.launch {
                 viewModel.deleteSchedule(serialNum)
+                viewModel.deleteAlarm(alarmCode)
             }
-            alarmFunctions.cancelAlarm(viewModel, serialNum)
-            //FancyToast.makeText(context,"delete", FancyToast.LENGTH_SHORT, FancyToast.INFO,true).show()
+            alarmFunctions.cancelAlarm(viewModel, alarmCode)
             context?.let { StyleableToast.makeText(it, "삭제", R.style.deleteToast).show() }
             this.dismiss()
         }
