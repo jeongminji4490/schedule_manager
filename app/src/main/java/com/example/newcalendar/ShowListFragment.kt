@@ -32,8 +32,9 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = ScheduleListFragmentBinding.inflate(inflater)
+        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_white_rounded_shape)
         return binding.root
     }
 
