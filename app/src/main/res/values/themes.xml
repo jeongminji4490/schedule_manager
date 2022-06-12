@@ -6,6 +6,7 @@
         <item name="colorPrimaryVariant">@color/conflowerblue</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:fontFamily">@font/uhbee_gmin2</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
@@ -13,7 +14,7 @@
     <style name="saveToast">
         <item name="stTextBold">true</item>
         <item name="stTextColor">#fff</item>
-        <item name="stFont">@font/sc_dream4</item>
+        <item name="stFont">@font/uhbee_gmin2_bold</item>
         <item name="stTextSize">14sp</item>
         <item name="stColorBackground">@color/conflowerblue</item>
         <item name="stSolidBackground">true</item>
@@ -27,7 +28,7 @@
     <style name="deleteToast">
         <item name="stTextBold">true</item>
         <item name="stTextColor">#fff</item>
-        <item name="stFont">@font/sc_dream4</item>
+        <item name="stFont">@font/uhbee_gmin2_bold</item>
         <item name="stTextSize">14sp</item>
         <item name="stColorBackground">@color/red</item>
         <item name="stSolidBackground">true</item>

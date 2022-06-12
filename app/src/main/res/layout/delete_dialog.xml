@@ -8,17 +8,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="300dp"
-        android:layout_height="170dp"
-        android:layout_margin="5dp"
-        android:background="@color/white">
+        android:layout_height="120dp"
+        android:background="@color/conflowerblue">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             tools:ignore="MissingConstraints"
             android:text="삭제하시겠습니까?"
-            android:fontFamily="@font/sc_dream4"
-            android:textColor="@color/black"
+            android:fontFamily="@font/uhbee_gmin2_bold"
+            android:textColor="@color/white"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/deleteOkBtn"
@@ -29,27 +28,26 @@
             android:id="@+id/deleteOkBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/deleteCancelBtn"
-            android:backgroundTint="@color/black"
+            android:background="#00ff0000"
             android:textColor="@color/white"
             android:text="삭제"
-            android:fontFamily="@font/sc_dream4"
+            android:fontFamily="@font/uhbee_gmin2_bold"
             tools:ignore="MissingConstraints" />
 
         <Button
             android:id="@+id/deleteCancelBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/deleteOkBtn"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="취소"
-            android:fontFamily="@font/sc_dream4"
+            android:background="#00ff0000"
+            android:fontFamily="@font/uhbee_gmin2_bold"
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -46,6 +46,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
         savedInstanceState: Bundle?
     ): View {
         binding = AddScheduleDialogBinding.inflate(inflater)
+        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_white_rounded_shape)
         return binding.root
     }
 
