@@ -9,7 +9,9 @@ data class ScheduleDataModel(
     var serialNum : Int = 0, //일련번호
     var date : String, //날짜(년/월/일)
     var content : String, //제목
-    var alarm : String, //알람시간(:)
+    var alarm : String, // 알람시간(:)
+    var hour : String, // 알람 시
+    var minute : String, // 알람 분
     var alarm_code : Int, // 알람요청코드
     var importance : Int //중요도
 )
@@ -23,7 +25,6 @@ data class EventDataModel(
 @Entity(tableName = "active_alarms") // 재부팅 시 활성화 되어야하는 알람 테이블
 data class AlarmDataModel(
     @PrimaryKey(autoGenerate = true)
-    var serialNum: Int, // 일련 번호
     var alarm_code : Int, // 알람 요청코드
     var time : String, // 시간
     var content : String // 알람 내용

@@ -6,29 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.example.newcalendar.databinding.DeleteDialogBinding
 import com.shashank.sony.fancytoastlib.FancyToast
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.android.synthetic.main.schedule_item.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 
 class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
 
-    //private var alarm_code = 0
     private var serialNum = 0
-    private lateinit var content: String
     private var alarmCode : Int = 0
     private lateinit var binding : DeleteDialogBinding
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
-    private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
+    private var job : Job? = null
     private val viewModel : ViewModel by inject()
 
-    constructor(serialNum: Int, content: String, code: Int) : this() {
+    constructor(serialNum: Int, code: Int) : this() {
         this.serialNum = serialNum
-        this.content = content
         this.alarmCode = code
     }
 
@@ -45,22 +41,33 @@ class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
         super.onViewCreated(view, savedInstanceState)
 
         binding.deleteOkBtn.setOnClickListener(this)
-        binding.deleteCancelBtn.setOnClickListener(this)
+        binding.modifyBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         val id = v?.id
         if (id == R.id.deleteOkBtn){ // 삭제
-            ioScope.launch {
-                viewModel.deleteSchedule(serialNum)
-                viewModel.deleteAlarm(alarmCode)
+            job = lifecycleScope.launch {
+                withContext(Dispatchers.IO){
+                    viewModel.deleteSchedule(serialNum)
+                    viewModel.deleteAlarm(alarmCode)
+                }
             }
             alarmFunctions.cancelAlarm(viewModel, alarmCode)
             context?.let { StyleableToast.makeText(it, "삭제", R.style.deleteToast).show() }
             this.dismiss()
         }
-        if (id == R.id.deleteCancelBtn){ // 다이얼로그 닫기
+        if (id == R.id.modifyBtn){ // 변경 다이얼로그 추가
+            val dialog = ModifyDialogFragment(serialNum)
+            activity?.let {
+                dialog.show(it.supportFragmentManager, "ShowListFragment")
+            }
             this.dismiss()
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        job?.cancel()
     }
 }

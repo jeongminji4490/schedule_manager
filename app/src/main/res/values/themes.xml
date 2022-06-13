@@ -39,5 +39,19 @@
         <item name="stGravity">center</item> top or center
         <item name="stRadius">20dp</item>
     </style>
+    <style name="dateToast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">@color/conflowerblue</item>
+        <item name="stFont">@font/uhbee_gmin2_bold</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">@color/yellow</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">@color/yellow</item>
+        <item name="stLength">SHORT</item> LONG or SHORT
+        <item name="stGravity">top</item> top or center
+        <item name="stRadius">20dp</item>
+    </style>
+
 
 </resources>

@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.room.Room
 import com.example.newcalendar.databinding.FragmentCalendarBinding
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
@@ -61,7 +60,7 @@ class CalendarFragment : Fragment(), View.OnClickListener{
         })
 
         binding.calendarView.dayBinder=object : DayBinder<DayViewContainer> {
-            override fun create(view: View) = DayViewContainer(dateSaveModule, view)
+            override fun create(view: View) = DayViewContainer(dateSaveModule, view, context)
 
             @RequiresApi(Build.VERSION_CODES.O)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
@@ -85,7 +84,7 @@ class CalendarFragment : Fragment(), View.OnClickListener{
                 if (day.owner == DayOwner.THIS_MONTH) {
                     container.textView.setTextColor(Color.BLACK)
                     if (selectedDate == todayDate){ //오늘 날짜만 원으로 표시
-                        container.textView.setBackgroundResource(R.drawable.selected_background)
+                        container.textView.setBackgroundResource(R.drawable.today_background)
                         container.textView.setTextColor(Color.WHITE)
                     }
                 } else {
