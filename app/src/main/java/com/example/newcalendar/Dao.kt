@@ -13,6 +13,9 @@ interface ScheduleDao { // 일정 테이블 관련
 
     @Query("select * from schedule")
     fun getAllSchedule() : LiveData<List<ScheduleDataModel>>
+
+    @Query("select * from schedule where serialNum = :serialNum")
+    fun getSchedule(serialNum: Int) : ScheduleDataModel
 }
 
 @Dao

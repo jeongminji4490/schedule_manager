@@ -8,8 +8,9 @@ class ViewModel(private val sDao : ScheduleDao, private val eDao: EventDao, priv
 
     fun getAllSchedule() : LiveData<List<ScheduleDataModel>> = sDao.getAllSchedule()
 
-    fun getAllDates() : LiveData<List<EventDataModel>> = eDao.getAllDates()
+    fun getSchedule(serialNum: Int) : ScheduleDataModel = sDao.getSchedule(serialNum)
 
+    fun getAllDates() : LiveData<List<EventDataModel>> = eDao.getAllDates()
 
     fun addSchedule(data : ScheduleDataModel){ // 일정 추가
         sDao.addItem(data)
@@ -38,9 +39,3 @@ class ViewModel(private val sDao : ScheduleDao, private val eDao: EventDao, priv
     }
 
 }
-
-//class AlarmViewModel(application: Application) : ViewModel() {
-//
-//    private val dao= AppDatabase.getInstance(application)!!.alarmDao
-//
-//}

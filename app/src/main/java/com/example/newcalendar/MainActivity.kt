@@ -51,16 +51,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         navController = navHostFragment.navController
 
-//        viewModel.getAllAlarms().observe(this, androidx.lifecycle.Observer {
-//            for (i in it.indices){
-//                val code = it[i].alarm_code
-//                val content = it[i].content
-//                Log.e("MainActivity", code.toString())
-//                Log.e("MainActivity", content)
-//            }
-//        })
-
-
         setupSmoothBottomMenu()
     }
 
@@ -86,5 +76,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        Log.e("AddDialogFragment", "onStart()")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.e("AddDialogFragment", "onPause()")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.e("AddDialogFragment", "onStop()")
     }
 }

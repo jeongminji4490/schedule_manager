@@ -3,17 +3,17 @@ package com.example.newcalendar
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.util.Log
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.kizitonwose.calendarview.ui.ViewContainer
+import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 import java.time.Month
 
-class DayViewContainer(module: DateSaveModule, view: View) : ViewContainer(view) {
+class DayViewContainer(module: DateSaveModule, view: View, context: Context?) : ViewContainer(view) {
 
     val textView: TextView =view.findViewById<TextView>(R.id.calendarDayText)
     lateinit var month :Month
@@ -32,6 +32,7 @@ class DayViewContainer(module: DateSaveModule, view: View) : ViewContainer(view)
             }else{
                 textView.setBackgroundResource(R.drawable.selected_background)
                 textView.setTextColor(Color.WHITE)
+                context?.let { StyleableToast.makeText(it, textView.text.toString() + "일", R.style.dateToast).show() }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     monthValue = month.value
                     //Log.e("Day", month.toString())
