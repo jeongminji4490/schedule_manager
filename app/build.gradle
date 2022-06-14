@@ -51,7 +51,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
-    implementation 'com.github.kizitonwose:CalendarView:1.0.4'
+
+    implementation 'com.github.prolificinteractive:material-calendarview:1.6.0'
 
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")

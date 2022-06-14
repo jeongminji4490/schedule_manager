@@ -10,7 +10,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
-        android:background="@color/conflowerblue">
+        android:background="@color/lightViolet">
 
         <TextView
             android:id="@+id/dateText"
@@ -19,7 +19,6 @@
             android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/conflowerblue"
             android:textColor="@color/white"
             android:textSize="20dp"
             android:text="2000-00-00"

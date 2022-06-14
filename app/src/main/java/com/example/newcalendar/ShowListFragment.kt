@@ -43,8 +43,6 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
         val context = requireContext()
         val adapter = ScheduleAdapter(context)
 
-        //binding.noticeText.visibility = View.GONE
-
         binding.scheduleListview.layoutManager=LinearLayoutManager(context)
         scope.launch {
             selectedDate = dateSaveModule.date.first()
@@ -53,11 +51,10 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
 
         adapter.itemClick = object : ScheduleAdapter.ItemClick{
             override fun onClick(view: View, position: Int, list: ArrayList<Schedule>) {
-                //val alarmCode = list[position].alarm_code
                 val serialNum = list[position].serialNum
-                val content = list[position].content
                 val alarmCode = list[position].alarm_code
-                val dialog = DeleteDialogFragment(serialNum, content, alarmCode)
+                val date = list[position].date
+                val dialog = DeleteDialogFragment(serialNum,alarmCode, date)
                 activity?.let {
                     dialog.show(it.supportFragmentManager, "ShowListFragment")
                 }
@@ -67,9 +64,6 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
         viewModel.getAllSchedule().observe(this, androidx.lifecycle.Observer {
             adapter.removeAll()
             for(i in it.indices){
-//                if (it.isEmpty()){
-//                    binding.noticeText.visibility = View.VISIBLE
-//                }
                 if (it[i].date == selectedDate){
                     binding.noticeText.visibility = View.GONE
                     val data = Schedule(

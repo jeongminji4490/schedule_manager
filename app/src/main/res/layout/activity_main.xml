@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:backgroundColor="@color/conflowerblue"
+        app:backgroundColor="@color/lightViolet"
         app:menu="@menu/menu"
         app:itemFontFamily="@font/uhbee_gmin2"
         tools:ignore="MissingConstraints" />

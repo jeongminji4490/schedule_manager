@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="300dp"
         android:layout_height="120dp"
-        android:background="@color/conflowerblue">
+        android:background="@color/lightViolet">
 
         <Button
             android:id="@+id/deleteOkBtn"

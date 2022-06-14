@@ -16,16 +16,18 @@ import org.koin.android.ext.android.inject
 
 class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
 
+    private lateinit var binding : DeleteDialogBinding
     private var serialNum = 0
     private var alarmCode : Int = 0
-    private lateinit var binding : DeleteDialogBinding
+    private lateinit var selectedDate : String
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private var job : Job? = null
     private val viewModel : ViewModel by inject()
 
-    constructor(serialNum: Int, code: Int) : this() {
+    constructor(serialNum: Int, code: Int, date: String) : this() {
         this.serialNum = serialNum
         this.alarmCode = code
+        this.selectedDate = date
     }
 
     override fun onCreateView(
@@ -51,6 +53,7 @@ class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
                 withContext(Dispatchers.IO){
                     viewModel.deleteSchedule(serialNum)
                     viewModel.deleteAlarm(alarmCode)
+                    viewModel.deleteDate(selectedDate)
                 }
             }
             alarmFunctions.cancelAlarm(viewModel, alarmCode)
