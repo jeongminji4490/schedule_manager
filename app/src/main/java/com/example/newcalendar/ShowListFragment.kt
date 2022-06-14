@@ -1,5 +1,6 @@
 package com.example.newcalendar
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -31,8 +32,9 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = ScheduleListFragmentBinding.inflate(inflater)
+        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_white_rounded_shape)
         return binding.root
     }
 
@@ -49,9 +51,10 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
 
         adapter.itemClick = object : ScheduleAdapter.ItemClick{
             override fun onClick(view: View, position: Int, list: ArrayList<Schedule>) {
+                val serialNum = list[position].serialNum
                 val alarmCode = list[position].alarm_code
-                val content = list[position].content
-                val dialog = DeleteDialogFragment(alarmCode, content)
+                val date = list[position].date
+                val dialog = DeleteDialogFragment(serialNum,alarmCode, date)
                 activity?.let {
                     dialog.show(it.supportFragmentManager, "ShowListFragment")
                 }
@@ -62,6 +65,7 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
             adapter.removeAll()
             for(i in it.indices){
                 if (it[i].date == selectedDate){
+                    binding.noticeText.visibility = View.GONE
                     val data = Schedule(
                         it[i].serialNum,
                         it[i].date,

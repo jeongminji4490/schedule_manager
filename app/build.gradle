@@ -51,7 +51,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
-    implementation 'com.github.kizitonwose:CalendarView:1.0.4'
+
+    implementation 'com.github.prolificinteractive:material-calendarview:1.6.0'
 
     //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
@@ -83,6 +84,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
-    // Motion Toast
+    // Toast
     implementation 'io.github.shashank02051997:FancyToast:2.0.1'
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
+    implementation 'io.github.muddz:styleabletoast:2.4.0'
+
+    // BottomBar
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
 }

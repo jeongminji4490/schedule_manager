@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigation"
-    app:startDestination="@id/mainFragment">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/routineFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.newcalendar.ShowListFragment"
-        android:label="MainFragment" >
-        <action
-            android:id="@+id/action_mainFragment_to_addDialogFrament"
-            app:destination="@id/addDialogFrament" />
-    </fragment>
+        android:id="@+id/routineFragment"
+        android:name="com.example.newcalendar.RoutineFragment"
+        android:label="RoutineFragment"/>
 
-    <dialog
-        android:id="@+id/addDialogFrament"
-        android:name="com.example.newcalendar.AddDialogFragment"
-        android:label="AddDialogFrament" />
+    <action
+        android:id="@+id/action_RoutineFragment_to_CalendarFragment"
+        app:destination="@id/calendarFragment"/>
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.newcalendar.CalendarFragment"
+        android:label="MainFragment" >
+
+        <action
+            android:id="@+id/action_CalendarFragment_to_routineFrament"
+            app:destination="@id/routineFragment" />
+    </fragment>
 
 </navigation>

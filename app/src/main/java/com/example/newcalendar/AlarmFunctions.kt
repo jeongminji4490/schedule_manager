@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import android.view.View
+import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,14 +16,14 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AlarmFunctions(private val context: Context){
+class AlarmFunctions(private val context: Context?){
 
     private lateinit var pendingIntent: PendingIntent
     private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
 
     @SuppressLint("UnspecifiedImmutableFlag")
-    fun callAlarm(from : String, alarm_code : Int, content : String){
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    fun callAlarm(time : String, alarm_code : Int, content : String){
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val receiverIntent = Intent(context, AlarmReceiver::class.java) //리시버로 전달될 인텐트 설정
         receiverIntent.putExtra("alarm_rqCode", alarm_code) //요청 코드를 리시버에 전달
         receiverIntent.putExtra("content", content) //수정_일정 제목을 리시버에 전달
@@ -37,7 +39,7 @@ class AlarmFunctions(private val context: Context){
         val dateFormat = SimpleDateFormat("yyyy-MM-dd H:mm:ss")
         var datetime = Date()
         try {
-            datetime = dateFormat.parse(from)
+            datetime = dateFormat.parse(time)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
@@ -52,9 +54,8 @@ class AlarmFunctions(private val context: Context){
     }
 
     fun cancelAlarm(viewModel: ViewModel, alarm_code: Int) {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
-        //val pendingIntent : PendingIntent
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
             pendingIntent=PendingIntent.getBroadcast(context,alarm_code,intent,PendingIntent.FLAG_IMMUTABLE);
@@ -65,8 +66,5 @@ class AlarmFunctions(private val context: Context){
         }
 
         alarmManager.cancel(pendingIntent)
-        ioScope.launch {
-            viewModel.deleteSchedule(alarm_code)
-        }
     }
 }

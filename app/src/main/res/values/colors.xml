@@ -9,11 +9,15 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_gray">#DCDCDC</color>
     <color name="grey">#808080</color>
-    <color name="red">#FF0000</color>
-    <color name="blue">#4169E1</color>
-    <color name="yellow">#FFFF00</color>
+    <color name="red">#F08080</color>
+    <color name="blue">#6495ED</color>
+    <color name="yellow">#FFD700</color>
     <color name="tomato">#FF6347</color>
     <color name="brown">#815854</color>
     <color name="salmon">#F9EBDE</color>
     <color name="conflowerblue">#64A0FF</color>
+    <color name="lightSkyBlue">#87CEFA</color>
+    <color name="lightViolet">#CCCCFF</color>
+    <color name="mint">#40E0D0</color>
+    <color name="violet">#EE82EE</color>
 </resources>

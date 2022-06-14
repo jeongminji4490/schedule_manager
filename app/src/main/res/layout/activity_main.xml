@@ -7,66 +7,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomBar"
+        app:navGraph="@navigation/nav_graph"
+        app:defaultNavHost="true"
+        tools:ignore="MissingConstraints" />
+
+    <me.ibrahimsn.lib.SmoothBottomBar
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/conflowerblue"
-        tools:ignore="MissingConstraints" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textSize="17sp"
-            android:fontFamily="@font/sc_dream4"
-            android:textColor="@color/white"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:id="@+id/importantScheduleBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitCenter"
-                android:backgroundTint="#00ff0000"
-                android:src="@drawable/red_most_important"
-                app:layout_constraintEnd_toStartOf="@id/openScheduleBtn"
-                />
-
-            <ImageButton
-                android:id="@+id/openScheduleBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitCenter"
-                android:backgroundTint="#00ff0000"
-                app:layout_constraintEnd_toStartOf="@id/addScheduleBtn"
-                android:src="@drawable/notebook"/>
-
-            <ImageButton
-                android:id="@+id/addScheduleBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/add"
-                android:backgroundTint="#00ff0000" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <com.kizitonwose.calendarview.CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:cv_dayViewResource="@layout/calendar_day_layout"
-        android:background="@color/white"
-        app:cv_monthHeaderResource="@layout/calendar_month_header_layout"
-        app:cv_scrollMode="continuous"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundColor="@color/lightViolet"
+        app:menu="@menu/menu"
+        app:itemFontFamily="@font/uhbee_gmin2"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

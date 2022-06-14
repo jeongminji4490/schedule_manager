@@ -3,6 +3,9 @@ package com.example.newcalendar
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
+import android.view.View
+import org.koin.android.ext.android.inject
 
 class AlarmService: Service() {
 

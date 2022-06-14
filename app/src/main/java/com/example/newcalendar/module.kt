@@ -38,13 +38,19 @@ val scheduleModule = module {
 
     single {
         provideDao(get())
+    }
+
+    single {
         provideEventDao(get())
+    }
+
+    single {
         provideAlarmDao(get())
     }
 }
 
 val viewModel = module {
     viewModel {
-        ViewModel(get(), get(), get()) // 에러 해결
+        ViewModel(get(), get(), get())
     }
 }
