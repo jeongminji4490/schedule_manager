@@ -30,7 +30,6 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
     // 알람 데이터
     private lateinit var selectedDate : String // 선택된 날짜
-    private lateinit var eventDate : String // 특정 날짜
     private var serialNum = 0 // 일련번호
     private var importance = 3 // 일정 중요도
 
@@ -49,7 +48,6 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
         getJob = lifecycleScope.launch {
             withContext(Dispatchers.IO){
                 selectedDate = dateSaveModule.date.first()
-                eventDate = dateSaveModule.event.first()
             }
             binding.dateText.text = selectedDate
         }
@@ -98,7 +96,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             val alarmCode = random.random()
                             withContext(Dispatchers.IO){
                                 viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, hour, minute, alarmCode, importance))
-                                viewModel.addDate(EventDataModel(eventDate))
+                                viewModel.addDate(EventDataModel(selectedDate))
                                 viewModel.addAlarm(AlarmDataModel(alarmCode, alarm, content))
                             }
                             setAlarm(alarmCode, content, alarm)
@@ -109,7 +107,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             val alarmCode = 0
                             withContext(Dispatchers.IO){
                                 viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, "null", "null", alarmCode, importance))
-                                viewModel.addDate(EventDataModel(eventDate))
+                                viewModel.addDate(EventDataModel(selectedDate))
                             }
                         }
                     }

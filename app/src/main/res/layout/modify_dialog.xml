@@ -19,7 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/conflowerblue"
+            android:textColor="@color/lightViolet"
             tools:ignore="MissingConstraints" />
 
         <EditText
@@ -31,7 +31,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="10dp"
             android:background="@drawable/btn_rectangle_shape"
-            android:textColor="@color/conflowerblue"
             android:fontFamily="@font/uhbee_gmin2"
             tools:ignore="MissingConstraints" />
 
@@ -56,7 +55,7 @@
             android:text="alarm"
             android:textSize="12sp"
             android:fontFamily="@font/uhbee_gmin2_bold"
-            android:textColor="@color/conflowerblue"
+            android:textColor="@color/lightViolet"
             tools:ignore="MissingConstraints" />
 
         <androidx.appcompat.widget.SwitchCompat
@@ -80,7 +79,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="importance"
             android:textSize="12sp"
-            android:textColor="@color/conflowerblue"
+            android:textColor="@color/lightViolet"
             android:fontFamily="@font/uhbee_gmin2_bold"
             tools:ignore="MissingConstraints" />
 
@@ -119,8 +118,8 @@
                 android:layout_height="wrap_content"
                 android:text="적음"
                 android:fontFamily="@font/uhbee_gmin2"
-                android:buttonTint="@color/tomato"
-                android:textColor="@color/tomato"/>
+                android:buttonTint="@color/yellow"
+                android:textColor="@color/yellow"/>
         </RadioGroup>
 
         <Button
@@ -131,7 +130,7 @@
             app:layout_constraintTop_toBottomOf="@id/radioGroup"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="#00ff0000"
-            android:textColor="@color/conflowerblue"
+            android:textColor="@color/lightViolet"
             android:text="Save"
             android:gravity="end"
             android:fontFamily="@font/uhbee_gmin2_bold"

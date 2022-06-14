@@ -3,7 +3,7 @@
     <style name="Theme.Newcalendar" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/conflowerblue</item>
+        <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:textColorPrimary">@color/black</item>
         <item name="android:fontFamily">@font/uhbee_gmin2</item>
@@ -52,6 +52,16 @@
         <item name="stGravity">top</item> top or center
         <item name="stRadius">20dp</item>
     </style>
-
+    <style name="CalendarWidgetHeader">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/uhbee_gmin2_bold</item>
+    </style>
+    <style name="CalendarWidgetWeek">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/uhbee_gmin2</item>
+    </style>
 
 </resources>
