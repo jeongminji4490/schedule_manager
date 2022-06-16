@@ -26,7 +26,7 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
     private val scope : CoroutineScope by lazy { CoroutineScope(Dispatchers.Main) }
-    private val ioScope : CoroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
+    //private val ioScope : CoroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,9 +41,9 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = requireContext()
-        val adapter = ScheduleAdapter(context)
+        val adapter = ScheduleAdapter(context, viewModel)
 
-        binding.scheduleListview.layoutManager=LinearLayoutManager(context)
+        //binding.scheduleListview.layoutManager=LinearLayoutManager(context)
         scope.launch {
             selectedDate = dateSaveModule.date.first()
             binding.dateText.text = selectedDate
@@ -54,7 +54,7 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
                 val serialNum = list[position].serialNum
                 val alarmCode = list[position].alarm_code
                 val date = list[position].date
-                val dialog = DeleteDialogFragment(serialNum,alarmCode, date)
+                val dialog = DeleteDialogFragment(serialNum,alarmCode, date, list.size)
                 activity?.let {
                     dialog.show(it.supportFragmentManager, "ShowListFragment")
                 }
@@ -77,6 +77,7 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
                 }
             }
             binding.scheduleListview.adapter = adapter
+            binding.scheduleListview.layoutManager=LinearLayoutManager(context)
         })
     }
 }

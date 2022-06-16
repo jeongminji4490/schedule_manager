@@ -16,10 +16,6 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.newcalendar.databinding.ActivityMainBinding
-<<<<<<< HEAD
-=======
-import kotlinx.android.synthetic.main.activity_main.*
->>>>>>> 03d3ce8bb1896948d782e34f5102c74a0f66daf1
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,21 +33,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController : NavController
     private val coroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
     private val context by lazy { this }
-<<<<<<< HEAD
 
-=======
-    //private val viewModel: ViewModel by inject()
-
-
-    @RequiresApi(Build.VERSION_CODES.O)
->>>>>>> 03d3ce8bb1896948d782e34f5102c74a0f66daf1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-<<<<<<< HEAD
-=======
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
         navController = navHostFragment.navController
 
@@ -63,26 +50,12 @@ class MainActivity : AppCompatActivity() {
         popupMenu.inflate(R.menu.menu)
         val menu = popupMenu.menu
         binding.bottomBar.setupWithNavController(menu, navController)
->>>>>>> 03d3ce8bb1896948d782e34f5102c74a0f66daf1
     }
 
-//    override fun onClick(v: View?) {
-//        when(v?.id){
-//            R.id.addScheduleBtn -> {
-//                val dialog = AddDialogFragment()
-//                dialog.show(supportFragmentManager, "AddScheduleDialog")
-//            }
-//            R.id.openScheduleBtn -> {
-//                val dialog = ShowListFragment()
-//                dialog.show(supportFragmentManager, "ShowListFragment")
-//            }
-//        }
-//    }
+
 
     override fun onStart() {
         super.onStart()
-<<<<<<< HEAD
-=======
         Log.e("AddDialogFragment", "onStart()")
     }
 
@@ -94,6 +67,5 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         Log.e("AddDialogFragment", "onStop()")
->>>>>>> 03d3ce8bb1896948d782e34f5102c74a0f66daf1
     }
 }

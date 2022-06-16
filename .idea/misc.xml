@@ -18,6 +18,7 @@
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/shape_thumb_on.xml" value="0.135" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/switch_track_on.xml" value="0.1385" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/today_background.xml" value="0.135" />
+        <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/violet_line_shape.xml" value="0.139" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/activity_main.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/add_schedule_dialog.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/calendar_day_layout.xml" value="0.21784420289855072" />
@@ -25,10 +26,10 @@
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/calendar_month_header_layout.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/delete_dialog.xml" value="0.20923913043478262" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/fragment_calendar.xml" value="0.22735507246376813" />
-        <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/fragment_routine.xml" value="0.22735507246376813" />
+        <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/fragment_routine.xml" value="0.1" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/main_page_fragment.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/modify_dialog.xml" value="0.22735507246376813" />
-        <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/schedule_item.xml" value="0.25" />
+        <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/schedule_item.xml" value="0.2" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/layout/schedule_list_fragment.xml" value="0.2" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/menu/menu.xml" value="0.21388888888888888" />
       </map>

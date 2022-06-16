@@ -2,6 +2,7 @@ package com.example.newcalendar
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,16 +19,18 @@ class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
 
     private lateinit var binding : DeleteDialogBinding
     private var serialNum = 0
-    private var alarmCode : Int = 0
+    private var alarmCode = 0
+    private var size = -1
     private lateinit var selectedDate : String
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private var job : Job? = null
     private val viewModel : ViewModel by inject()
 
-    constructor(serialNum: Int, code: Int, date: String) : this() {
+    constructor(serialNum: Int, code: Int, date: String, size: Int) : this() {
         this.serialNum = serialNum
         this.alarmCode = code
         this.selectedDate = date
+        this.size = size
     }
 
     override fun onCreateView(
@@ -53,10 +56,13 @@ class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
                 withContext(Dispatchers.IO){
                     viewModel.deleteSchedule(serialNum)
                     viewModel.deleteAlarm(alarmCode)
-                    viewModel.deleteDate(selectedDate)
+                    Log.e("Delete", size.toString())
+                    if (size == 1){
+                        viewModel.deleteDate(selectedDate) // 일정이 하나만 남았다면 도트 삭제
+                    }
                 }
             }
-            alarmFunctions.cancelAlarm(viewModel, alarmCode)
+            alarmFunctions.cancelAlarm(alarmCode)
             context?.let { StyleableToast.makeText(it, "삭제", R.style.deleteToast).show() }
             this.dismiss()
         }

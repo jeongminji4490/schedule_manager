@@ -14,6 +14,9 @@ import org.koin.android.ext.android.inject
 import java.util.*
 import kotlin.collections.ArrayList
 import android.graphics.Color
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 class RoutineFragment : Fragment(), View.OnClickListener {
 
@@ -22,6 +25,7 @@ class RoutineFragment : Fragment(), View.OnClickListener {
     private lateinit var selectedDate: String
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
+    //private val scope : CoroutineScope by lazy { CoroutineScope(Dispatchers.Main) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,28 +39,65 @@ class RoutineFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.materialCalendarView.selectedDate = CalendarDay.today()
-        binding.materialCalendarView.addDecorators(SaturdayDecorator(), SundayDecorator())
+        binding.calendarView.selectedDate = CalendarDay.today()
+        binding.calendarView.addDecorators(SaturdayDecorator(), SundayDecorator())
 
-        var year = binding.materialCalendarView.selectedDate!!.year
-        var month = binding.materialCalendarView.selectedDate!!.month + 1
-        var day = binding.materialCalendarView.selectedDate!!.day
+        val context = requireContext()
+        val adapter = ScheduleAdapter(context, viewModel)
+        //binding.scheduleListview.layoutManager= LinearLayoutManager(context)
+
+        var year = binding.calendarView.selectedDate!!.year
+        var month = binding.calendarView.selectedDate!!.month + 1
+        var day = binding.calendarView.selectedDate!!.day
         selectedDate = "$year-$month-$day"
+        Log.e(TAG, selectedDate)
         lifecycleScope.launch {
             dateSaveModule.setDate(selectedDate)
+        }
+
+        adapter.itemClick = object : ScheduleAdapter.ItemClick{
+            override fun onClick(view: View, position: Int, list: ArrayList<Schedule>) {
+                val serialNum = list[position].serialNum
+                val alarmCode = list[position].alarm_code
+                val date = list[position].date
+                val dialog = DeleteDialogFragment(serialNum,alarmCode, date, list.size)
+                activity?.let {
+                    dialog.show(it.supportFragmentManager, "ShowListFragment")
+                }
+            }
         }
 
         binding.addScheduleBtn.setOnClickListener(this)
         binding.openScheduleBtn.setOnClickListener(this)
 
-        binding.materialCalendarView.setOnDateChangedListener { widget, date, selected ->
-            year = binding.materialCalendarView.selectedDate!!.year
-            month = binding.materialCalendarView.selectedDate!!.month + 1
-            day = binding.materialCalendarView.selectedDate!!.day
+        binding.calendarView.setOnDateChangedListener { widget, date, selected ->
+            year = binding.calendarView.selectedDate!!.year
+            month = binding.calendarView.selectedDate!!.month + 1
+            day = binding.calendarView.selectedDate!!.day
             val selectedDate = "$year-$month-$day"
             lifecycleScope.launch {
                 dateSaveModule.setDate(selectedDate)
             }
+
+            viewModel.getAllSchedule().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                binding.noItemText.visibility = View.VISIBLE
+                adapter.removeAll()
+                for(i in it.indices){
+                    if (it[i].date == selectedDate){
+                        binding.noItemText.visibility = View.GONE
+                        val data = Schedule(
+                            it[i].serialNum,
+                            it[i].date,
+                            it[i].content,
+                            it[i].alarm,
+                            it[i].alarm_code,
+                            it[i].importance)
+                        adapter.addItems(data)
+                    }
+                }
+                binding.scheduleListview.adapter = adapter
+                binding.scheduleListview.layoutManager= LinearLayoutManager(context)
+            })
             Log.e(TAG, selectedDate)
         }
     }
@@ -76,6 +117,7 @@ class RoutineFragment : Fragment(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
+        Log.e(TAG, "onStart()")
         // 일정이 저장된 특정 날짜들을 가져와서 리스트에 넣기
         viewModel.getAllDates().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             for (i in it.indices){
@@ -83,12 +125,15 @@ class RoutineFragment : Fragment(), View.OnClickListener {
                 val year = Integer.parseInt(eventDate[0])
                 val month = Integer.parseInt(eventDate[1])
                 val day = Integer.parseInt(eventDate[2])
-                Log.e(TAG, year.toString())
-                Log.e(TAG, month.toString())
-                Log.e(TAG, day.toString())
-                binding.materialCalendarView.addDecorator(EventDecorator(Color.parseColor("#EE82EE"),Collections.singleton(CalendarDay.from(year, month-1, day))))
+                binding
+                    .calendarView
+                    .addDecorator(
+                        EventDecorator(
+                            Color.parseColor("#BE89E3"),
+                            Collections.singleton(CalendarDay.from(year, month-1, day))))
             }
         })
+
     }
 
     companion object{
