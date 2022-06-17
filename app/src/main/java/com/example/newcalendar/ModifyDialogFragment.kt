@@ -21,13 +21,13 @@ class ModifyDialogFragment() : DialogFragment() {
 
     private lateinit var binding : ModifyDialogBinding
     private val viewModel : ViewModel by inject()
+    private lateinit var schedule : ScheduleDataModel
     private var getJob : Job? = null
     private var setJob : Job? = null
 
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
-    private lateinit var schedule : ScheduleDataModel
-    private var serialNum: Int = 0
-    private var alarmCode = 0
+    private var serialNum = -1
+    private var alarmCode = -1
     private var importance = 3 // 일정 중요도
 
     constructor(serialNum: Int) : this() {
@@ -96,7 +96,7 @@ class ModifyDialogFragment() : DialogFragment() {
                     }
                 }else {
                     setJob = lifecycleScope.launch { // 알람 설정 안했을 때
-                        val alarm = "null"
+                        val alarm = ""
                         withContext(Dispatchers.IO){
                             viewModel.addSchedule(ScheduleDataModel(serialNum, date, content, alarm, "null", "null", alarmCode, importance))
                         }
@@ -117,11 +117,11 @@ class ModifyDialogFragment() : DialogFragment() {
         // 기존 내용으로 일정 변경화면 세팅
         getJob = lifecycleScope.launch() {
             withContext(Dispatchers.IO) {
-                schedule = viewModel.getSchedule(serialNum)
+                schedule = viewModel.getSchedule(serialNum) // 일정 내용 가져오기
             }
             binding.date.text = schedule.date
             binding.content.setText(schedule.content)
-            if (schedule.hour!="null"){
+            if (schedule.hour!="null"){ // 알람 시간이 null 아니면 타임피커 셋팅
                 binding.timePicker.visibility = View.VISIBLE
                 binding.timePicker.setIs24HourView(true)
                 binding.timePicker.hour = schedule.hour.toInt()

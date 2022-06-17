@@ -14,14 +14,14 @@ import java.lang.reflect.Array
 
 class RestartAlarmReceiver : BroadcastReceiver() {
 
-    private val db by lazy { AppDatabase }
+    //private val db by lazy { AppDatabase }
     private val coroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
     private lateinit var functions: AlarmFunctions
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action.equals("android.intent.action.BOOT_COMPLETED")) {
             functions = AlarmFunctions(context)
-            coroutineScope.launch {
+            coroutineScope.launch { // 싱글톤으로 변경
                 val db = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,

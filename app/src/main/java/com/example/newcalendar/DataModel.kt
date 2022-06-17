@@ -3,6 +3,14 @@ package com.example.newcalendar
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Entity(tableName = "memo")
+data class MemoDataModel(
+    @PrimaryKey(autoGenerate = true)
+    val serialNum: Int,
+    val content: String,
+    val completion : Boolean
+)
+
 @Entity(tableName = "schedule") // 일정 테이블
 data class ScheduleDataModel(
     @PrimaryKey(autoGenerate = true)

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/routineFragment"
-        android:title="오늘 루틴"
-
-        android:icon="@drawable/routine_white"/>
+        android:id="@+id/memoFragment"
+        android:title="포스트잇"
+        android:icon="@drawable/routine_white"
+        />
 
     <item
         android:id="@+id/calendarFragment"
         android:title="달력"
         android:icon="@drawable/calendar_white"/>
+
+    <item
+        android:id="@+id/stampFragment"
+        android:title="스탬프"
+        android:icon="@drawable/stamp_white"/>
 </menu>

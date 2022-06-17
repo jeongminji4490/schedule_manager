@@ -2,25 +2,32 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/routineFragment">
+    app:startDestination="@id/memoFragment">
 
     <fragment
-        android:id="@+id/routineFragment"
-        android:name="com.example.newcalendar.RoutineFragment"
-        android:label="RoutineFragment"/>
+        android:id="@+id/memoFragment"
+        android:name="com.example.newcalendar.MemoFragment"
+        android:label="MemoFragment">
 
-    <action
-        android:id="@+id/action_RoutineFragment_to_CalendarFragment"
-        app:destination="@id/calendarFragment"/>
+        <action
+            android:id="@+id/action_memoFragment_to_calendarFragment"
+            app:destination="@id/memoFragment"/>
+
+    </fragment>
 
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.example.newcalendar.CalendarFragment"
-        android:label="MainFragment" >
+        android:label="CalendarFragment"/>
 
         <action
-            android:id="@+id/action_CalendarFragment_to_routineFrament"
-            app:destination="@id/routineFragment" />
+            android:id="@+id/action_calendarFragment_to_stampFragment"
+            app:destination="@id/calendarFragment"/>
+
+    <fragment
+        android:id="@+id/stampFragment"
+        android:name="com.example.newcalendar.StampFragment"
+        android:label="MainFragment" >
     </fragment>
 
 </navigation>
