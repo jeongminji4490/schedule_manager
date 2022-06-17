@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class AlarmReceiver() : BroadcastReceiver() {
 
-    private val db by lazy { AppDatabase }
+    //private val db by lazy { AppDatabase }
     private val coroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
     private lateinit var functions: AlarmFunctions
 

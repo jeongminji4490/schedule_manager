@@ -13,7 +13,7 @@ import java.io.IOException
 class DateSaveModule (private val context: Context) {
     private val Context.datastore by preferencesDataStore(name = "datastore")
     private val dateKey = stringPreferencesKey("DATE_KEY")
-    private val eventKey = stringPreferencesKey("EVENT_KEY")
+    private val dataCountKey = stringPreferencesKey("EVENT_KEY")
 
     val date : Flow<String> = context.datastore.data
         .catch { exception ->
@@ -26,7 +26,7 @@ class DateSaveModule (private val context: Context) {
             it[dateKey] ?: ""
         }
 
-    val event : Flow<String> = context.datastore.data
+    val dataCount : Flow<String> = context.datastore.data
         .catch { exception ->
             if (exception is IOException){
                 emit(emptyPreferences())
@@ -34,7 +34,7 @@ class DateSaveModule (private val context: Context) {
                 throw exception
             }
         }.map {
-            it[eventKey] ?: ""
+            it[dataCountKey] ?: ""
         }
 
     suspend fun setDate(date : String){
@@ -43,9 +43,9 @@ class DateSaveModule (private val context: Context) {
         }
     }
 
-    suspend fun setEvent(date : String){
+    suspend fun setCount(count : String){
         context.datastore.edit {
-            it[eventKey] = date
+            it[dataCountKey] = count
         }
     }
 }

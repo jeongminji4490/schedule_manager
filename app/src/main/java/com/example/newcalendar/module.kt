@@ -20,6 +20,10 @@ val scheduleModule = module {
             .build()
     }
 
+    fun provideMemoDao(database: AppDatabase) : MemoDao {
+        return database.memoDao
+    }
+
     fun provideDao(database: AppDatabase) : ScheduleDao {
         return database.scheduleDao
     }
@@ -37,6 +41,10 @@ val scheduleModule = module {
     }
 
     single {
+        provideMemoDao(get())
+    }
+
+    single {
         provideDao(get())
     }
 
@@ -51,6 +59,6 @@ val scheduleModule = module {
 
 val viewModel = module {
     viewModel {
-        ViewModel(get(), get(), get())
+        ViewModel(get(), get(), get(), get())
     }
 }

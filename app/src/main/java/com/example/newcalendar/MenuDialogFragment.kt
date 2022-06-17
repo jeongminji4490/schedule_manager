@@ -8,18 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
-import com.example.newcalendar.databinding.DeleteDialogBinding
+import com.example.newcalendar.databinding.MenuDialogBinding
 import com.shashank.sony.fancytoastlib.FancyToast
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.android.synthetic.main.schedule_item.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 
-class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
+// 일정을 삭제 or 수정 할 수 있는 다이얼로그
+class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
 
-    private lateinit var binding : DeleteDialogBinding
-    private var serialNum = 0
-    private var alarmCode = 0
+    private lateinit var binding : MenuDialogBinding
+    private var serialNum = -1
+    private var alarmCode = -1
     private var size = -1
     private lateinit var selectedDate : String
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
@@ -38,7 +39,7 @@ class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-       binding = DeleteDialogBinding.inflate(inflater)
+       binding = MenuDialogBinding.inflate(inflater)
         return binding.root
     }
 
@@ -51,22 +52,22 @@ class DeleteDialogFragment()  : DialogFragment(), View.OnClickListener{
 
     override fun onClick(v: View?) {
         val id = v?.id
-        if (id == R.id.deleteOkBtn){ // 삭제
+        if (id == R.id.deleteOkBtn){ // 삭제 (완료는 일정을 완전히 끝냈다는 뜻, 삭제랑 개념이 다름)
             job = lifecycleScope.launch {
                 withContext(Dispatchers.IO){
                     viewModel.deleteSchedule(serialNum)
                     viewModel.deleteAlarm(alarmCode)
                     Log.e("Delete", size.toString())
-                    if (size == 1){
-                        viewModel.deleteDate(selectedDate) // 일정이 하나만 남았다면 도트 삭제
+                    if (size == 1){ // 일정이 하나만 남았다면
+                        viewModel.deleteDate(selectedDate) // 도트 삭제
                     }
                 }
             }
-            alarmFunctions.cancelAlarm(alarmCode)
+            alarmFunctions.cancelAlarm(alarmCode) // 알람 취소
             context?.let { StyleableToast.makeText(it, "삭제", R.style.deleteToast).show() }
             this.dismiss()
         }
-        if (id == R.id.modifyBtn){ // 변경 다이얼로그 추가
+        if (id == R.id.modifyBtn){ // 변경
             val dialog = ModifyDialogFragment(serialNum)
             activity?.let {
                 dialog.show(it.supportFragmentManager, "ShowListFragment")

@@ -9,3 +9,9 @@ data class Schedule( // schedule_Listview 데이터클래스
     val importance : Int //중요도
 )
 
+data class Memo(
+    val serialNum: Int,
+    val content: String,
+    val completion : Boolean
+)
+

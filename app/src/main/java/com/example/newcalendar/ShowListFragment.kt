@@ -1,22 +1,19 @@
 package com.example.newcalendar
 
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.newcalendar.databinding.ScheduleListFragmentBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.DisposableHandle
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 보여주는 다이얼로그
@@ -26,7 +23,6 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
     private val scope : CoroutineScope by lazy { CoroutineScope(Dispatchers.Main) }
-    //private val ioScope : CoroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,11 +36,10 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val context = requireContext()
-        val adapter = ScheduleAdapter(context, viewModel)
 
-        //binding.scheduleListview.layoutManager=LinearLayoutManager(context)
-        scope.launch {
+        val adapter = ScheduleAdapter(requireContext(), viewModel)
+
+        lifecycleScope.launch {
             selectedDate = dateSaveModule.date.first()
             binding.dateText.text = selectedDate
         }
@@ -54,30 +49,30 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
                 val serialNum = list[position].serialNum
                 val alarmCode = list[position].alarm_code
                 val date = list[position].date
-                val dialog = DeleteDialogFragment(serialNum,alarmCode, date, list.size)
+                val size = list.size
+                val dialog = MenuDialogFragment(serialNum,alarmCode, date, size)
                 activity?.let {
                     dialog.show(it.supportFragmentManager, "ShowListFragment")
                 }
             }
         }
 
-        viewModel.getAllSchedule().observe(this, androidx.lifecycle.Observer {
+        // 선택된 날짜에 해당하는 일정 목록 가져오기
+        viewModel.getAllSchedule(selectedDate).observe(this, androidx.lifecycle.Observer {
             adapter.removeAll()
             for(i in it.indices){
-                if (it[i].date == selectedDate){
-                    binding.noticeText.visibility = View.GONE
-                    val data = Schedule(
-                        it[i].serialNum,
-                        it[i].date,
-                        it[i].content,
-                        it[i].alarm,
-                        it[i].alarm_code,
-                        it[i].importance)
-                    adapter.addItems(data)
-                }
+                binding.noticeText.visibility = View.GONE
+                val data = Schedule(
+                    it[i].serialNum,
+                    it[i].date,
+                    it[i].content,
+                    it[i].alarm,
+                    it[i].alarm_code,
+                    it[i].importance)
+                adapter.addItems(data)
             }
             binding.scheduleListview.adapter = adapter
-            binding.scheduleListview.layoutManager=LinearLayoutManager(context)
+            binding.scheduleListview.layoutManager=LinearLayoutManager(requireContext())
         })
     }
 }

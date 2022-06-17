@@ -23,8 +23,6 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
     private lateinit var binding : AddScheduleDialogBinding
     private val dateSaveModule : DateSaveModule by inject()
-    private var getJob : Job? = null
-    private var setJob : Job? = null
     private val viewModel : ViewModel by inject()
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
 
@@ -45,10 +43,8 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getJob = lifecycleScope.launch {
-            withContext(Dispatchers.IO){
-                selectedDate = dateSaveModule.date.first()
-            }
+        lifecycleScope.launch {
+            selectedDate = dateSaveModule.date.first()
             binding.dateText.text = selectedDate
         }
 
@@ -88,7 +84,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                     FancyToast.makeText(context,"내용 또는 중요도를 입력해주세요",FancyToast.LENGTH_SHORT,FancyToast.INFO,true).show()
                 }else{ // 알람 설정했을 때
                     if (binding.alarmOnOffBtn.isChecked){ // alarm on
-                        setJob = lifecycleScope.launch {
+                        lifecycleScope.launch {
                             val hour = binding.timePicker.hour.toString()
                             val minute = binding.timePicker.minute.toString()
                             val alarm = "$selectedDate $hour:$minute:00"
@@ -102,8 +98,8 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             setAlarm(alarmCode, content, alarm)
                         }
                     }else {
-                        setJob = lifecycleScope.launch { // 알람 설정 안했을 때
-                            val alarm = "null"
+                        lifecycleScope.launch { // 알람 설정 안했을 때
+                            val alarm = ""
                             val alarmCode = 0
                             withContext(Dispatchers.IO){
                                 viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, "null", "null", alarmCode, importance))
@@ -124,8 +120,6 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
     override fun onPause() {
         super.onPause()
-        getJob?.cancel()
-        setJob?.cancel()
     }
 
     override fun onStop() {
