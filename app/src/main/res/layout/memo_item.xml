@@ -32,11 +32,10 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:fontFamily="@font/uhbee_gmin2_bold"
                 android:text="@{memo.content}"
                 android:textSize="15sp"
-                android:textColor="@color/lightViolet"
-                android:textStyle="bold"/>
+                android:textColor="@color/classicBlue"
+                android:textStyle="bold" />
 
             <CheckBox
                 android:id="@+id/completionBox"
@@ -45,7 +44,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/content"
                 app:layout_constraintBottom_toBottomOf="@id/content"
-                android:buttonTint="@color/lightViolet"/>
+                android:buttonTint="@color/classicBlue"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

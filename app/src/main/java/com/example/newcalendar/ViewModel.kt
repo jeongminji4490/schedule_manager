@@ -4,10 +4,11 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
-class ViewModel(private val mDao: MemoDao,
-                private val sDao : ScheduleDao,
-                private val eDao: EventDao,
-                private val aDao: AlarmDao) : ViewModel(){
+class ViewModel(
+    private val mDao: MemoDao,
+    private val sDao : ScheduleDao,
+    private val eDao: EventDao,
+    private val aDao: AlarmDao) : ViewModel(){
 
     fun getAllMemo() : LiveData<List<MemoDataModel>> = mDao.getAllMemo()
 
@@ -51,6 +52,10 @@ class ViewModel(private val mDao: MemoDao,
 
     fun deleteAlarm(alarm_code: Int){ // 날짜 삭제
         aDao.deleteAlarm(alarm_code)
+    }
+
+    fun changeCompletion(completion: Boolean, serialNum: Int){
+        mDao.changeCompletion(completion, serialNum)
     }
 
 }

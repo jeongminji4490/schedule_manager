@@ -52,7 +52,7 @@
             app:layout_constraintTop_toTopOf="@id/alarmOnOffBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/alarmOnOffBtn"
-            android:text="alarm"
+            android:text="@string/alarm"
             android:textSize="12sp"
             android:fontFamily="@font/uhbee_gmin2_bold"
             android:textColor="@color/lightViolet"
@@ -77,7 +77,7 @@
             app:layout_constraintTop_toBottomOf="@id/alarmOnOffBtn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="importance"
+            android:text="@string/importance"
             android:textSize="12sp"
             android:textColor="@color/lightViolet"
             android:fontFamily="@font/uhbee_gmin2_bold"
@@ -98,7 +98,7 @@
                 android:id="@+id/veryBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="매우"
+                android:text="@string/very"
                 android:fontFamily="@font/uhbee_gmin2"
                 android:buttonTint="@color/red"
                 android:textColor="@color/red"/>
@@ -107,7 +107,7 @@
                 android:id="@+id/middleBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="중간"
+                android:text="@string/middle"
                 android:fontFamily="@font/uhbee_gmin2"
                 android:buttonTint="@color/blue"
                 android:textColor="@color/blue"/>
@@ -116,7 +116,7 @@
                 android:id="@+id/lessBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="적음"
+                android:text="@string/little"
                 android:fontFamily="@font/uhbee_gmin2"
                 android:buttonTint="@color/yellow"
                 android:textColor="@color/yellow"/>
@@ -131,7 +131,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:background="#00ff0000"
             android:textColor="@color/lightViolet"
-            android:text="Save"
+            android:text="@string/save"
             android:gravity="end"
             android:fontFamily="@font/uhbee_gmin2_bold"
             tools:ignore="MissingConstraints" />

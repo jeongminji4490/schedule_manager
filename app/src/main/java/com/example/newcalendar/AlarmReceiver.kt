@@ -59,12 +59,13 @@ class AlarmReceiver() : BroadcastReceiver() {
 
         functions = AlarmFunctions(context)
         coroutineScope.launch {
-            val db = Room.databaseBuilder(
-                context.applicationContext,
-                AppDatabase::class.java,
-                "SCHEDULE_DB"
-            ).build()
-            db.alarmDao.deleteAlarm(requestCode)
+//            val db = Room.databaseBuilder(
+//                context.applicationContext,
+//                AppDatabase::class.java,
+//                "SCHEDULE_DB"
+//            ).build()
+            val db = AppDatabase.getInstance(context)
+            db?.alarmDao?.deleteAlarm(requestCode)
         }
 
         val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){

@@ -53,20 +53,11 @@
                 android:id="@+id/importance_img"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                app:layout_constraintEnd_toStartOf="@id/checkBox"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/title"
                 app:layout_constraintBottom_toBottomOf="@id/alarm"
                 android:scaleType="fitCenter"
                 android:background="#00ff0000"/>
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/title"
-                app:layout_constraintBottom_toBottomOf="@id/alarm"
-                android:buttonTint="@color/lightViolet"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

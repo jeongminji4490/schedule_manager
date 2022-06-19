@@ -1,53 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/todayDate"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="30sp"
-        android:fontFamily="@font/uhbee_gmin2_bold"
-        android:text="2000-00-00"
-        android:textColor="@color/lightViolet"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/todayDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="23sp"
+            android:fontFamily="@font/sc_dream7"
+            android:textColor="@color/classicBlue"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
         android:id="@+id/memoEdit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:layout_constraintTop_toBottomOf="@id/todayDate"
+        app:layout_constraintTop_toBottomOf="@id/view1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/saveBtn"
-        android:hint="할일"
-        android:textColorHint="@color/lightViolet"
+        android:hint="@string/todo"
+        android:textSize="13sp"
+        android:textColor="@color/classicBlue"
+        android:textColorHint="@color/classicBlue"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/saveBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="77dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:layout_constraintTop_toTopOf="@id/memoEdit"
-        app:layout_constraintBottom_toBottomOf="@id/memoEdit"
+        app:layout_constraintTop_toBottomOf="@id/view1"
+        app:layout_constraintBottom_toTopOf="@id/view2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/memoEdit"
-        android:backgroundTint="@color/lightViolet"
-        android:text="SAVE"
-        android:fontFamily="@font/uhbee_gmin2_bold"
+        android:backgroundTint="@color/classicBlue"
+        android:text="@string/save"
+        android:fontFamily="@font/sc_dream7"
+        android:textColor="@color/white"
         tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/view1"
+        android:id="@+id/view2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -70,11 +81,10 @@
             android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="TODO LIST"
+            android:text="@string/todo_list"
             android:textSize="18sp"
-            android:textColor="@color/lightViolet"
+            android:textColor="@color/classicBlue"
             android:gravity="center"
-            android:fontFamily="@font/uhbee_gmin2_bold"
             tools:ignore="MissingConstraints" />
 
         <ImageView
@@ -92,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view1"
+        app:layout_constraintTop_toBottomOf="@id/view2"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints" />
 

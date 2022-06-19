@@ -10,9 +10,4 @@
         android:id="@+id/calendarFragment"
         android:title="달력"
         android:icon="@drawable/calendar_white"/>
-
-    <item
-        android:id="@+id/stampFragment"
-        android:title="스탬프"
-        android:icon="@drawable/stamp_white"/>
 </menu>

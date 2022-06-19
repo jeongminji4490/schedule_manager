@@ -21,7 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:background="#00ff0000"
             android:textColor="@color/white"
-            android:text="삭제"
+            android:text="@string/delete"
             android:textSize="17sp"
             android:fontFamily="@font/uhbee_gmin2_bold"
             tools:ignore="MissingConstraints" />
@@ -36,7 +36,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:textColor="@color/white"
-            android:text="수정"
+            android:text="@string/modify"
             android:background="#00ff0000"
             android:textSize="17sp"
             android:fontFamily="@font/uhbee_gmin2_bold"

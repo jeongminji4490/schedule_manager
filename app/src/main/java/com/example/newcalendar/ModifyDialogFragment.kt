@@ -17,7 +17,9 @@ import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 
-class ModifyDialogFragment() : DialogFragment() {
+class ModifyDialogFragment(
+    private var serialNum: Int
+) : DialogFragment() {
 
     private lateinit var binding : ModifyDialogBinding
     private val viewModel : ViewModel by inject()
@@ -26,13 +28,8 @@ class ModifyDialogFragment() : DialogFragment() {
     private var setJob : Job? = null
 
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
-    private var serialNum = -1
     private var alarmCode = -1
     private var importance = 3 // 일정 중요도
-
-    constructor(serialNum: Int) : this() {
-        this.serialNum = serialNum
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
