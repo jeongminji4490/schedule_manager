@@ -13,21 +13,21 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val eventDao : EventDao
     abstract val alarmDao : AlarmDao
 
-//    companion object{
-//        private var instance: AppDatabase?=null
-//
-//        @Synchronized
-//        fun getInstance(context: Context): AppDatabase? {
-//            if (instance == null){
-//                synchronized(AppDatabase::class){
-//                    instance=Room.databaseBuilder(
-//                        context.applicationContext,
-//                        AppDatabase::class.java,
-//                        "SCHEDULE_DB"
-//                    ).build()
-//                }
-//            }
-//            return instance
-//        }
-//    }
+    companion object{
+        private var instance: AppDatabase?=null
+
+        @Synchronized
+        fun getInstance(context: Context): AppDatabase? {
+            if (instance == null){
+                synchronized(AppDatabase::class){
+                    instance=Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        "SCHEDULE_DB"
+                    ).build()
+                }
+            }
+            return instance
+        }
+    }
 }

@@ -13,6 +13,9 @@ interface MemoDao {
 
     @Query("SELECT * FROM memo")
     fun getAllMemo() : LiveData<List<MemoDataModel>>
+
+    @Query("UPDATE memo SET completion = :completion where serialNum = :serialNum")
+    fun changeCompletion(completion: Boolean, serialNum: Int)
 }
 
 @Dao

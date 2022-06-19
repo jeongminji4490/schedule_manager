@@ -74,57 +74,6 @@
         tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/calendarView"
-        app:layout_constraintStart_toStartOf="@id/calendarView"
-        app:layout_constraintEnd_toEndOf="@id/calendarView"
-        app:layout_constraintBottom_toTopOf="@id/view"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:id="@+id/completionCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="2"
-            android:textColor="@color/lightViolet"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/middleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="/"
-            android:textColor="@color/lightViolet"
-            app:layout_constraintStart_toEndOf="@id/completionCount"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/sumCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/middleText"
-            android:textColor="@color/lightViolet"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/sumCount"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/lightViolet"
-            android:text=" 완료!"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="60dp"

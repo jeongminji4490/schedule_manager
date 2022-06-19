@@ -47,13 +47,6 @@ class CalendarFragment : Fragment(), View.OnClickListener {
         lifecycleScope.launch {
             dateSaveModule.setDate(selectedDate)
         }
-        viewModel.getCount(selectedDate).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            binding.completionCount.text = it.toString()
-            lifecycleScope.launch {
-                dateSaveModule.setCount(it.toString())
-                binding.sumCount.text = dateSaveModule.dataCount.first()
-            }
-        })
 
         binding.addScheduleBtn.setOnClickListener(this)
         binding.openScheduleBtn.setOnClickListener(this)
@@ -68,9 +61,6 @@ class CalendarFragment : Fragment(), View.OnClickListener {
             }
             Log.e(TAG, selectedDate)
 
-            viewModel.getCount(selectedDate).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                binding.sumCount.text = it.toString()
-            })
         }
 
         // 일정 있는 날짜에 도트 찍기

@@ -53,6 +53,7 @@ class AlarmFunctions(private val context: Context?){
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,calendar.timeInMillis,pendingIntent);
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     fun cancelAlarm(alarm_code: Int) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)

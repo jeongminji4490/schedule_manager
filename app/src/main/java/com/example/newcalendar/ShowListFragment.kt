@@ -60,16 +60,18 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
         // 선택된 날짜에 해당하는 일정 목록 가져오기
         viewModel.getAllSchedule(selectedDate).observe(this, androidx.lifecycle.Observer {
             adapter.removeAll()
-            for(i in it.indices){
-                binding.noticeText.visibility = View.GONE
-                val data = Schedule(
-                    it[i].serialNum,
-                    it[i].date,
-                    it[i].content,
-                    it[i].alarm,
-                    it[i].alarm_code,
-                    it[i].importance)
-                adapter.addItems(data)
+            it.let {
+                for(i in it.indices){
+                    binding.noticeText.visibility = View.GONE
+                    val data = Schedule(
+                        it[i].serialNum,
+                        it[i].date,
+                        it[i].content,
+                        it[i].alarm,
+                        it[i].alarm_code,
+                        it[i].importance)
+                    adapter.addItems(data)
+                }
             }
             binding.scheduleListview.adapter = adapter
             binding.scheduleListview.layoutManager=LinearLayoutManager(requireContext())

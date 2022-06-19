@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">심스메</string>
     <string name="input_error">내용 또는 중요도를 입력해주세요</string>
+    <string name="alarm">alarm</string>
+    <string name="content">내용</string>
+    <string name="importance">importance</string>
+    <string name="very">매우</string>
+    <string name="middle">중간</string>
+    <string name="little">적음</string>
+    <string name="save">save</string>
+    <string name="todo">할일</string>
+    <string name="todo_list">TODO List</string>
+    <string name="delete">삭제</string>
+    <string name="modify">수정</string>
+    <string name="no_schedule">일정 없음</string>
 </resources>

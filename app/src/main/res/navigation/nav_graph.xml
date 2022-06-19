@@ -24,10 +24,4 @@
             android:id="@+id/action_calendarFragment_to_stampFragment"
             app:destination="@id/calendarFragment"/>
 
-    <fragment
-        android:id="@+id/stampFragment"
-        android:name="com.example.newcalendar.StampFragment"
-        android:label="MainFragment" >
-    </fragment>
-
 </navigation>

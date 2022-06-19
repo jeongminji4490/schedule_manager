@@ -9,7 +9,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
         android:background="@color/lightViolet">
 
         <TextView
@@ -20,9 +19,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textColor="@color/white"
-            android:textSize="20dp"
-            android:text="2000-00-00"
-            android:gravity="left"
+            android:textSize="20sp"
+            android:gravity="start"
             android:fontFamily="@font/uhbee_gmin2_bold"
             tools:ignore="MissingConstraints" />
 
@@ -48,7 +46,7 @@
             app:layout_constraintBottom_toTopOf="@id/schedule_Listview"
             android:textColor="@color/white"
             android:gravity="center"
-            android:text="저장된 알람 없음"
+            android:text="@string/no_schedule"
             android:fontFamily="@font/uhbee_gmin2"
             tools:ignore="MissingConstraints" />
 

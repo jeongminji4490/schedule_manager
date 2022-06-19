@@ -16,23 +16,17 @@ import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 
 // 일정을 삭제 or 수정 할 수 있는 다이얼로그
-class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
+class MenuDialogFragment(
+    private var serialNum: Int,
+    private var alarmCode: Int,
+    private var selectedDate: String,
+    private var size: Int
+)  : DialogFragment(), View.OnClickListener{
 
     private lateinit var binding : MenuDialogBinding
-    private var serialNum = -1
-    private var alarmCode = -1
-    private var size = -1
-    private lateinit var selectedDate : String
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private var job : Job? = null
     private val viewModel : ViewModel by inject()
-
-    constructor(serialNum: Int, code: Int, date: String, size: Int) : this() {
-        this.serialNum = serialNum
-        this.alarmCode = code
-        this.selectedDate = date
-        this.size = size
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
