@@ -3,8 +3,15 @@
     <style name="Theme.Newcalendar" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/classicBlue</item>
-        <item name="colorPrimaryVariant">@color/classicBlue</item>
-        <item name="colorOnPrimary">@color/classicBlue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/darkBlue</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorError">@color/red</item>
         <item name="android:textColorPrimary">@color/classicBlue</item>
         <item name="android:fontFamily">@font/sc_dream4</item>
         <!-- Status bar color. -->
@@ -14,12 +21,11 @@
     <style name="saveToast">
         <item name="stTextBold">true</item>
         <item name="stTextColor">#fff</item>
-        <item name="stFont">@font/uhbee_gmin2_bold</item>
         <item name="stTextSize">14sp</item>
-        <item name="stColorBackground">@color/lightViolet</item>
+        <item name="stColorBackground">@color/classicBlue</item>
         <item name="stSolidBackground">true</item>
         <item name="stStrokeWidth">3dp</item>
-        <item name="stStrokeColor">@color/lightViolet</item>
+        <item name="stStrokeColor">@color/classicBlue</item>
         <item name="stLength">SHORT</item> LONG or SHORT
         <item name="stGravity">center</item> top or center
         <item name="stRadius">20dp</item>
@@ -27,7 +33,6 @@
     <style name="deleteToast">
         <item name="stTextBold">true</item>
         <item name="stTextColor">#fff</item>
-        <item name="stFont">@font/uhbee_gmin2_bold</item>
         <item name="stTextSize">14sp</item>
         <item name="stColorBackground">@color/red</item>
         <item name="stSolidBackground">true</item>
@@ -37,31 +42,22 @@
         <item name="stGravity">center</item> top or center
         <item name="stRadius">20dp</item>
     </style>
-    <style name="completeToast">
-        <item name="stTextBold">true</item>
-        <item name="stTextColor">@color/white</item>
-        <item name="stFont">@font/uhbee_gmin2_bold</item>
-        <item name="stTextSize">14sp</item>
-        <item name="stColorBackground">@color/violet</item>
-        <item name="stSolidBackground">true</item>
-        <item name="stStrokeWidth">3dp</item>
-        <item name="stStrokeColor">@color/violet</item>
-        <item name="stIconStart">@drawable/event</item>
-        <item name="stIconEnd">@drawable/event</item>
-        <item name="stLength">SHORT</item> LONG or SHORT
-        <item name="stGravity">top</item> top or center
-        <item name="stRadius">20dp</item>
-    </style>
+
     <style name="CalendarWidgetHeader">
         <item name="android:textSize">15sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">@font/uhbee_gmin2_bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/sc_dream5</item>
     </style>
     <style name="CalendarWidgetWeek">
         <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">@font/uhbee_gmin2</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/sc_dream4</item>
     </style>
-
+    <style name="CalendarWidgetDay">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/sc_dream4</item>
+    </style>
+    <style name="TimePickerTheme">
+        <item name="android:textColorPrimary">@color/white</item>
+    </style>
 </resources>

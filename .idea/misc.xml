@@ -9,6 +9,7 @@
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/dialog_write_rounded_shape.xml" value="0.1385" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/ic_launcher_background.xml" value="0.132" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.175" />
+        <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/item_border_shape.xml" value="0.175" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/layout_rectangle_shape.xml" value="0.135" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/line_shape.xml" value="0.1365" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/selected_background.xml" value="0.135" />
@@ -17,6 +18,8 @@
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/shape_switch_track_on.xml" value="0.135" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/shape_thumb_off.xml" value="0.135" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/shape_thumb_on.xml" value="0.135" />
+        <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/switch_thumb.xml" value="0.175" />
+        <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/switch_track_off.xml" value="0.175" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/switch_track_on.xml" value="0.1385" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/today_background.xml" value="0.135" />
         <entry key="..\:/Users/hamin/AndroidStudioProjects/newcalendar/app/src/main/res/drawable/violet_line_shape.xml" value="0.139" />

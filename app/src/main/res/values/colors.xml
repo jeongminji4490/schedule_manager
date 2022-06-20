@@ -20,5 +20,7 @@
     <color name="lightViolet">#CCCCFF</color>
     <color name="mint">#40E0D0</color>
     <color name="violet">#EE82EE</color>
-    <color name="classicBlue">#34568b</color>
+    <color name="classicBlue">#34568B</color>
+    <color name="darkBlue">#0E406B</color>
+    <color name="blueGray">#5A7FBF</color>
 </resources>

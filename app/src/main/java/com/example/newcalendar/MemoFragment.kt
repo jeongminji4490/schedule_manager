@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.newcalendar.databinding.FragmentMemoBinding
@@ -39,6 +40,8 @@ class MemoFragment : Fragment() {
         val serialNum = 0
         val viewModel : ViewModel by inject()
         val adapter by lazy { MemoAdapter(requireContext(), viewModel) }
+        val itemTouchHelper = ItemTouchHelper(SwipeController(adapter))
+        itemTouchHelper.attachToRecyclerView(binding.todoListView)
 
         //Glide.with(this).load(R.drawable.memo).into(binding.diaryGif)
 
@@ -49,16 +52,19 @@ class MemoFragment : Fragment() {
 
         binding.todayDate.text = date
 
-//        adapter.checkBoxClick = object : MemoAdapter.CheckBoxClick{
-//            override fun onClick(boolean: Boolean, serialNum: Int) {
-//                Toast.makeText(context, "hi", Toast.LENGTH_SHORT).show()
-//                lifecycleScope.launch {
-//                    withContext(Dispatchers.IO){
-//                        viewModel.changeCompletion(boolean, serialNum)
-//                    }
+//        adapter.itemClick = object : MemoAdapter.ItemClick{
+//            override fun onClick(view: View, position: Int, list: ArrayList<MemoDataModel>) {
+//                val serialNum = list[position].serialNum
+//                val content = list[position].alarm_code
+//                val date = list[position].date
+//                val size = list.size
+//                val dialog = MenuDialogFragment(serialNum,alarmCode, date, size)
+//                activity?.let {
+//                    dialog.show(it.supportFragmentManager, "ShowListFragment")
 //                }
 //            }
 //        }
+
 
         binding.saveBtn.setOnClickListener {
             val memo = binding.memoEdit.text.toString()

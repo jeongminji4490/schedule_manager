@@ -36,6 +36,8 @@ class CalendarFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val adapter = ScheduleAdapter(requireContext(), viewModel)
+
         binding.calendarView.selectedDate = CalendarDay.today()
         binding.calendarView.addDecorators(SaturdayDecorator(), SundayDecorator())
 
@@ -59,8 +61,28 @@ class CalendarFragment : Fragment(), View.OnClickListener {
             lifecycleScope.launch {
                 dateSaveModule.setDate(selectedDate)
             }
+            // 선택된 날짜에 해당하는 일정 목록 가져오기
+            viewModel.getAllSchedule(selectedDate).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                adapter.removeAll()
+                if (it.isEmpty()){
+                    binding.emptyText.visibility = View.VISIBLE
+                }else{
+                    for(i in it.indices){
+                        binding.emptyText.visibility = View.GONE
+                        val data = Schedule(
+                            it[i].serialNum,
+                            it[i].date,
+                            it[i].content,
+                            it[i].alarm,
+                            it[i].alarm_code,
+                            it[i].importance)
+                        adapter.addItems(data)
+                    }
+                }
+                binding.scheduleListview.adapter = adapter
+                binding.scheduleListview.layoutManager=LinearLayoutManager(requireContext())
+            })
             Log.e(TAG, selectedDate)
-
         }
 
         // 일정 있는 날짜에 도트 찍기
@@ -74,10 +96,46 @@ class CalendarFragment : Fragment(), View.OnClickListener {
                     .calendarView
                     .addDecorator(
                         EventDecorator(
-                            Color.parseColor("#BE89E3"),
+                            Color.parseColor("#0E406B"),
                             Collections.singleton(CalendarDay.from(year, month-1, day))))
             }
         })
+
+        adapter.itemClick = object : ScheduleAdapter.ItemClick{
+            override fun onClick(view: View, position: Int, list: ArrayList<Schedule>) {
+                val serialNum = list[position].serialNum
+                val alarmCode = list[position].alarm_code
+                val date = list[position].date
+                val size = list.size
+                val dialog = MenuDialogFragment(serialNum,alarmCode, date, size)
+                activity?.let {
+                    dialog.show(it.supportFragmentManager, "ShowListFragment")
+                }
+            }
+        }
+
+        // 선택된 날짜에 해당하는 일정 목록 가져오기
+        viewModel.getAllSchedule(selectedDate).observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            adapter.removeAll()
+            if (it.isEmpty()){
+                binding.emptyText.visibility = View.VISIBLE
+            }else{
+                for(i in it.indices){
+                    binding.emptyText.visibility = View.GONE
+                    val data = Schedule(
+                        it[i].serialNum,
+                        it[i].date,
+                        it[i].content,
+                        it[i].alarm,
+                        it[i].alarm_code,
+                        it[i].importance)
+                    adapter.addItems(data)
+                }
+            }
+            binding.scheduleListview.adapter = adapter
+            binding.scheduleListview.layoutManager=LinearLayoutManager(requireContext())
+        })
+        Log.e(TAG, selectedDate)
     }
 
     override fun onClick(v: View?) {

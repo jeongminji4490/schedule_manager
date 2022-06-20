@@ -2,14 +2,38 @@
     <!-- Base application theme. -->
     <style name="Theme.Newcalendar" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryVariant">@color/lightViolet</item>
+        <item name="colorPrimary">@color/classicBlue</item>
         <item name="colorOnPrimary">@color/white</item>
-
-        <item name="android:textColorPrimary">@color/black</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/darkBlue</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorError">@color/red</item>
+        <item name="android:textColorPrimary">@color/classicBlue</item>
         <item name="android:fontFamily">@font/sc_dream4</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+    <style name="CalendarWidgetHeader">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/sc_dream5</item>
+    </style>
+    <style name="CalendarWidgetWeek">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/sc_dream4</item>
+    </style>
+    <style name="CalendarWidgetDay">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/sc_dream4</item>
+    </style>
+    <style name="TimePickerTheme">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:fontFamily">@font/sc_dream2</item>
     </style>
 </resources>

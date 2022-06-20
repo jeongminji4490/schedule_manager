@@ -5,3 +5,9 @@ enum class Importance {
     MIDDLE,
     LEAST
 }
+
+enum class ButtonState {
+    GONE,
+    LEFT_VISIBLE,
+    RIGHT_VISIBLE
+}
