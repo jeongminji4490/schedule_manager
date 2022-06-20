@@ -19,7 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/lightViolet"
+            android:textColor="@color/classicBlue"
             tools:ignore="MissingConstraints" />
 
         <EditText
@@ -30,8 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="10dp"
-            android:background="@drawable/btn_rectangle_shape"
-            android:fontFamily="@font/uhbee_gmin2"
+            android:textSize="14sp"
             tools:ignore="MissingConstraints" />
 
         <TimePicker
@@ -54,8 +53,7 @@
             app:layout_constraintBottom_toBottomOf="@id/alarmOnOffBtn"
             android:text="@string/alarm"
             android:textSize="12sp"
-            android:fontFamily="@font/uhbee_gmin2_bold"
-            android:textColor="@color/lightViolet"
+            android:textColor="@color/classicBlue"
             tools:ignore="MissingConstraints" />
 
         <androidx.appcompat.widget.SwitchCompat
@@ -79,8 +77,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/importance"
             android:textSize="12sp"
-            android:textColor="@color/lightViolet"
-            android:fontFamily="@font/uhbee_gmin2_bold"
+            android:textColor="@color/classicBlue"
             tools:ignore="MissingConstraints" />
 
         <RadioGroup
@@ -99,7 +96,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/very"
-                android:fontFamily="@font/uhbee_gmin2"
                 android:buttonTint="@color/red"
                 android:textColor="@color/red"/>
 
@@ -108,7 +104,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/middle"
-                android:fontFamily="@font/uhbee_gmin2"
                 android:buttonTint="@color/blue"
                 android:textColor="@color/blue"/>
 
@@ -117,7 +112,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/little"
-                android:fontFamily="@font/uhbee_gmin2"
                 android:buttonTint="@color/yellow"
                 android:textColor="@color/yellow"/>
         </RadioGroup>
@@ -130,10 +124,10 @@
             app:layout_constraintTop_toBottomOf="@id/radioGroup"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="#00ff0000"
-            android:textColor="@color/lightViolet"
+            android:textColor="@color/classicBlue"
             android:text="@string/save"
             android:gravity="end"
-            android:fontFamily="@font/uhbee_gmin2_bold"
+            android:fontFamily="@font/sc_dream7"
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

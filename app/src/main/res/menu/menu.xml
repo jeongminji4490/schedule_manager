@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/memoFragment"
-        android:title="포스트잇"
+        android:title="@string/memo"
         android:icon="@drawable/routine_white"
         />
 
     <item
         android:id="@+id/calendarFragment"
-        android:title="달력"
+        android:title="@string/calendar"
         android:icon="@drawable/calendar_white"/>
 </menu>

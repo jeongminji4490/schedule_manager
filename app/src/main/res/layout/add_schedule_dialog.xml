@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/lightViolet">
+    android:background="@color/classicBlue">
 
     <TextView
         android:id="@+id/dateText"
@@ -18,7 +18,7 @@
         android:gravity="left"
         android:textColor="@color/white"
         android:textSize="20dp"
-        android:fontFamily="@font/uhbee_gmin2_bold"
+        android:fontFamily="@font/sc_dream5"
         tools:ignore="MissingConstraints" />
 
     <ImageView
@@ -37,6 +37,7 @@
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:theme="@style/TimePickerTheme"
         app:layout_constraintTop_toBottomOf="@id/line_img"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +52,6 @@
         app:layout_constraintBottom_toBottomOf="@id/alarmOnOffBtn"
         android:text="@string/alarm"
         android:textSize="12sp"
-        android:fontFamily="@font/uhbee_gmin2_bold"
         android:textColor="@color/white"
         tools:ignore="MissingConstraints" />
 
@@ -74,9 +74,8 @@
         app:layout_constraintEnd_toEndOf="@id/dateText"
         app:layout_constraintTop_toBottomOf="@id/alarmOnOffBtn"
         android:hint="@string/content"
-        android:fontFamily="@font/uhbee_gmin2"
+        android:textSize="14sp"
         android:textColorHint="@color/light_gray"
-        android:background="@drawable/btn_rectangle_shape"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -90,7 +89,6 @@
         android:text="@string/importance"
         android:textSize="12sp"
         android:textColor="@color/white"
-        android:fontFamily="@font/uhbee_gmin2_bold"
         tools:ignore="MissingConstraints" />
 
     <RadioGroup
@@ -108,7 +106,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/very"
-            android:fontFamily="@font/uhbee_gmin2"
             android:buttonTint="@color/red"
             android:textColor="@color/red"/>
 
@@ -117,7 +114,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/middle"
-            android:fontFamily="@font/uhbee_gmin2"
             android:buttonTint="@color/blue"
             android:textColor="@color/blue"/>
 
@@ -126,7 +122,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/little"
-            android:fontFamily="@font/uhbee_gmin2"
             android:buttonTint="@color/yellow"
             android:textColor="@color/yellow"/>
     </RadioGroup>
@@ -141,8 +136,8 @@
         android:background="#00ff0000"
         android:textColor="@color/white"
         android:text="@string/save"
+        android:fontFamily="@font/sc_dream7"
         android:gravity="end"
-        android:fontFamily="@font/uhbee_gmin2_bold"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

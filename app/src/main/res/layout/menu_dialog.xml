@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="300dp"
         android:layout_height="120dp"
-        android:background="@color/lightViolet">
+        android:background="@color/classicBlue">
 
         <Button
             android:id="@+id/deleteOkBtn"
@@ -23,7 +23,6 @@
             android:textColor="@color/white"
             android:text="@string/delete"
             android:textSize="17sp"
-            android:fontFamily="@font/uhbee_gmin2_bold"
             tools:ignore="MissingConstraints" />
 
         <Button
@@ -39,7 +38,6 @@
             android:text="@string/modify"
             android:background="#00ff0000"
             android:textSize="17sp"
-            android:fontFamily="@font/uhbee_gmin2_bold"
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

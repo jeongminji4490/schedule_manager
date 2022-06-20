@@ -11,13 +11,6 @@ data class MemoDataModel(
     val completion : Boolean
 )
 
-//@Entity(tableName = "completion")
-//data class CompletionDataModel(
-//    @PrimaryKey(autoGenerate = true)
-//    val serialNum: Int,
-//
-//)
-
 @Entity(tableName = "schedule") // 일정 테이블
 data class ScheduleDataModel(
     @PrimaryKey(autoGenerate = true)

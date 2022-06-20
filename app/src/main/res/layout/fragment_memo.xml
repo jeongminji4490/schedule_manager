@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/classicBlue"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/view1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_margin="25dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,77 +22,80 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="23sp"
-            android:fontFamily="@font/sc_dream7"
-            android:textColor="@color/classicBlue"
+            android:text="5월 20일"
+            android:gravity="start"
+            android:fontFamily="@font/sc_dream5"
+            android:textColor="@color/white"
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <EditText
-        android:id="@+id/memoEdit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        app:layout_constraintTop_toBottomOf="@id/view1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/saveBtn"
-        android:hint="@string/todo"
-        android:textSize="13sp"
-        android:textColor="@color/classicBlue"
-        android:textColorHint="@color/classicBlue"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/saveBtn"
-        android:layout_width="77dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        app:layout_constraintTop_toBottomOf="@id/view1"
-        app:layout_constraintBottom_toTopOf="@id/view2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/memoEdit"
-        android:backgroundTint="@color/classicBlue"
-        android:text="@string/save"
-        android:fontFamily="@font/sc_dream7"
-        android:textColor="@color/white"
-        tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/view2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        app:layout_constraintTop_toBottomOf="@id/memoEdit"
+        android:layout_margin="25dp"
+        app:layout_constraintTop_toBottomOf="@id/view1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <EditText
+            android:id="@+id/memoEdit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/saveBtn"
+            android:hint="@string/todo"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/classicBlue"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:backgroundTint="@color/classicBlue"
+            android:text="@string/save"
+            android:fontFamily="@font/sc_dream7"
+            android:textColor="@color/white"
+            android:background="#00ff0000"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        app:layout_constraintTop_toBottomOf="@id/view2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints">
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="5dp"
-            app:layout_constraintEnd_toStartOf="@id/listText"
-            android:src="@drawable/star"/>
+            android:id="@+id/circle_img"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            app:layout_constraintTop_toTopOf="@id/listText"
+            app:layout_constraintBottom_toBottomOf="@id/listText"
+            android:src="@drawable/white_circle"/>
 
         <TextView
             android:id="@+id/listText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/todo_list"
-            android:textSize="18sp"
-            android:textColor="@color/classicBlue"
+            android:layout_marginStart="8dp"
             android:gravity="center"
+            android:text="@string/todo_list"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/circle_img"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_margin="5dp"
-            app:layout_constraintStart_toEndOf="@id/listText"
-            android:src="@drawable/star"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -100,9 +103,9 @@
         android:id="@+id/todoListView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="25dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view2"
+        app:layout_constraintTop_toBottomOf="@id/view3"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="MissingConstraints" />
 

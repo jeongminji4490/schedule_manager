@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:background="@drawable/btn_rectangle_shape">
+        android:background="@color/classicBlue">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -32,10 +32,10 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:fontFamily="@font/uhbee_gmin2_bold"
+                android:fontFamily="@font/sc_dream7"
                 android:text="@{schedule.content}"
-                android:textSize="15sp"
-                android:textColor="@color/lightViolet"
+                android:textSize="14sp"
+                android:textColor="@color/white"
                 android:textStyle="bold"/>
 
             <TextView
@@ -45,9 +45,8 @@
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textSize="12sp"
-                android:fontFamily="@font/uhbee_gmin2"
                 android:text="@{schedule.alarm}"
-                android:textColor="@color/lightViolet" />
+                android:textColor="@color/white" />
 
             <ImageView
                 android:id="@+id/importance_img"

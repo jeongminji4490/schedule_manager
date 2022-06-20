@@ -78,10 +78,10 @@ class ScheduleAdapter(
     }
 }
 
-class MemoAdapter(
+class MemoAdapter (
     private val context: Context,
     private val viewModel: ViewModel
-    ) : RecyclerView.Adapter<MemoAdapter.Holder>() {
+    ) : RecyclerView.Adapter<MemoAdapter.Holder>(), ItemTouchHelperListener {
 
     private val list = ArrayList<MemoDataModel>()
     private lateinit var binding : MemoItemBinding
@@ -125,5 +125,21 @@ class MemoAdapter(
         }
     }
 
+    override fun onItemMove(from_position: Int, to_position: Int): Boolean {
+        return false
+    }
+
+    override fun onItemSwipe(position: Int) {
+        //
+    }
+
+    override fun onLeftClick(position: Int, viewHolder: RecyclerView.ViewHolder?) {
+    }
+
+    override fun onRightClick(position: Int, viewHolder: RecyclerView.ViewHolder?) { // 삭제
+        CoroutineScope(Dispatchers.IO).launch {
+            viewModel.deleteMemo(list[position].serialNum)
+        }
+    }
 
 }

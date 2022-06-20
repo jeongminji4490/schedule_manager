@@ -5,27 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    android:background="@color/classicBlue">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/lightViolet"
+        android:background="@color/classicBlue"
         tools:ignore="MissingConstraints" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
 
-            <TextView
-                android:text="달력(전체적인 일정관리용)"
-                android:fontFamily="@font/uhbee_gmin2_bold"
-                android:textSize="17sp"
+            <EditText
+                android:id="@+id/searchEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/search"
+                android:textSize="14sp"
+                android:textColorHint="@color/light_gray"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                app:layout_constraintEnd_toStartOf="@id/openScheduleBtn"/>
 
             <ImageButton
                 android:id="@+id/openScheduleBtn"
@@ -33,14 +36,18 @@
                 android:layout_height="40dp"
                 android:scaleType="fitCenter"
                 android:backgroundTint="#00ff0000"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/addScheduleBtn"
-                android:src="@drawable/notebook"/>
+                android:src="@drawable/search"/>
 
             <ImageButton
                 android:id="@+id/addScheduleBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="5dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:scaleType="fitCenter"
                 android:src="@drawable/add"
@@ -58,9 +65,11 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:mcv_selectionColor="@color/lightViolet"
+        app:mcv_selectionColor="#5a7fbf"
         app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
         app:mcv_weekDayTextAppearance="@style/CalendarWidgetWeek"
+        app:mcv_dateTextAppearance="@style/CalendarWidgetDay"
+        app:mcv_arrowColor="@color/white"
         tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -71,6 +80,18 @@
         app:layout_constraintEnd_toEndOf="@id/calendarView"
         app:layout_constraintTop_toBottomOf="@id/calendarView"
         app:layout_constraintBottom_toTopOf="@id/view"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/emptyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/calendarView"
+        app:layout_constraintEnd_toEndOf="@id/calendarView"
+        app:layout_constraintTop_toBottomOf="@id/calendarView"
+        app:layout_constraintBottom_toTopOf="@id/view"
+        android:text="@string/empty_event"
+        android:fontFamily="@font/sc_dream5"
         tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
