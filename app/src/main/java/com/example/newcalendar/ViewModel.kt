@@ -3,6 +3,10 @@ package com.example.newcalendar
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ViewModel(
     private val mDao: MemoDao,
@@ -19,6 +23,16 @@ class ViewModel(
 
     fun deleteMemo(serialNum: Int){
         mDao.deleteMemo(serialNum)
+    }
+
+    fun changeCompletion(completion: Boolean, serialNum: Int) = viewModelScope.launch {
+        withContext(Dispatchers.IO){
+            mDao.changeCompletion(completion, serialNum)
+        }
+    }
+
+    suspend fun changeContent(content: String, serialNum: Int) {
+        mDao.changeContent(content, serialNum)
     }
 
     // Schedule

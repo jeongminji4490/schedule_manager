@@ -75,6 +75,7 @@
         app:layout_constraintTop_toBottomOf="@id/alarmOnOffBtn"
         android:hint="@string/content"
         android:textSize="14sp"
+        android:textColor="@color/white"
         android:textColorHint="@color/light_gray"
         tools:ignore="MissingConstraints" />
 

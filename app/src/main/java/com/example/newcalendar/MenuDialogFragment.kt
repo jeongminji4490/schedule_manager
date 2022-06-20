@@ -1,7 +1,5 @@
 package com.example.newcalendar
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,9 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.example.newcalendar.databinding.MenuDialogBinding
-import com.shashank.sony.fancytoastlib.FancyToast
 import io.github.muddz.styleabletoast.StyleableToast
-import kotlinx.android.synthetic.main.schedule_item.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 
@@ -52,7 +48,6 @@ class MenuDialogFragment(
                 withContext(Dispatchers.IO){
                     viewModel.deleteSchedule(serialNum)
                     viewModel.deleteAlarm(alarmCode)
-                    Log.e("Delete", size.toString())
                     if (size == 1){ // 일정이 하나만 남았다면
                         viewModel.deleteDate(selectedDate) // 도트 삭제
                     }
@@ -63,7 +58,7 @@ class MenuDialogFragment(
             this.dismiss()
         }
         if (id == R.id.modifyBtn){ // 변경
-            val dialog = ModifyDialogFragment(serialNum)
+            val dialog = ScheduleModifyFragment(serialNum)
             activity?.let {
                 dialog.show(it.supportFragmentManager, "ShowListFragment")
             }

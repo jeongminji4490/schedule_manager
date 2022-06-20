@@ -24,6 +24,8 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
     private lateinit var binding : AddScheduleDialogBinding
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
+    private var setJob : Job? = null
+    private var getJob : Job? = null
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
 
     // 알람 데이터
@@ -43,7 +45,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch {
+        getJob = lifecycleScope.launch {
             selectedDate = dateSaveModule.date.first()
             binding.dateText.text = selectedDate
         }
@@ -84,7 +86,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                     FancyToast.makeText(context,"내용 또는 중요도를 입력해주세요",FancyToast.LENGTH_SHORT,FancyToast.INFO,true).show()
                 }else{ // 알람 설정했을 때
                     if (binding.alarmOnOffBtn.isChecked){ // alarm on
-                        lifecycleScope.launch {
+                        setJob = lifecycleScope.launch {
                             val hour = binding.timePicker.hour.toString()
                             val minute = binding.timePicker.minute.toString()
                             val alarm = "$selectedDate $hour:$minute:00"
@@ -98,7 +100,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             setAlarm(alarmCode, content, alarm)
                         }
                     }else {
-                        lifecycleScope.launch { // 알람 설정 안했을 때
+                        setJob = lifecycleScope.launch { // 알람 설정 안했을 때
                             val alarm = ""
                             val alarmCode = 0
                             withContext(Dispatchers.IO){
@@ -120,6 +122,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
     override fun onPause() {
         super.onPause()
+        Log.e("AddDialogFragment", "onPause()")
     }
 
     override fun onStop() {
@@ -129,6 +132,8 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
     override fun onDestroyView() {
         super.onDestroyView()
+        getJob?.cancel()
+        setJob?.cancel()
         Log.e("AddDialogFragment", "onDestroyView()")
     }
 

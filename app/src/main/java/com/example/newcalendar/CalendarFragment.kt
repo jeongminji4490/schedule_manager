@@ -15,6 +15,7 @@ import kotlin.collections.ArrayList
 import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newcalendar.databinding.FragmentCalendarBinding
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 
 class CalendarFragment : Fragment(), View.OnClickListener {
@@ -23,6 +24,7 @@ class CalendarFragment : Fragment(), View.OnClickListener {
     private lateinit var selectedDate: String
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
+    private var setJob : Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +48,7 @@ class CalendarFragment : Fragment(), View.OnClickListener {
         var day = binding.calendarView.selectedDate!!.day
         selectedDate = "$year-$month-$day"
         Log.e(TAG, selectedDate)
-        lifecycleScope.launch {
+        setJob = lifecycleScope.launch {
             dateSaveModule.setDate(selectedDate)
         }
 
@@ -58,7 +60,7 @@ class CalendarFragment : Fragment(), View.OnClickListener {
             month = binding.calendarView.selectedDate!!.month + 1
             day = binding.calendarView.selectedDate!!.day
             val selectedDate = "$year-$month-$day"
-            lifecycleScope.launch {
+            setJob = lifecycleScope.launch {
                 dateSaveModule.setDate(selectedDate)
             }
             // 선택된 날짜에 해당하는 일정 목록 가져오기
@@ -153,10 +155,32 @@ class CalendarFragment : Fragment(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
+        binding.calendarView.selectedDate = CalendarDay.today()
         Log.e(TAG, "onStart()")
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.calendarView.selectedDate = CalendarDay.today()
+        Log.e(TAG, "onResume()")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.e(TAG, "onStop()")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.e(TAG, "onDestroyView()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e(TAG, "onDestroy()")
+    }
+
     companion object{
-        const val TAG = "RoutineFragment"
+        const val TAG = "CalendarFragment"
     }
 }
