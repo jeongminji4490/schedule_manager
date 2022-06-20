@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">심스메</string>
-    <string name="input_error">내용 또는 중요도를 입력해주세요</string>
     <string name="alarm">alarm</string>
     <string name="content">내용</string>
     <string name="importance">importance</string>

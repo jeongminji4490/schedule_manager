@@ -2,6 +2,7 @@ package com.example.newcalendar
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import java.net.ContentHandler
 
 @Dao
 interface MemoDao {
@@ -16,6 +17,9 @@ interface MemoDao {
 
     @Query("UPDATE memo SET completion = :completion where serialNum = :serialNum")
     fun changeCompletion(completion: Boolean, serialNum: Int)
+
+    @Query("UPDATE memo SET content = :content where serialNum = :serialNum")
+    fun changeContent(content: String, serialNum: Int)
 }
 
 @Dao

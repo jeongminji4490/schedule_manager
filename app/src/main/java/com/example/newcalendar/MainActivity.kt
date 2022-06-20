@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var navController : NavController
-    private val coroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
-    private val context by lazy { this }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,20 +50,22 @@ class MainActivity : AppCompatActivity() {
         binding.bottomBar.setupWithNavController(menu, navController)
     }
 
-
-
     override fun onStart() {
         super.onStart()
-        Log.e("AddDialogFragment", "onStart()")
+        Log.e(TAG, "onStart()")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.e("AddDialogFragment", "onPause()")
+        Log.e(TAG, "onPause()")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.e("AddDialogFragment", "onStop()")
+        Log.e(TAG, "onStop()")
+    }
+
+    companion object{
+        const val TAG = "MainActivity"
     }
 }

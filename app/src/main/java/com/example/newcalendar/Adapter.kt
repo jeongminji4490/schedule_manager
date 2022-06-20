@@ -2,15 +2,18 @@ package com.example.newcalendar
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newcalendar.databinding.MemoItemBinding
@@ -122,6 +125,18 @@ class MemoAdapter (
 
         fun onBind(item : MemoDataModel){
             binding.memo = item
+            binding.completionBox.isChecked = item.completion
+            binding.completionBox.setOnCheckedChangeListener { button, b ->
+                if (b){
+                    changeMemo(b, item.serialNum)
+                }else{
+                    changeMemo(b, item.serialNum)
+                }
+            }
+        }
+
+        private fun changeMemo(completion: Boolean, serialNum: Int){
+            viewModel.changeCompletion(completion, serialNum)
         }
     }
 
@@ -134,6 +149,10 @@ class MemoAdapter (
     }
 
     override fun onLeftClick(position: Int, viewHolder: RecyclerView.ViewHolder?) {
+        Log.e("Adapter", list[position].content)
+        Log.e("Adapter", list[position].serialNum.toString())
+        val dialog = MemoModifyFragment(list[position].content, list[position].serialNum)
+        dialog.show((context as FragmentActivity).supportFragmentManager, "MemoModifyFragment")
     }
 
     override fun onRightClick(position: Int, viewHolder: RecyclerView.ViewHolder?) { // 삭제

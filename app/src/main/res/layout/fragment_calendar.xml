@@ -56,7 +56,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:layout_width="0dp"

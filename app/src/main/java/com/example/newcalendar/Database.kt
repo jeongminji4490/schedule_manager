@@ -6,7 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [MemoDataModel::class, ScheduleDataModel::class, EventDataModel::class, AlarmDataModel::class], version = 10, exportSchema = false)
+@Database(
+    entities = [
+        MemoDataModel::class,
+        ScheduleDataModel::class,
+        EventDataModel::class,
+        AlarmDataModel::class],
+    version = 10,
+    exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract val memoDao : MemoDao
     abstract val scheduleDao : ScheduleDao

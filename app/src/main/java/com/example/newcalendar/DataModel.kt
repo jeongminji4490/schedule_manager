@@ -8,7 +8,7 @@ data class MemoDataModel(
     @PrimaryKey(autoGenerate = true)
     val serialNum: Int,
     val content: String,
-    val completion : Boolean
+    val completion: Boolean
 )
 
 @Entity(tableName = "schedule") // 일정 테이블

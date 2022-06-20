@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.newcalendar.databinding.FragmentMemoBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
@@ -23,7 +24,7 @@ import org.koin.core.logger.KOIN_TAG
 class MemoFragment : Fragment() {
 
     private lateinit var binding : FragmentMemoBinding
-    private val viewModel : ViewModel by inject()
+    private var setJob : Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,33 +44,17 @@ class MemoFragment : Fragment() {
         val itemTouchHelper = ItemTouchHelper(SwipeController(adapter))
         itemTouchHelper.attachToRecyclerView(binding.todoListView)
 
-        //Glide.with(this).load(R.drawable.memo).into(binding.diaryGif)
-
-        val month =  CalendarDay.today().month.toString()
+        val month =  (CalendarDay.today().month + 1).toString()
         val day = CalendarDay.today().day.toString()
         val date = "${month}월 ${day}일"
         Log.e("Memo", CalendarDay.today().date.toString())
 
         binding.todayDate.text = date
 
-//        adapter.itemClick = object : MemoAdapter.ItemClick{
-//            override fun onClick(view: View, position: Int, list: ArrayList<MemoDataModel>) {
-//                val serialNum = list[position].serialNum
-//                val content = list[position].alarm_code
-//                val date = list[position].date
-//                val size = list.size
-//                val dialog = MenuDialogFragment(serialNum,alarmCode, date, size)
-//                activity?.let {
-//                    dialog.show(it.supportFragmentManager, "ShowListFragment")
-//                }
-//            }
-//        }
-
-
         binding.saveBtn.setOnClickListener {
             val memo = binding.memoEdit.text.toString()
             if (memo.isNotEmpty()){
-                lifecycleScope.launch {
+                setJob = lifecycleScope.launch {
                     withContext(Dispatchers.IO){
                         viewModel.addMemo(MemoDataModel(serialNum, memo, false))
                     }
@@ -89,5 +74,25 @@ class MemoFragment : Fragment() {
             binding.todoListView.adapter = adapter
             binding.todoListView.layoutManager = LinearLayoutManager(requireContext())
         })
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.e(TAG, "onStop()")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        setJob?.cancel()
+        Log.e(TAG, "onDestroyView()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e(TAG, "onDestroy()")
+    }
+
+    companion object{
+        const val TAG = "MemoFragment"
     }
 }
