@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.withCreated
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.newcalendar.databinding.AddScheduleDialogBinding
 import com.shashank.sony.fancytoastlib.FancyToast
 import es.dmoral.toasty.Toasty
@@ -19,9 +20,10 @@ import kotlinx.coroutines.flow.first
 import org.koin.android.ext.android.inject
 import java.util.*
 
-class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다이얼로그
+class AddDialogFragment : DialogFragment(R.layout.add_schedule_dialog), View.OnClickListener { // 수정 다이얼로그
 
-    private lateinit var binding : AddScheduleDialogBinding
+    //private lateinit var binding : AddScheduleDialogBinding
+    private val binding by viewBinding(AddScheduleDialogBinding::bind)
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
     private var setJob : Job? = null
@@ -33,15 +35,15 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
     private var serialNum = 0 // 일련번호
     private var importance = 3 // 일정 중요도
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = AddScheduleDialogBinding.inflate(inflater)
-        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_white_rounded_shape)
-        return binding.root
-    }
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View {
+//        binding = AddScheduleDialogBinding.inflate(inflater)
+//        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_white_rounded_shape)
+//        return binding.root
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -127,13 +129,13 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
     override fun onStop() {
         super.onStop()
+        getJob?.cancel()
+        setJob?.cancel()
         Log.e("AddDialogFragment", "onStop()")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        getJob?.cancel()
-        setJob?.cancel()
         Log.e("AddDialogFragment", "onDestroyView()")
     }
 

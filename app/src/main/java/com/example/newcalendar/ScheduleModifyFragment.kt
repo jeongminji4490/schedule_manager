@@ -7,12 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.example.newcalendar.databinding.AddScheduleDialogBinding
-import com.example.newcalendar.databinding.ModifyDialogBinding
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.newcalendar.databinding.ModifyScheduleDialogBinding
 import com.shashank.sony.fancytoastlib.FancyToast
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
@@ -20,9 +17,9 @@ import org.koin.android.ext.android.inject
 
 class ScheduleModifyFragment(
     private var serialNum: Int
-) : DialogFragment() {
+) : DialogFragment(R.layout.modify_schedule_dialog) {
 
-    private lateinit var binding : ModifyDialogBinding
+    private val binding by viewBinding(ModifyScheduleDialogBinding::bind)
     private val viewModel : ViewModel by inject()
     private lateinit var schedule : ScheduleDataModel
     private var getJob : Job? = null
@@ -31,16 +28,6 @@ class ScheduleModifyFragment(
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private var alarmCode = -1
     private var importance = 3 // 일정 중요도
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = ModifyDialogBinding.inflate(inflater)
-        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_white_rounded_shape)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -139,13 +126,16 @@ class ScheduleModifyFragment(
 
     override fun onPause() {
         super.onPause()
-        getJob?.cancel()
-        setJob?.cancel()
-        //Log.e("AddDialogFragment", "onPause()")
+        Log.e("AddDialogFragment", "onPause()")
     }
 
     override fun onStop() {
         super.onStop()
-        //Log.e("AddDialogFragment", "onStop()")
+        getJob?.cancel()
+        setJob?.cancel()
+        Log.e(TAG, "onStop()")
+    }
+    companion object{
+        const val TAG = "AddDialogFragment"
     }
 }

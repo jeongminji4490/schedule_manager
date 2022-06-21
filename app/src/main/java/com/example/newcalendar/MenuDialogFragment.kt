@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.newcalendar.databinding.MenuDialogBinding
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
@@ -18,21 +19,12 @@ class MenuDialogFragment(
     private var alarmCode: Int,
     private var selectedDate: String,
     private var size: Int
-)  : DialogFragment(), View.OnClickListener{
+)  : DialogFragment(R.layout.menu_dialog), View.OnClickListener{
 
-    private lateinit var binding : MenuDialogBinding
+    private val binding by viewBinding(MenuDialogBinding::bind)
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private var job : Job? = null
     private val viewModel : ViewModel by inject()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-       binding = MenuDialogBinding.inflate(inflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,5 +61,11 @@ class MenuDialogFragment(
     override fun onStop() {
         super.onStop()
         job?.cancel()
+        Log.e(TAG, "onStop()")
+        //job?.cancel()
+    }
+
+    companion object{
+        const val TAG = "MenuDialogFragment"
     }
 }
