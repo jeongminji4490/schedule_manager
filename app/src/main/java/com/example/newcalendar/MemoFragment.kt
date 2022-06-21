@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.example.newcalendar.databinding.FragmentMemoBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -21,26 +23,25 @@ import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import org.koin.core.logger.KOIN_TAG
 
-class MemoFragment : Fragment() {
+class MemoFragment : Fragment(R.layout.fragment_memo) {
 
-    private lateinit var binding : FragmentMemoBinding
+    private val binding by viewBinding(FragmentMemoBinding::bind,
+        onViewDestroyed = {
+            // reset view
+            it.todoListView.adapter = null
+            Log.e(TAG, "onViewDestroyed()")
+        })
+
     private var setJob : Job? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMemoBinding.inflate(inflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.e(TAG, "onViewCreated()")
+
         val serialNum = 0
         val viewModel : ViewModel by inject()
-        val adapter by lazy { MemoAdapter(requireContext(), viewModel) }
+        val adapter = MemoAdapter(requireContext(), viewModel)
         val itemTouchHelper = ItemTouchHelper(SwipeController(adapter))
         itemTouchHelper.attachToRecyclerView(binding.todoListView)
 
@@ -76,14 +77,19 @@ class MemoFragment : Fragment() {
         })
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.e(TAG, "onPause()")
+    }
+
     override fun onStop() {
         super.onStop()
+        setJob?.cancel()
         Log.e(TAG, "onStop()")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        setJob?.cancel()
         Log.e(TAG, "onDestroyView()")
     }
 

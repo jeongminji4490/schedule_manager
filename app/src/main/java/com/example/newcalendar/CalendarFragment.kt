@@ -14,26 +14,21 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.newcalendar.databinding.FragmentCalendarBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 
-class CalendarFragment : Fragment(), View.OnClickListener {
+class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListener {
 
-    private lateinit var binding : FragmentCalendarBinding
+    private val binding by viewBinding(FragmentCalendarBinding::bind,
+    onViewDestroyed = {
+        it.scheduleListview.adapter = null
+    })
     private lateinit var selectedDate: String
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
     private var setJob : Job? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentCalendarBinding.inflate(inflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -167,6 +162,7 @@ class CalendarFragment : Fragment(), View.OnClickListener {
 
     override fun onStop() {
         super.onStop()
+        setJob?.cancel()
         Log.e(TAG, "onStop()")
     }
 

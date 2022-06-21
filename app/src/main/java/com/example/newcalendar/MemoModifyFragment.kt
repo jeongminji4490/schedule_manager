@@ -7,7 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
-import com.example.newcalendar.databinding.ModifyMemoBinding
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.newcalendar.databinding.ModifyMemoDialogBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -19,18 +20,13 @@ class MemoModifyFragment(
     private val serialNum : Int,
 ) : DialogFragment() {
 
-    private lateinit var binding : ModifyMemoBinding
+    private val binding by viewBinding(ModifyMemoDialogBinding::bind,
+    onViewDestroyed = {
+        job?.cancel()
+    })
+
     private var job : Job? = null
     private val viewModel : ViewModel by inject()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = ModifyMemoBinding.inflate(inflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,7 +49,7 @@ class MemoModifyFragment(
     override fun onDestroyView() {
         super.onDestroyView()
         Log.e("memoFrag", "onDestroyView")
-        job?.cancel()
+        //job?.cancel()
     }
 
     override fun onDestroy() {

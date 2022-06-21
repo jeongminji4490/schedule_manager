@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewModelScope
@@ -26,7 +27,7 @@ class ScheduleAdapter(
     private val viewModel: ViewModel
     ) : RecyclerView.Adapter<ScheduleAdapter.Holder>() {
 
-    private var list = ArrayList<Schedule>()
+    var list = ArrayList<Schedule>()
     private lateinit var binding : ScheduleItemBinding
 
     interface ItemClick{
@@ -35,7 +36,7 @@ class ScheduleAdapter(
     var itemClick : ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val inflater = LayoutInflater.from(context)
+        val inflater = LayoutInflater.from(parent.context)
         binding = ScheduleItemBinding.inflate(inflater, parent, false)
         return Holder(binding.root)
     }
@@ -63,8 +64,6 @@ class ScheduleAdapter(
 
     inner class Holder(val view: View) : RecyclerView.ViewHolder(view){
 
-        private val scope by lazy { CoroutineScope(Dispatchers.IO) }
-        private val functions by lazy { AlarmFunctions(context) }
         private var importanceImg = view.findViewById<ImageView>(R.id.importance_img) // 중요도 이미지
         private val redImg = ContextCompat.getDrawable(context, R.drawable.red_most_important)
         private val blueImg = ContextCompat.getDrawable(context, R.drawable.blue_moderately_important)
@@ -149,8 +148,6 @@ class MemoAdapter (
     }
 
     override fun onLeftClick(position: Int, viewHolder: RecyclerView.ViewHolder?) {
-        Log.e("Adapter", list[position].content)
-        Log.e("Adapter", list[position].serialNum.toString())
         val dialog = MemoModifyFragment(list[position].content, list[position].serialNum)
         dialog.show((context as FragmentActivity).supportFragmentManager, "MemoModifyFragment")
     }
@@ -160,5 +157,19 @@ class MemoAdapter (
             viewModel.deleteMemo(list[position].serialNum)
         }
     }
-
 }
+
+//object Adapter{
+//
+//    @BindingAdapter("item")
+//    @JvmStatic
+//    fun setItems(view: RecyclerView, item: ArrayList<Schedule>){
+//        if (view.adapter==null){
+//            view.adapter = ScheduleAdapter()
+//        }
+//
+//        val adapter = view.adapter as ScheduleAdapter
+//
+//        adapter.list = item
+//    }
+//}
