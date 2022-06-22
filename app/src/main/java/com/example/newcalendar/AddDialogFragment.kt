@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.first
 import org.koin.android.ext.android.inject
 import java.util.*
 
-class AddDialogFragment : DialogFragment(R.layout.add_schedule_dialog), View.OnClickListener { // 수정 다이얼로그
+class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다이얼로그
 
     //private lateinit var binding : AddScheduleDialogBinding
     private val binding by viewBinding(AddScheduleDialogBinding::bind)
@@ -35,18 +35,21 @@ class AddDialogFragment : DialogFragment(R.layout.add_schedule_dialog), View.OnC
     private var serialNum = 0 // 일련번호
     private var importance = 3 // 일정 중요도
 
-//    override fun onCreateView(
-//        inflater: LayoutInflater,
-//        container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        isCancelable = false
 //        binding = AddScheduleDialogBinding.inflate(inflater)
 //        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_white_rounded_shape)
 //        return binding.root
-//    }
+        return inflater.inflate(R.layout.add_schedule_dialog, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         getJob = lifecycleScope.launch {
             selectedDate = dateSaveModule.date.first()
             binding.dateText.text = selectedDate
@@ -78,6 +81,7 @@ class AddDialogFragment : DialogFragment(R.layout.add_schedule_dialog), View.OnC
             }
         }
         binding.saveScheduleBtn.setOnClickListener(this)
+        binding.cancelDialogBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -115,6 +119,9 @@ class AddDialogFragment : DialogFragment(R.layout.add_schedule_dialog), View.OnC
                     this.dismiss()
                 }
             }
+            R.id.cancelDialogBtn -> {
+                this.dismiss()
+            }
         }
     }
 
@@ -124,19 +131,24 @@ class AddDialogFragment : DialogFragment(R.layout.add_schedule_dialog), View.OnC
 
     override fun onPause() {
         super.onPause()
-        Log.e("AddDialogFragment", "onPause()")
+        Log.e(TAG, "onPause()")
     }
 
     override fun onStop() {
         super.onStop()
         getJob?.cancel()
         setJob?.cancel()
-        Log.e("AddDialogFragment", "onStop()")
+        Log.e(TAG, "onStop()")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.e("AddDialogFragment", "onDestroyView()")
+        Log.e(TAG, "onDestroyView()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e(TAG, "onDestroy()")
     }
 
     companion object{

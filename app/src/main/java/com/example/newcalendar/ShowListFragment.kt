@@ -1,12 +1,16 @@
 package com.example.newcalendar
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.window.Dialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.newcalendar.databinding.FragmentCalendarBinding
 import com.example.newcalendar.databinding.ScheduleListFragmentBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,20 +22,24 @@ import kotlin.collections.ArrayList
 
 class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 보여주는 다이얼로그
 
-    private lateinit var binding : ScheduleListFragmentBinding
+    //private lateinit var binding : ScheduleListFragmentBinding
+    private val binding by viewBinding(ScheduleListFragmentBinding::bind)
     private lateinit var selectedDate : String
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
-    private val scope : CoroutineScope by lazy { CoroutineScope(Dispatchers.Main) }
+    //private val scope : CoroutineScope by lazy { CoroutineScope(Dispatchers.Main) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = ScheduleListFragmentBinding.inflate(inflater)
-        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_white_rounded_shape)
-        return binding.root
+        //isCancelable = false
+        //dialog?.setCancelable(false)
+//        binding = ScheduleListFragmentBinding.inflate(inflater)
+//        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_white_rounded_shape)
+//        return binding.root
+        return inflater.inflate(R.layout.schedule_list_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,5 +84,19 @@ class ShowListFragment : DialogFragment(){ // 저장한 일정들의 목록을 �
             binding.scheduleListview.adapter = adapter
             binding.scheduleListview.layoutManager=LinearLayoutManager(requireContext())
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.e(TAG, "onDestroyView()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e(TAG, "onDestroy()")
+    }
+
+    companion object{
+        const val TAG = "ShowListFragment"
     }
 }

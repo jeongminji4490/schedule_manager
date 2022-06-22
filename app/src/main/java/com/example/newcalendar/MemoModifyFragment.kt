@@ -20,13 +20,21 @@ class MemoModifyFragment(
     private val serialNum : Int,
 ) : DialogFragment() {
 
+    private var job : Job? = null
+    private val viewModel : ViewModel by inject()
+
     private val binding by viewBinding(ModifyMemoDialogBinding::bind,
     onViewDestroyed = {
         job?.cancel()
     })
 
-    private var job : Job? = null
-    private val viewModel : ViewModel by inject()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.modify_memo_dialog, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

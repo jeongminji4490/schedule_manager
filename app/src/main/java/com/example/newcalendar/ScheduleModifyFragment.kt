@@ -17,7 +17,7 @@ import org.koin.android.ext.android.inject
 
 class ScheduleModifyFragment(
     private var serialNum: Int
-) : DialogFragment(R.layout.modify_schedule_dialog) {
+) : DialogFragment() {
 
     private val binding by viewBinding(ModifyScheduleDialogBinding::bind)
     private val viewModel : ViewModel by inject()
@@ -28,6 +28,14 @@ class ScheduleModifyFragment(
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private var alarmCode = -1
     private var importance = 3 // 일정 중요도
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.modify_schedule_dialog, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
