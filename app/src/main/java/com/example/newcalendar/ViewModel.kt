@@ -14,6 +14,9 @@ class ViewModel(
     private val eDao: EventDao,
     private val aDao: AlarmDao) : ViewModel(){
 
+    // test
+    val result = sDao.getAllSchedules()
+
     // Memo
     fun getAllMemo() : LiveData<List<MemoDataModel>> = mDao.getAllMemo()
 
@@ -31,7 +34,7 @@ class ViewModel(
         }
     }
 
-    suspend fun changeContent(content: String, serialNum: Int) {
+    fun changeContent(content: String, serialNum: Int) {
         mDao.changeContent(content, serialNum)
     }
 

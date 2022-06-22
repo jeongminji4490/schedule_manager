@@ -19,12 +19,20 @@ class MenuDialogFragment(
     private var alarmCode: Int,
     private var selectedDate: String,
     private var size: Int
-)  : DialogFragment(R.layout.menu_dialog), View.OnClickListener{
+)  : DialogFragment(), View.OnClickListener{
 
     private val binding by viewBinding(MenuDialogBinding::bind)
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private var job : Job? = null
     private val viewModel : ViewModel by inject()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.menu_dialog, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

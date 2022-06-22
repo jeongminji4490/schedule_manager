@@ -1,5 +1,6 @@
 package com.example.newcalendar
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -10,14 +11,17 @@ import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.core.animateDpAsState
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newcalendar.databinding.MemoItemBinding
+import com.example.newcalendar.databinding.ResultItemBinding
 import com.example.newcalendar.databinding.ScheduleItemBinding
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
@@ -159,6 +163,68 @@ class MemoAdapter (
     }
 }
 
+class TestAdapter() : RecyclerView.Adapter<TestAdapter.Holder>() {
+
+    var list : List<ScheduleDataModel> = ArrayList()
+    private lateinit var binding : ResultItemBinding
+
+    interface ItemClick{
+        fun onClick(view: View, position: Int, list: List<ScheduleDataModel>)
+    }
+    var itemClick : ItemClick? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        val inflater = LayoutInflater.from(parent.context)
+        binding = ResultItemBinding.inflate(inflater, parent, false)
+        return Holder(binding.root)
+    }
+
+    override fun onBindViewHolder(holder: Holder, position: Int) {
+        holder.onBind(list[position], itemCount)
+        if (itemClick!=null){
+            holder.view.setOnClickListener{ v ->
+                itemClick?.onClick(v, position, list)
+            }
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+
+//    fun addItems(item : ScheduleDataModel){
+//        list.add(item)
+//    }
+//
+//    fun removeAll(){
+//        list.clear()
+//    }
+
+    inner class Holder(val view: View) : RecyclerView.ViewHolder(view){
+
+        fun onBind(item : ScheduleDataModel, size: Int){
+            binding.item = item
+        }
+    }
+}
+
+object Adapter {
+    @SuppressLint("NotifyDataSetChanged")
+    @BindingAdapter("item")
+    @JvmStatic
+    fun setItems(recyclerView: RecyclerView, item: List<ScheduleDataModel>?){
+        if (recyclerView.adapter == null){
+            val adapter = TestAdapter()
+            recyclerView.layoutManager = LinearLayoutManager(recyclerView.context)
+            recyclerView.adapter = adapter
+        }
+        if (item != null) {
+            (recyclerView.adapter as TestAdapter).list = item
+        }
+        recyclerView.adapter?.notifyDataSetChanged()
+    }
+}
+
 //object Adapter{
 //
 //    @BindingAdapter("item")
@@ -173,3 +239,4 @@ class MemoAdapter (
 //        adapter.list = item
 //    }
 //}
+

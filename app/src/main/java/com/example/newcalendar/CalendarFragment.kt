@@ -13,6 +13,7 @@ import org.koin.android.ext.android.inject
 import java.util.*
 import kotlin.collections.ArrayList
 import android.graphics.Color
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.newcalendar.databinding.FragmentCalendarBinding
@@ -49,6 +50,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
 
         binding.addScheduleBtn.setOnClickListener(this)
         binding.openScheduleBtn.setOnClickListener(this)
+        binding.searchEdit.setOnClickListener(this)
 
         binding.calendarView.setOnDateChangedListener { widget, date, selected ->
             year = binding.calendarView.selectedDate!!.year
@@ -144,6 +146,10 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
             R.id.openScheduleBtn -> {
                 val dialog = ShowListFragment()
                 dialog.show(parentFragmentManager, "ShowListFragment")
+            }
+            R.id.searchEdit -> {
+                val dialog = SearchResultFragment()
+                dialog.show(parentFragmentManager, "SearchResultDialog")
             }
         }
     }
