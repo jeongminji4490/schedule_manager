@@ -13,6 +13,8 @@ import org.koin.android.ext.android.inject
 import java.util.*
 import kotlin.collections.ArrayList
 import android.graphics.Color
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -26,6 +28,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
     onViewDestroyed = {
         it.scheduleListview.adapter = null
     })
+
     private lateinit var selectedDate: String
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
@@ -49,8 +52,8 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
         }
 
         binding.addScheduleBtn.setOnClickListener(this)
-        binding.openScheduleBtn.setOnClickListener(this)
-        binding.searchEdit.setOnClickListener(this)
+        binding.searchBtn.setOnClickListener(this)
+        //binding.searchEdit.setOnClickListener(this)
 
         binding.calendarView.setOnDateChangedListener { widget, date, selected ->
             year = binding.calendarView.selectedDate!!.year
@@ -143,13 +146,9 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
                 val dialog = AddDialogFragment()
                 dialog.show(parentFragmentManager, "AddScheduleDialog")
             }
-            R.id.openScheduleBtn -> {
-                val dialog = ShowListFragment()
-                dialog.show(parentFragmentManager, "ShowListFragment")
-            }
-            R.id.searchEdit -> {
+            R.id.searchBtn -> {
                 val dialog = SearchResultFragment()
-                dialog.show(parentFragmentManager, "SearchResultDialog")
+                dialog.show(parentFragmentManager, "SearchResultFragment")
             }
         }
     }
