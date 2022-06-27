@@ -12,7 +12,7 @@
         <item name="colorOnSurface">@color/black</item>
         <item name="android:colorBackground">@color/white</item>
         <item name="colorError">@color/red</item>
-        <item name="android:textColorPrimary">@color/classicBlue</item>
+        <item name="android:textColorPrimary">@color/white</item>
         <item name="android:fontFamily">@font/sc_dream4</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

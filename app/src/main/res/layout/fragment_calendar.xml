@@ -20,18 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
-            <EditText
-                android:id="@+id/searchEdit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/search"
-                android:textSize="14sp"
-                android:textColorHint="@color/light_gray"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/openScheduleBtn"/>
-
             <ImageButton
-                android:id="@+id/openScheduleBtn"
+                android:id="@+id/searchBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:scaleType="fitCenter"
