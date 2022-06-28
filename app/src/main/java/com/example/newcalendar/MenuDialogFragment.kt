@@ -14,12 +14,12 @@ import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 
 // 일정을 삭제 or 수정 할 수 있는 다이얼로그
-class MenuDialogFragment(
-    private var serialNum: Int,
-    private var alarmCode: Int,
-    private var selectedDate: String,
-    private var size: Int
-)  : DialogFragment(), View.OnClickListener{
+class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
+
+    var serialNum: Int = 0 // 일정 일련번호
+    var alarmCode: Int = -1 // 일정 알람코드
+    var selectedDate: String = "" // 선택된 날짜
+    var size: Int = 0 // 리스트 사이즈
 
     private val binding by viewBinding(MenuDialogBinding::bind)
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
@@ -70,7 +70,6 @@ class MenuDialogFragment(
         super.onStop()
         job?.cancel()
         Log.e(TAG, "onStop()")
-        //job?.cancel()
     }
 
     companion object{

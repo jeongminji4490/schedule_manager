@@ -22,7 +22,6 @@ import java.util.*
 
 class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다이얼로그
 
-    //private lateinit var binding : AddScheduleDialogBinding
     private val binding by viewBinding(AddScheduleDialogBinding::bind)
     private val dateSaveModule : DateSaveModule by inject()
     private val viewModel : ViewModel by inject()
@@ -33,7 +32,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
     // 알람 데이터
     private lateinit var selectedDate : String // 선택된 날짜
     private var serialNum = 0 // 일련번호
-    private var importance = 3 // 일정 중요도
+    private var importance = 3 // 일정 중요도 (기본값 : 3)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,15 +40,13 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
         savedInstanceState: Bundle?
     ): View {
         isCancelable = false
-//        binding = AddScheduleDialogBinding.inflate(inflater)
-//        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_white_rounded_shape)
-//        return binding.root
         return inflater.inflate(R.layout.add_schedule_dialog, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 선택된 날짜 가져오기
         getJob = lifecycleScope.launch {
             selectedDate = dateSaveModule.date.first()
             binding.dateText.text = selectedDate
@@ -57,11 +54,12 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
         binding.timePicker.visibility = TimePicker.GONE // 타임피커 기본설정
 
+        // 알람 온오프 클릭 listener
         binding.alarmOnOffBtn.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked){
+            if (isChecked){ // 알람 온
                 binding.timePicker.visibility = TimePicker.VISIBLE
                 binding.timePicker.setIs24HourView(true)
-            }else{
+            }else{ // 알람 오프
                 binding.timePicker.visibility = TimePicker.GONE
             }
         }
@@ -98,17 +96,17 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             val alarm = "$selectedDate $hour:$minute:00"
                             val random = (1..100000) // 1~10000 범위에서 알람코드 랜덤으로 생성
                             val alarmCode = random.random()
+                            setAlarm(alarmCode, content, alarm)
                             withContext(Dispatchers.IO){
                                 viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, hour, minute, alarmCode, importance))
                                 viewModel.addDate(EventDataModel(selectedDate))
                                 viewModel.addAlarm(AlarmDataModel(alarmCode, alarm, content))
                             }
-                            setAlarm(alarmCode, content, alarm)
                         }
                     }else {
                         setJob = lifecycleScope.launch { // 알람 설정 안했을 때
                             val alarm = ""
-                            val alarmCode = 0
+                            val alarmCode = -1
                             withContext(Dispatchers.IO){
                                 viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, "null", "null", alarmCode, importance))
                                 viewModel.addDate(EventDataModel(selectedDate))

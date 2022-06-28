@@ -31,20 +31,13 @@ interface ScheduleDao { // 일정 테이블 관련
     @Query("DELETE FROM schedule WHERE serialNum = :serialNum") // 일련번호로 삭제
     fun deleteSchedule(serialNum : Int)
 
-    // 특정 날짜에 해당하는 모든 데이터 가져오기
+    // '날짜' 에 해당하는 모든 데이터 가져오기
     @Query("SELECT * FROM schedule WHERE date = :date")
     fun getAllSchedule(date: String) : LiveData<List<ScheduleDataModel>>
 
-    // test : 모든 일정 가져오기
-    @Query("SELECT * FROM schedule")
-    fun getAllSchedules() : LiveData<List<ScheduleDataModel>>
-
+    // '일련 번호' 에 해당하는 모든 데이터 가져오기
     @Query("SELECT * FROM schedule WHERE serialNum = :serialNum")
     fun getSchedule(serialNum: Int) : ScheduleDataModel
-
-    // 특정 날짜에 해당하는 데이터 개수 가져오기
-    @Query("SELECT count(*) FROM schedule WHERE date = :date")
-    fun getCount(date: String) : LiveData<Int>
 }
 
 @Dao

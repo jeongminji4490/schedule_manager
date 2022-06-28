@@ -7,7 +7,7 @@
     <data>
         <variable
             name="schedule"
-            type="com.example.newcalendar.Schedule" />
+            type="com.example.newcalendar.ScheduleDataModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,6 +55,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/title"
                 app:layout_constraintBottom_toBottomOf="@id/alarm"
+                set_image="@{schedule}"
                 android:scaleType="fitCenter"
                 android:background="#00ff0000"/>
 

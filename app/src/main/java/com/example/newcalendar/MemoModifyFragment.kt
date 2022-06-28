@@ -15,10 +15,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
-class MemoModifyFragment(
-    private val content: String,
-    private val serialNum : Int,
-) : DialogFragment() {
+class MemoModifyFragment() : DialogFragment() {
+
+    var content: String = ""
+    var serialNum : Int = 0
 
     private var job : Job? = null
     private val viewModel : ViewModel by inject()
@@ -56,12 +56,15 @@ class MemoModifyFragment(
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.e("memoFrag", "onDestroyView")
-        //job?.cancel()
+        Log.e(TAG, "onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.e("memoFrag", "onDestroy")
+        Log.e(TAG, "onDestroy")
+    }
+
+    companion object{
+        const val TAG = "MemoModifyFragment"
     }
 }
