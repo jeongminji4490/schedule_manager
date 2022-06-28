@@ -26,8 +26,8 @@ class ScheduleModifyFragment(
     private var setJob : Job? = null
 
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
-    private var alarmCode = -1
-    private var importance = 3 // 일정 중요도
+    private var alarmCode = -1 // 알람 코드, 기본값 : -1 (기존에 알람이 설정되지 않았을 때)
+    private var importance = 3 // 일정 중요도, 기본값 : 3
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,6 +65,9 @@ class ScheduleModifyFragment(
             }
         }
 
+        // 기존에 설정헀던 알람이 있다면 취소하고 재설정
+        // 만약 기존에 설정했던 알람이 없다면 알람코드의 값은 -1
+        // 기존에 설정했던 알람을 취소한다면 cancelAlarm 호출
         binding.saveScheduleBtn.setOnClickListener {
             val date = binding.date.text.toString()
             val content = binding.content.text.toString()
@@ -78,20 +81,32 @@ class ScheduleModifyFragment(
                         val hour = binding.timePicker.hour.toString()
                         val minute = binding.timePicker.minute.toString()
                         val alarm = "$date $hour:$minute:00"
+                        if (alarmCode != 1){ // 기존에 설정된 알림이 있다면 취소하고 재설정
+                            cancelAlarm(alarmCode)
+                            withContext(Dispatchers.IO){
+                                viewModel.deleteAlarm(alarmCode)
+                            }
+                        }
                         val random = (1..100000) // 1~10000 범위에서 알람코드 랜덤으로 생성
                         val alarmCode = random.random()
+                        setAlarm(alarmCode, content, alarm)
                         withContext(Dispatchers.IO){
                             viewModel.addSchedule(ScheduleDataModel(serialNum, date, content, alarm, hour, minute, alarmCode, importance))
                             viewModel.addDate(EventDataModel(date))
                             viewModel.addAlarm(AlarmDataModel(alarmCode, alarm, content))
                         }
-                        setAlarm(alarmCode, content, alarm)
                     }
                 }else {
-                    setJob = lifecycleScope.launch { // 알람 설정 안했을 때
+                    setJob = lifecycleScope.launch { // 알람 설정 안했을 때 알람 취소해야함!
                         val alarm = ""
                         withContext(Dispatchers.IO){
-                            viewModel.addSchedule(ScheduleDataModel(serialNum, date, content, alarm, "null", "null", alarmCode, importance))
+                            viewModel.addSchedule(ScheduleDataModel(serialNum, date, content, alarm, "null", "null", -1, importance))
+                        }
+                        if (alarmCode != -1){
+                            cancelAlarm(alarmCode)
+                            withContext(Dispatchers.IO){
+                                viewModel.deleteAlarm(alarmCode)
+                            }
                         }
                     }
                 }
@@ -102,7 +117,13 @@ class ScheduleModifyFragment(
     }
 
     private fun setAlarm(alarmCode : Int, content : String, alarm : String){
+        Log.e(TAG, "call alarm $alarmCode")
         alarmFunctions.callAlarm(alarm, alarmCode, content)
+    }
+
+    private fun cancelAlarm(alarmCode: Int){
+        Log.e(TAG, "cancel alarm $alarmCode")
+        alarmFunctions.cancelAlarm(alarmCode)
     }
 
     override fun onStart() {
@@ -120,6 +141,7 @@ class ScheduleModifyFragment(
                 binding.timePicker.hour = schedule.hour.toInt()
                 binding.timePicker.minute = schedule.minute.toInt()
                 binding.alarmOnOffBtn.isChecked = true
+                alarmCode = schedule.alarm_code // 기존의 알람코드
             }else{
                 binding.timePicker.visibility = View.GONE
                 binding.alarmOnOffBtn.isChecked = false
@@ -143,6 +165,7 @@ class ScheduleModifyFragment(
         setJob?.cancel()
         Log.e(TAG, "onStop()")
     }
+
     companion object{
         const val TAG = "AddDialogFragment"
     }

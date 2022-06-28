@@ -14,9 +14,6 @@ class ViewModel(
     private val eDao: EventDao,
     private val aDao: AlarmDao) : ViewModel(){
 
-    // test
-    val result = sDao.getAllSchedules()
-
     // Memo
     fun getAllMemo() : LiveData<List<MemoDataModel>> = mDao.getAllMemo()
 
@@ -63,8 +60,6 @@ class ViewModel(
     }
 
     // Alarm
-    fun getAllAlarms() : List<AlarmDataModel> = aDao.getAllAlarms()
-
     fun addAlarm(data : AlarmDataModel){ // 날짜 추가
         aDao.addAlarm(data)
     }

@@ -26,12 +26,11 @@ import org.koin.core.logger.KOIN_TAG
 class MemoFragment : Fragment(R.layout.fragment_memo) {
 
     private val binding by viewBinding(FragmentMemoBinding::bind,
-        onViewDestroyed = {
-            // reset view
-            it.todoListView.adapter = null
-            Log.e(TAG, "onViewDestroyed()")
+        onViewDestroyed = { fragmentMemoBinding ->
+            fragmentMemoBinding.todoListView.adapter = null
         })
 
+    private val viewModel : ViewModel by inject()
     private var setJob : Job? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,19 +38,23 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
 
         Log.e(TAG, "onViewCreated()")
 
-        val serialNum = 0
-        val viewModel : ViewModel by inject()
+        val serialNum = 0 // 메모 일련번호
         val adapter = MemoAdapter(requireContext(), viewModel)
+
+        // RecyclerView 스와이프 기능
         val itemTouchHelper = ItemTouchHelper(SwipeController(adapter))
         itemTouchHelper.attachToRecyclerView(binding.todoListView)
 
-        val month =  (CalendarDay.today().month + 1).toString()
-        val day = CalendarDay.today().day.toString()
-        val date = "${month}월 ${day}일"
-        Log.e("Memo", CalendarDay.today().date.toString())
-
+        //상단에 날짜 표시
+        // run = 마지막 줄 return
+        val date = run {
+            val month =  (CalendarDay.today().month + 1).toString()
+            val day = CalendarDay.today().day.toString()
+            "${month}월 ${day}일"
+        }
         binding.todayDate.text = date
 
+        // 메모 저장
         binding.saveBtn.setOnClickListener {
             val memo = binding.memoEdit.text.toString()
             if (memo.isNotEmpty()){
@@ -60,17 +63,16 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
                         viewModel.addMemo(MemoDataModel(serialNum, memo, false))
                     }
                 }
+            } else {
+                Toast.makeText(requireContext(), "내용을 입력해주세요", Toast.LENGTH_SHORT).show()
             }
         }
 
-        viewModel.getAllMemo().observe(viewLifecycleOwner, Observer {
+        // 모든 메모 가져오기
+        viewModel.getAllMemo().observe(viewLifecycleOwner, Observer { list ->
             adapter.removeAll()
-            for (i in it.indices){
-                val item = MemoDataModel(
-                    it[i].serialNum,
-                    it[i].content,
-                    it[i].completion)
-                adapter.addItem(item)
+            list.let {
+                adapter.list = it as ArrayList<MemoDataModel>
             }
             binding.todoListView.adapter = adapter
             binding.todoListView.layoutManager = LinearLayoutManager(requireContext())

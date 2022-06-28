@@ -36,4 +36,7 @@
     <style name="TimePickerTheme">
         <item name="android:textColorPrimary">@color/white</item>
     </style>
+    <style name="ModifyTimePickerTheme">
+        <item name="android:textColorPrimary">@color/classicBlue</item>
+    </style>
 </resources>
