@@ -45,14 +45,14 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         val itemTouchHelper = ItemTouchHelper(SwipeController(adapter))
         itemTouchHelper.attachToRecyclerView(binding.todoListView)
 
-        //상단에 날짜 표시
-        // run = 마지막 줄 return
+        // 상단에 날짜 표시
         val date = run {
             val month =  (CalendarDay.today().month + 1).toString()
             val day = CalendarDay.today().day.toString()
             "${month}월 ${day}일"
         }
         binding.todayDate.text = date
+        binding.todayDate.text
 
         // 메모 저장
         binding.saveBtn.setOnClickListener {
@@ -71,7 +71,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         // 모든 메모 가져오기
         viewModel.getAllMemo().observe(viewLifecycleOwner, Observer { list ->
             adapter.removeAll()
-            list.let {
+            list?.let {
                 adapter.list = it as ArrayList<MemoDataModel>
             }
             binding.todoListView.adapter = adapter

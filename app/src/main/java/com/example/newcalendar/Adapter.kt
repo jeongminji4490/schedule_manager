@@ -103,7 +103,7 @@ class MemoAdapter (
         fun onBind(item : MemoDataModel){
             binding.memo = item
             binding.completionBox.isChecked = item.completion
-            binding.completionBox.setOnCheckedChangeListener { button, b ->
+            binding.completionBox.setOnCheckedChangeListener { _, b ->
                 if (b){
                     changeMemo(b, item.serialNum)
                 }else{
@@ -115,14 +115,6 @@ class MemoAdapter (
         private fun changeMemo(completion: Boolean, serialNum: Int){
             viewModel.changeCompletion(completion, serialNum)
         }
-    }
-
-    override fun onItemMove(from_position: Int, to_position: Int): Boolean {
-        return false
-    }
-
-    override fun onItemSwipe(position: Int) {
-        //
     }
 
     override fun onLeftClick(position: Int, viewHolder: RecyclerView.ViewHolder?) {
@@ -137,6 +129,14 @@ class MemoAdapter (
         CoroutineScope(Dispatchers.IO).launch {
             viewModel.deleteMemo(list[position].serialNum)
         }
+    }
+
+    override fun onItemMove(from_position: Int, to_position: Int): Boolean {
+        return false
+    }
+
+    override fun onItemSwipe(position: Int) {
+        //
     }
 }
 

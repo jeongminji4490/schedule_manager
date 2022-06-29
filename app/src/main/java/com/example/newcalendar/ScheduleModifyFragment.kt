@@ -14,9 +14,10 @@ import com.shashank.sony.fancytoastlib.FancyToast
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
+import kotlin.math.min
 
 class ScheduleModifyFragment(
-    private var serialNum: Int
+    private var serialNum: Int // 일정 일련번호
 ) : DialogFragment() {
 
     private val binding by viewBinding(ModifyScheduleDialogBinding::bind)
@@ -65,47 +66,45 @@ class ScheduleModifyFragment(
             }
         }
 
-        // 기존에 설정헀던 알람이 있다면 취소하고 재설정
-        // 만약 기존에 설정했던 알람이 없다면 알람코드의 값은 -1
-        // 기존에 설정했던 알람을 취소한다면 cancelAlarm 호출
         binding.saveScheduleBtn.setOnClickListener {
-            val date = binding.date.text.toString()
-            val content = binding.content.text.toString()
-            if (content.isEmpty() || importance==3){ //내용 비었을 때, 중요도 설정 안하면 저장 X
+            val date = binding.date.text.toString() // 날짜
+            val content = binding.content.text.toString() // 내용
+            if (content.isEmpty() || importance==3){ //내용 비었을 때 or 중요도 설정 안하면 저장 X
                 FancyToast.makeText(context,"내용 또는 중요도를 입력해주세요",
                     FancyToast.LENGTH_SHORT,
                     FancyToast.INFO,true).show()
-            }else{ // 알람 설정했을 때
+            }else{
                 if (binding.alarmOnOffBtn.isChecked){ // alarm on
                     setJob = lifecycleScope.launch {
+                        // 날짜 시:분:00 형태로 알람시간 설정
                         val hour = binding.timePicker.hour.toString()
                         val minute = binding.timePicker.minute.toString()
                         val alarm = "$date $hour:$minute:00"
-                        if (alarmCode != 1){ // 기존에 설정된 알림이 있다면 취소하고 재설정
-                            cancelAlarm(alarmCode)
+                        if (alarmCode != -1){ // 기존에 설정된 알림이 있다면 취소하고 재설정
+                            cancelAlarm(alarmCode) // 알람 취소
                             withContext(Dispatchers.IO){
-                                viewModel.deleteAlarm(alarmCode)
+                                viewModel.deleteAlarm(alarmCode) // 테이블에서 알람코드 삭제
                             }
                         }
                         val random = (1..100000) // 1~10000 범위에서 알람코드 랜덤으로 생성
                         val alarmCode = random.random()
-                        setAlarm(alarmCode, content, alarm)
+                        setAlarm(alarmCode, content, alarm) // 알람 설정
                         withContext(Dispatchers.IO){
                             viewModel.addSchedule(ScheduleDataModel(serialNum, date, content, alarm, hour, minute, alarmCode, importance))
                             viewModel.addDate(EventDataModel(date))
                             viewModel.addAlarm(AlarmDataModel(alarmCode, alarm, content))
                         }
                     }
-                }else {
-                    setJob = lifecycleScope.launch { // 알람 설정 안했을 때 알람 취소해야함!
+                }else { // alarm off
+                    setJob = lifecycleScope.launch {
                         val alarm = ""
                         withContext(Dispatchers.IO){
                             viewModel.addSchedule(ScheduleDataModel(serialNum, date, content, alarm, "null", "null", -1, importance))
                         }
-                        if (alarmCode != -1){
-                            cancelAlarm(alarmCode)
+                        if (alarmCode != -1){ // 기존에 설정된 알림이 있다면 취소
+                            cancelAlarm(alarmCode) // 알람 취소
                             withContext(Dispatchers.IO){
-                                viewModel.deleteAlarm(alarmCode)
+                                viewModel.deleteAlarm(alarmCode) // 테이블에서 삭제
                             }
                         }
                     }
@@ -133,18 +132,23 @@ class ScheduleModifyFragment(
             withContext(Dispatchers.IO) {
                 schedule = viewModel.getSchedule(serialNum) // 일정 내용 가져오기
             }
-            binding.date.text = schedule.date
-            binding.content.setText(schedule.content)
             if (schedule.hour!="null"){ // 알람 시간이 null 아니면 타임피커 셋팅
-                binding.timePicker.visibility = View.VISIBLE
-                binding.timePicker.setIs24HourView(true)
-                binding.timePicker.hour = schedule.hour.toInt()
-                binding.timePicker.minute = schedule.minute.toInt()
-                binding.alarmOnOffBtn.isChecked = true
+                with(binding) {
+                    date.text = schedule.date
+                    content.setText(schedule.content)
+                    timePicker.visibility = View.VISIBLE
+                    timePicker.setIs24HourView(true)
+                    timePicker.hour = schedule.hour.toInt()
+                    timePicker.minute = schedule.minute.toInt()
+                    alarmOnOffBtn.isChecked = true
+                }
                 alarmCode = schedule.alarm_code // 기존의 알람코드
             }else{
-                binding.timePicker.visibility = View.GONE
-                binding.alarmOnOffBtn.isChecked = false
+                with(binding){
+                    date.text = schedule.date
+                    timePicker.visibility = View.GONE
+                    alarmOnOffBtn.isChecked = false
+                }
             }
             when(schedule.importance){
                 0 -> { binding.veryBtn.isChecked = true }
