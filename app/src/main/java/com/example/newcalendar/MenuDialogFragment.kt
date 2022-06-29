@@ -43,7 +43,7 @@ class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
 
     override fun onClick(v: View?) {
         val id = v?.id
-        if (id == R.id.deleteOkBtn){ // 삭제 (완료는 일정을 완전히 끝냈다는 뜻, 삭제랑 개념이 다름)
+        if (id == R.id.deleteOkBtn){ // 일정 삭제
             job = lifecycleScope.launch {
                 withContext(Dispatchers.IO){
                     viewModel.deleteSchedule(serialNum)
@@ -57,7 +57,7 @@ class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
             context?.let { StyleableToast.makeText(it, "삭제", R.style.deleteToast).show() }
             this.dismiss()
         }
-        if (id == R.id.modifyBtn){ // 변경
+        if (id == R.id.modifyBtn){ // 일정 변경 다이얼로그 호출
             val dialog = ScheduleModifyFragment(serialNum)
             activity?.let {
                 dialog.show(it.supportFragmentManager, "ShowListFragment")

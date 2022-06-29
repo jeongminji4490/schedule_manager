@@ -17,8 +17,8 @@ import org.koin.android.ext.android.inject
 
 class MemoModifyFragment() : DialogFragment() {
 
-    var content: String = ""
-    var serialNum : Int = 0
+    var content: String = "" // 메모 내용
+    var serialNum : Int = 0 // 메모 일련번호
 
     private var job : Job? = null
     private val viewModel : ViewModel by inject()
@@ -38,12 +38,13 @@ class MemoModifyFragment() : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.contentEdit.setText(content)
+
+        binding.contentEdit.setText(content) // 기존 메모 내용 출력
         binding.modifyBtn.setOnClickListener {
-            val newContent = binding.contentEdit.text.toString()
+            val newContent = binding.contentEdit.text.toString() // 변경된 메모 내용
             job = lifecycleScope.launch {
                 withContext(Dispatchers.IO){
-                    viewModel.changeContent(newContent, serialNum)
+                    viewModel.changeContent(newContent, serialNum) // 메모 수정
                 }
             }
             this.dismiss()

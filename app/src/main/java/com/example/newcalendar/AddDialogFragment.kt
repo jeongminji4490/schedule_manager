@@ -88,7 +88,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                 val content = binding.content.text.toString()
                 if (content.isEmpty() || importance==3){ //내용 비었을 때, 중요도 설정 안하면 저장 X
                     FancyToast.makeText(context,"내용 또는 중요도를 입력해주세요",FancyToast.LENGTH_SHORT,FancyToast.INFO,true).show()
-                }else{ // 알람 설정했을 때
+                }else{
                     if (binding.alarmOnOffBtn.isChecked){ // alarm on
                         setJob = lifecycleScope.launch {
                             val hour = binding.timePicker.hour.toString()
@@ -96,15 +96,15 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             val alarm = "$selectedDate $hour:$minute:00"
                             val random = (1..100000) // 1~10000 범위에서 알람코드 랜덤으로 생성
                             val alarmCode = random.random()
-                            setAlarm(alarmCode, content, alarm)
+                            setAlarm(alarmCode, content, alarm) // 알람 설정
                             withContext(Dispatchers.IO){
                                 viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, hour, minute, alarmCode, importance))
                                 viewModel.addDate(EventDataModel(selectedDate))
                                 viewModel.addAlarm(AlarmDataModel(alarmCode, alarm, content))
                             }
                         }
-                    }else {
-                        setJob = lifecycleScope.launch { // 알람 설정 안했을 때
+                    }else { // alarm off
+                        setJob = lifecycleScope.launch {
                             val alarm = ""
                             val alarmCode = -1
                             withContext(Dispatchers.IO){
