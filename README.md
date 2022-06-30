@@ -1,9 +1,9 @@
-<div align="center">
-  <h1>Schedule Manager</h1>
-</div>
 <p align="center">
   <img src="https://user-images.githubusercontent.com/62979330/176619485-7398a432-f83d-44ea-a25b-615c52ad4b7d.PNG" width=15% height=15%>
 </p>
+<div align="center">
+  <h1>Schedule Manager</h1>
+</div>
 <div align="center">
 하루 일과를 체크하고, 달력을 통해 일정을 관리할 수 있도록 기능을 제공하는 일정관리 목적의 안드로이드 앱
 </div>
@@ -21,33 +21,33 @@
 
 ## Libraries
 + __Jetpack__
-  + Room, Navigation, LiveData, ViewModel, DataBinding, DataStore
+  + Room, Navigation, LiveData, ViewModel, DataBinding, DataStore 
 + __Asynchronous programming__
-  + Coroutine
+  + Coroutine 
 + __DI framework__
   + Koin
 + __UI__
-  + __CalendarView__
+  + CalendarView
     + [Material CalendarView](https://github.com/prolificinteractive/material-calendarview)
-  + __Toast__
+  + Toast
     + [styleabletoast](https://github.com/Muddz/StyleableToast)
-  + __Bottom Bar__
+  + Bottom Bar
     + [SmoothBottomBar](https://github.com/ibrahimsn98/SmoothBottomBar)
-  + __Viewbinding management__
+  + Viewbinding management
     + [ViewbindingPropertyDelegate](https://github.com/androidbroadcast/ViewBindingPropertyDelegate)
 
 ## Functions
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/62979330/176653985-b3f84e6c-f27f-4608-84fa-48b38870f2f5.png" width=20% height=20%>
-  <img src="https://user-images.githubusercontent.com/62979330/176653799-cc140cc8-6cd5-4823-8e01-17b9d9db4822.png" width=20% height=20%>
-  <img src="https://user-images.githubusercontent.com/62979330/176654322-305e2b55-7b3a-48ac-8148-d35c5a4bb8a7.png" width=20% height=20%>
-  <img src="https://user-images.githubusercontent.com/62979330/176654433-c44b9485-a585-4af9-a843-a2c176e219b4.png" width=20% height=20%>
+  <img src="https://user-images.githubusercontent.com/62979330/176653985-b3f84e6c-f27f-4608-84fa-48b38870f2f5.png" width=23% height=23%>
+  <img src="https://user-images.githubusercontent.com/62979330/176653799-cc140cc8-6cd5-4823-8e01-17b9d9db4822.png" width=23% height=23%>
+  <img src="https://user-images.githubusercontent.com/62979330/176654322-305e2b55-7b3a-48ac-8148-d35c5a4bb8a7.png" width=23% height=23%>
+  <img src="https://user-images.githubusercontent.com/62979330/176654433-c44b9485-a585-4af9-a843-a2c176e219b4.png" width=23% height=23%>
 </p>
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/62979330/176653479-eacdecd3-c67b-4c0d-943f-68553bd212a4.png" width=20% height=20%>
-  <img src="https://user-images.githubusercontent.com/62979330/176659725-41a8eab6-b2e0-4eb5-a8cb-4bfc46b4b218.png" width=20% height=20%>
-  <img src="https://user-images.githubusercontent.com/62979330/176659863-294b668e-f953-445d-9d16-a3b8b60b04e8.png" width=20% height=20%>
-  <img src="https://user-images.githubusercontent.com/62979330/176659992-8aa3f01b-8f09-4be6-a3ea-9582c4b9d942.png" width=20% height=20%>
+  <img src="https://user-images.githubusercontent.com/62979330/176653479-eacdecd3-c67b-4c0d-943f-68553bd212a4.png" width=23% height=23%>
+  <img src="https://user-images.githubusercontent.com/62979330/176659725-41a8eab6-b2e0-4eb5-a8cb-4bfc46b4b218.png" width=23% height=23%>
+  <img src="https://user-images.githubusercontent.com/62979330/176659863-294b668e-f953-445d-9d16-a3b8b60b04e8.png" width=23% height=23%>
+  <img src="https://user-images.githubusercontent.com/62979330/176659992-8aa3f01b-8f09-4be6-a3ea-9582c4b9d942.png" width=23% height=23%>
 </p>
 
 ### 1. TODO
@@ -56,7 +56,7 @@
 + 할 일 완료
   + 할 일 완료 시 체크박스를 클릭하여 완료되었음을 표시
 + 할 일 변경 및 삭제
-  + 아이템을 양 옆으로 스와이프하여 변경하거나 삭제
+  + 할 일 아이템을 양 옆으로 스와이프하여 변경하거나 삭제
 
 ### 2. Calendar
 + 달력
