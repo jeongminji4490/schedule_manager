@@ -68,6 +68,17 @@
   + 일정 아이템을 클릭하면 변경 또는 삭제 가능
 + 알람
   + 알람 설정 시 설정한 시간에 Notification 발생
+  
+## Version Test
+|API Level|Test|
+|------|---|
+|32|OK|
+|31|OK|
+|30|OK|
+|29|OK|
+|28|OK|
+|27|OK|
+|26|OK|
 
 ## License
 + Image : All icons are resources of [Flaticon.com](https://www.flaticon.com/)
