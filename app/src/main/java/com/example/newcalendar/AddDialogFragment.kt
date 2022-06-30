@@ -1,6 +1,5 @@
 package com.example.newcalendar
 
-import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,16 +8,13 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.withCreated
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.newcalendar.databinding.AddScheduleDialogBinding
 import com.shashank.sony.fancytoastlib.FancyToast
-import es.dmoral.toasty.Toasty
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import org.koin.android.ext.android.inject
-import java.util.*
 
 class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다이얼로그
 
@@ -32,7 +28,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
     // 알람 데이터
     private lateinit var selectedDate : String // 선택된 날짜
     private var serialNum = 0 // 일련번호
-    private var importance = 3 // 일정 중요도 (기본값 : 3)
+    private var importance = 3 // 일정 중요도 (기본값 : 3 (어떤 항목도 선택되지 않았을 때) )
 
     override fun onCreateView(
         inflater: LayoutInflater,
