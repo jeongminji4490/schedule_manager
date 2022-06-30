@@ -2,18 +2,14 @@ package com.example.newcalendar
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.bumptech.glide.Glide
 import com.example.newcalendar.databinding.FragmentMemoBinding
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +17,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
-import org.koin.core.logger.KOIN_TAG
 
 class MemoFragment : Fragment(R.layout.fragment_memo) {
 
@@ -35,8 +30,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.e(TAG, "onViewCreated()")
 
         val serialNum = 0 // 메모 일련번호
         val adapter = MemoAdapter(requireContext(), viewModel)

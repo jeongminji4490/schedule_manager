@@ -9,6 +9,7 @@ import com.prolificinteractive.materialcalendarview.spans.DotSpan
 import java.util.*
 
 
+// 주말 강조 및 도트 Decorator
 class EventDecorator() : DayViewDecorator {
 
     private var color = 0

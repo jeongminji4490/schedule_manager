@@ -6,12 +6,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
-import android.view.View
-import androidx.lifecycle.LifecycleOwner
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,7 +13,6 @@ import java.util.*
 class AlarmFunctions(private val context: Context?){
 
     private lateinit var pendingIntent: PendingIntent
-    private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
 
     @SuppressLint("UnspecifiedImmutableFlag")
     fun callAlarm(time : String, alarm_code : Int, content : String){
@@ -30,10 +23,8 @@ class AlarmFunctions(private val context: Context?){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
             pendingIntent=PendingIntent.getBroadcast(context,alarm_code,receiverIntent,PendingIntent.FLAG_IMMUTABLE);
-            Log.e("AlarmFunctions", alarm_code.toString());
         }else{
             pendingIntent=PendingIntent.getBroadcast(context,alarm_code,receiverIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-            Log.e("AlarmFunctions", alarm_code.toString());
         }
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd H:mm:ss")
@@ -43,8 +34,6 @@ class AlarmFunctions(private val context: Context?){
         } catch (e: ParseException) {
             e.printStackTrace()
         }
-
-        Log.e("dateFormat", datetime.toString())
 
         val calendar = Calendar.getInstance()
         calendar.time = datetime
@@ -60,10 +49,8 @@ class AlarmFunctions(private val context: Context?){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
             pendingIntent=PendingIntent.getBroadcast(context,alarm_code,intent,PendingIntent.FLAG_IMMUTABLE);
-            Log.e("AlarmFunctions", alarm_code.toString());
         }else{
             pendingIntent=PendingIntent.getBroadcast(context,alarm_code,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-            Log.e("AlarmFunctions", alarm_code.toString());
         }
 
         alarmManager.cancel(pendingIntent)

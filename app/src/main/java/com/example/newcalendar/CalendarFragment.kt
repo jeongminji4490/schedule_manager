@@ -56,7 +56,6 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
                 dateSaveModule.setDate(selectedDate)
             }
             callList()
-            Log.e(TAG, selectedDate)
         }
 
         // 일정 있는 날짜에 도트 찍기
@@ -88,9 +87,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
                 }
             }
         }
-
         callList()
-        Log.e(TAG, selectedDate)
     }
 
     // 선택된 날짜에 해당하는 일정 목록 가져오기

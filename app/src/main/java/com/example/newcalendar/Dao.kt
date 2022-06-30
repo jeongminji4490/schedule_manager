@@ -1,12 +1,10 @@
 package com.example.newcalendar
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
-import java.net.ContentHandler
 
 @Dao
-interface MemoDao {
+interface MemoDao { // 메모 테이블 관련
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addMemo(item: MemoDataModel)
 

@@ -14,7 +14,6 @@ import com.shashank.sony.fancytoastlib.FancyToast
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
-import kotlin.math.min
 
 class ScheduleModifyFragment(
     private var serialNum: Int // 일정 일련번호
@@ -116,12 +115,10 @@ class ScheduleModifyFragment(
     }
 
     private fun setAlarm(alarmCode : Int, content : String, alarm : String){
-        Log.e(TAG, "call alarm $alarmCode")
         alarmFunctions.callAlarm(alarm, alarmCode, content)
     }
 
     private fun cancelAlarm(alarmCode: Int){
-        Log.e(TAG, "cancel alarm $alarmCode")
         alarmFunctions.cancelAlarm(alarmCode)
     }
 
@@ -146,6 +143,7 @@ class ScheduleModifyFragment(
             }else{
                 with(binding){
                     date.text = schedule.date
+                    content.setText(schedule.content)
                     timePicker.visibility = View.GONE
                     alarmOnOffBtn.isChecked = false
                 }

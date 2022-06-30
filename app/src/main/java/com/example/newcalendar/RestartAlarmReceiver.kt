@@ -3,15 +3,11 @@ package com.example.newcalendar
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.util.Log
-import androidx.lifecycle.Observer
-import androidx.room.Database
-import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.reflect.Array
 
+// 재부팅 시 실행될 리시버
 class RestartAlarmReceiver : BroadcastReceiver() {
 
     private val coroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
@@ -29,7 +25,7 @@ class RestartAlarmReceiver : BroadcastReceiver() {
                         val time = list[i].time
                         val code = list[i].alarm_code
                         val content = list[i].content
-                        functions.callAlarm(time, code, content)
+                        functions.callAlarm(time, code, content) // 알람 실행
                     }
                 }
             }

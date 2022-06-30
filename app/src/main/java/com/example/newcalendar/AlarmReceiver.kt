@@ -10,10 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
-import android.view.View
 import androidx.core.app.NotificationCompat
-import androidx.room.Dao
-import androidx.room.Room
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,14 +18,13 @@ import kotlinx.coroutines.launch
 
 class AlarmReceiver() : BroadcastReceiver() {
 
-    //private val db by lazy { AppDatabase }
     private val coroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
     private lateinit var functions: AlarmFunctions
 
     private lateinit var manager: NotificationManager
     private lateinit var builder: NotificationCompat.Builder
 
-    //오레오 이상은 반드시 채널을 설정해줘야 Notification이 작동함
+    //오레오 이상은 반드시 채널을 설정해줘야 Notification 작동함
     companion object{
         const val CHANNEL_ID = "channel"
         const val CHANNEL_NAME = "channel1"
@@ -38,18 +34,15 @@ class AlarmReceiver() : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         manager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { //Oreo 이상
-            manager.createNotificationChannel( //NotificationChannel 인스턴스를 createNotificationChannel()에 전달하여 앱 알림 채널을 시스템에 등록
-                NotificationChannel(
-                    CHANNEL_ID,
-                    CHANNEL_NAME,
-                    NotificationManager.IMPORTANCE_DEFAULT
-                )
+        manager.createNotificationChannel( //NotificationChannel 인스턴스를 createNotificationChannel()에 전달하여 앱 알림 채널을 시스템에 등록
+            NotificationChannel(
+                CHANNEL_ID,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT
             )
-            NotificationCompat.Builder(context, CHANNEL_ID)
-        } else {
-            NotificationCompat.Builder(context)
-        }
+        )
+
+        builder = NotificationCompat.Builder(context, CHANNEL_ID)
 
         val intent2 = Intent(context, AlarmService::class.java)
         val requestCode = intent?.extras!!.getInt("alarm_rqCode")
@@ -59,11 +52,6 @@ class AlarmReceiver() : BroadcastReceiver() {
 
         functions = AlarmFunctions(context)
         coroutineScope.launch {
-//            val db = Room.databaseBuilder(
-//                context.applicationContext,
-//                AppDatabase::class.java,
-//                "SCHEDULE_DB"
-//            ).build()
             val db = AppDatabase.getInstance(context)
             db?.alarmDao?.deleteAlarm(requestCode)
         }
@@ -75,7 +63,7 @@ class AlarmReceiver() : BroadcastReceiver() {
         }
 
         val notification = builder.setContentTitle(title)
-            .setContentText("SIMSME")
+            .setContentText("SCHEDULE MANAGER")
             .setSmallIcon(R.drawable.btn_star)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
