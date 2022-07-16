@@ -30,26 +30,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         binding.bottomBar.setupWithNavController(menu, navController)
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.e(TAG, "onStart()")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.e(TAG, "onPause()")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.e(TAG, "onStop()")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e(TAG, "onDestroy()")
-    }
-
     companion object{
         const val TAG = "MainActivity"
     }

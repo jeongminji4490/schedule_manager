@@ -45,7 +45,6 @@ class ScheduleAdapter : RecyclerView.Adapter<ScheduleAdapter.Holder>() {
     }
 
     inner class Holder(val view: View) : RecyclerView.ViewHolder(view){
-
         fun onBind(item : ScheduleDataModel, size: Int){
             binding.schedule = item
         }
@@ -88,7 +87,6 @@ class MemoAdapter (
     }
 
     inner class Holder(val view: View) : RecyclerView.ViewHolder(view) {
-
         fun onBind(item: MemoDataModel) {
             binding.memo = item
             binding.completionBox.isChecked = item.completion // 체크 유무 셋팅
@@ -100,7 +98,6 @@ class MemoAdapter (
                 }
             }
         }
-
         private fun changeCompletion(completion: Boolean, serialNum: Int) { // 체크 유무 변경
             viewModel.changeCompletion(completion, serialNum)
         }

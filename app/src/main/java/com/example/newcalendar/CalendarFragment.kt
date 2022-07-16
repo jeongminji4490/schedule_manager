@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.newcalendar.databinding.FragmentCalendarBinding
 import kotlinx.coroutines.Job
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListener {
 
@@ -24,13 +25,14 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
     })
 
     private lateinit var selectedDate: String // 달력에서 선택한 날짜
-    private val adapter by lazy { ScheduleAdapter() }
+    private val scheduleAdapter by lazy { ScheduleAdapter() }
     private val dateSaveModule : DateSaveModule by inject() // 날짜를 저장하는 DataStore
-    private val viewModel : ViewModel by inject()
-    private var setJob : Job? = null
+    private val viewModel : ViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.addScheduleBtn.setOnClickListener(this)
 
         binding.calendarView.selectedDate = CalendarDay.today() // 오늘 날짜 출력
         binding.calendarView.addDecorators(SaturdayDecorator(), SundayDecorator()) // 주말 강조
@@ -40,11 +42,9 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
         var day = binding.calendarView.selectedDate!!.day
         selectedDate = "$year-$month-$day"
 
-        setJob = lifecycleScope.launch {
+        lifecycleScope.launch {
             dateSaveModule.setDate(selectedDate)
         }
-
-        binding.addScheduleBtn.setOnClickListener(this)
 
         // 달력 - 날짜 선택 Listener
         binding.calendarView.setOnDateChangedListener { _, date, _ ->
@@ -52,7 +52,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
             month = date.month + 1
             day = date.day
             selectedDate = "$year-$month-$day"
-            setJob = lifecycleScope.launch {
+            lifecycleScope.launch {
                 dateSaveModule.setDate(selectedDate)
             }
             callList()
@@ -74,7 +74,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
         })
 
         // recyclerview item click -> open MenuDialog
-        adapter.itemClick = object : ScheduleAdapter.ItemClick{
+        scheduleAdapter.itemClick = object : ScheduleAdapter.ItemClick{
             override fun onClick(view: View, position: Int, list: ArrayList<ScheduleDataModel>) {
                 val dialog = MenuDialogFragment().apply {
                     serialNum = list[position].serialNum
@@ -93,15 +93,17 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
     // 선택된 날짜에 해당하는 일정 목록 가져오기
     private fun callList(){
         viewModel.getAllSchedule(selectedDate).observe(viewLifecycleOwner, androidx.lifecycle.Observer { list ->
-            adapter.removeAll()
+            scheduleAdapter.removeAll()
             if (list.isEmpty()){ // 해당 날짜에 목록이 없을 때 "이벤트 없음" 표시
                 binding.emptyText.visibility = View.VISIBLE
             }else{
                 binding.emptyText.visibility = View.GONE
-                adapter.list = list as ArrayList<ScheduleDataModel>
+                scheduleAdapter.list = list as ArrayList<ScheduleDataModel>
             }
-            binding.scheduleListview.adapter = adapter
-            binding.scheduleListview.layoutManager=LinearLayoutManager(requireContext())
+            binding.scheduleListview.apply {
+                adapter = scheduleAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+            }
         })
     }
 
@@ -124,22 +126,6 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
         super.onResume()
         binding.calendarView.selectedDate = CalendarDay.today()
         Log.e(TAG, "onResume()")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        setJob?.cancel()
-        Log.e(TAG, "onStop()")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.e(TAG, "onDestroyView()")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e(TAG, "onDestroy()")
     }
 
     companion object{

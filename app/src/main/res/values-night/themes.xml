@@ -15,7 +15,7 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:fontFamily">@font/sc_dream4</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
     <style name="CalendarWidgetHeader">

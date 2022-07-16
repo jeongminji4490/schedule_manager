@@ -34,7 +34,8 @@ class AlarmReceiver() : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         manager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        manager.createNotificationChannel( //NotificationChannel 인스턴스를 createNotificationChannel()에 전달하여 앱 알림 채널을 시스템에 등록
+        //NotificationChannel 인스턴스를 createNotificationChannel()에 전달하여 앱 알림 채널을 시스템에 등록
+        manager.createNotificationChannel(
             NotificationChannel(
                 CHANNEL_ID,
                 CHANNEL_NAME,
@@ -56,7 +57,7 @@ class AlarmReceiver() : BroadcastReceiver() {
             db?.alarmDao?.deleteAlarm(requestCode)
         }
 
-        val pendingIntent: PendingIntent = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
+        val pendingIntent = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
             PendingIntent.getActivity(context,requestCode,intent2,PendingIntent.FLAG_IMMUTABLE); //Activity를 시작하는 인텐트 생성
         }else {
             PendingIntent.getActivity(context,requestCode,intent2,PendingIntent.FLAG_UPDATE_CURRENT);
