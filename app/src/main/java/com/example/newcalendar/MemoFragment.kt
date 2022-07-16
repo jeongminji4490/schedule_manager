@@ -1,7 +1,6 @@
 package com.example.newcalendar
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MemoFragment : Fragment(R.layout.fragment_memo) {
 
@@ -25,8 +24,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             fragmentMemoBinding.todoListView.adapter = null
         })
 
-    private val viewModel : ViewModel by inject()
-    private var setJob : Job? = null
+    private val viewModel : ViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,7 +49,7 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
         binding.saveBtn.setOnClickListener {
             val memo = binding.memoEdit.text.toString()
             if (memo.isNotEmpty()){
-                setJob = lifecycleScope.launch {
+                lifecycleScope.launch {
                     withContext(Dispatchers.IO){
                         viewModel.addMemo(MemoDataModel(serialNum, memo, false))
                     }
@@ -70,27 +68,6 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             binding.todoListView.adapter = adapter
             binding.todoListView.layoutManager = LinearLayoutManager(requireContext())
         })
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.e(TAG, "onPause()")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        setJob?.cancel()
-        Log.e(TAG, "onStop()")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.e(TAG, "onDestroyView()")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e(TAG, "onDestroy()")
     }
 
     companion object{

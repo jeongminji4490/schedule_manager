@@ -14,19 +14,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MemoModifyFragment() : DialogFragment() {
 
+    private val binding by viewBinding(ModifyMemoDialogBinding::bind)
+    private val viewModel : ViewModel by viewModel()
     var content: String = "" // 메모 내용
     var serialNum : Int = 0 // 메모 일련번호
-
-    private var job : Job? = null
-    private val viewModel : ViewModel by inject()
-
-    private val binding by viewBinding(ModifyMemoDialogBinding::bind,
-    onViewDestroyed = {
-        job?.cancel()
-    })
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,30 +37,12 @@ class MemoModifyFragment() : DialogFragment() {
         binding.contentEdit.setText(content) // 기존 메모 내용 출력
         binding.modifyBtn.setOnClickListener {
             val newContent = binding.contentEdit.text.toString() // 변경된 메모 내용
-            job = lifecycleScope.launch {
+            lifecycleScope.launch {
                 withContext(Dispatchers.IO){
                     viewModel.changeContent(newContent, serialNum) // 메모 수정
                 }
             }
             this.dismiss()
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.e(TAG, "onDestroyView")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e(TAG, "onDestroy")
-    }
-
-    companion object{
-        const val TAG = "MemoModifyFragment"
     }
 }

@@ -14,16 +14,15 @@ import com.shashank.sony.fancytoastlib.FancyToast
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ScheduleModifyFragment(
     private var serialNum: Int // 일정 일련번호
 ) : DialogFragment() {
 
     private val binding by viewBinding(ModifyScheduleDialogBinding::bind)
-    private val viewModel : ViewModel by inject()
+    private val viewModel : ViewModel by viewModel()
     private lateinit var schedule : ScheduleDataModel
-    private var getJob : Job? = null
-    private var setJob : Job? = null
 
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private var alarmCode = -1 // 알람 코드, 기본값 : -1 (기존에 알람이 설정되지 않았을 때)
@@ -74,7 +73,7 @@ class ScheduleModifyFragment(
                     FancyToast.INFO,true).show()
             }else{
                 if (binding.alarmOnOffBtn.isChecked){ // alarm on
-                    setJob = lifecycleScope.launch {
+                      lifecycleScope.launch {
                         // 날짜 시:분:00 형태로 알람시간 설정
                         val hour = binding.timePicker.hour.toString()
                         val minute = binding.timePicker.minute.toString()
@@ -89,16 +88,36 @@ class ScheduleModifyFragment(
                         val alarmCode = random.random()
                         setAlarm(alarmCode, content, alarm) // 알람 설정
                         withContext(Dispatchers.IO){
-                            viewModel.addSchedule(ScheduleDataModel(serialNum, date, content, alarm, hour, minute, alarmCode, importance))
+                            viewModel.addSchedule(
+                                ScheduleDataModel(
+                                    serialNum,
+                                    date,
+                                    content,
+                                    alarm,
+                                    hour,
+                                    minute,
+                                    alarmCode,
+                                    importance)
+                            )
                             viewModel.addDate(EventDataModel(date))
                             viewModel.addAlarm(AlarmDataModel(alarmCode, alarm, content))
                         }
                     }
                 }else { // alarm off
-                    setJob = lifecycleScope.launch {
+                    lifecycleScope.launch {
                         val alarm = ""
                         withContext(Dispatchers.IO){
-                            viewModel.addSchedule(ScheduleDataModel(serialNum, date, content, alarm, "null", "null", -1, importance))
+                            viewModel.addSchedule(
+                                ScheduleDataModel(
+                                    serialNum,
+                                    date,
+                                    content,
+                                    alarm,
+                                    "null",
+                                    "null",
+                                    -1,
+                                    importance)
+                            )
                         }
                         if (alarmCode != -1){ // 기존에 설정된 알림이 있다면 취소
                             cancelAlarm(alarmCode) // 알람 취소
@@ -108,7 +127,7 @@ class ScheduleModifyFragment(
                         }
                     }
                 }
-                context?.let { StyleableToast.makeText(it, "저장", R.style.saveToast).show() }
+                StyleableToast.makeText(requireContext(), "저장", R.style.saveToast).show()
                 this.dismiss()
             }
         }
@@ -125,7 +144,7 @@ class ScheduleModifyFragment(
     override fun onStart() {
         super.onStart()
         // 기존 내용으로 일정 변경화면 세팅
-        getJob = lifecycleScope.launch() {
+        lifecycleScope.launch() {
             withContext(Dispatchers.IO) {
                 schedule = viewModel.getSchedule(serialNum) // 일정 내용 가져오기
             }
@@ -154,18 +173,6 @@ class ScheduleModifyFragment(
                 2 -> { binding.lessBtn.isChecked = true }
             }
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.e("AddDialogFragment", "onPause()")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        getJob?.cancel()
-        setJob?.cancel()
-        Log.e(TAG, "onStop()")
     }
 
     companion object{

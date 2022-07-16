@@ -1,7 +1,6 @@
 package com.example.newcalendar
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +14,13 @@ import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다이얼로그
 
     private val binding by viewBinding(AddScheduleDialogBinding::bind)
     private val dateSaveModule : DateSaveModule by inject()
-    private val viewModel : ViewModel by inject()
-    private var setJob : Job? = null
-    private var getJob : Job? = null
+    private val viewModel : ViewModel by viewModel()
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
 
     // 알람 데이터
@@ -42,8 +40,11 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.saveScheduleBtn.setOnClickListener(this)
+        binding.cancelDialogBtn.setOnClickListener(this)
+
         // 선택된 날짜 가져오기
-        getJob = lifecycleScope.launch {
+        lifecycleScope.launch {
             selectedDate = dateSaveModule.date.first()
             binding.dateText.text = selectedDate
         }
@@ -74,8 +75,6 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                 }
             }
         }
-        binding.saveScheduleBtn.setOnClickListener(this)
-        binding.cancelDialogBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -83,10 +82,15 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
             R.id.saveScheduleBtn -> {
                 val content = binding.content.text.toString()
                 if (content.isEmpty() || importance==3){ //내용 비었을 때, 중요도 설정 안하면 저장 X
-                    FancyToast.makeText(context,"내용 또는 중요도를 입력해주세요",FancyToast.LENGTH_SHORT,FancyToast.INFO,true).show()
+                    FancyToast.makeText(
+                        context,
+                        "내용 또는 중요도를 입력해주세요",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.INFO,
+                        true).show()
                 }else{
                     if (binding.alarmOnOffBtn.isChecked){ // alarm on
-                        setJob = lifecycleScope.launch {
+                        lifecycleScope.launch {
                             val hour = binding.timePicker.hour.toString()
                             val minute = binding.timePicker.minute.toString()
                             val alarm = "$selectedDate $hour:$minute:00"
@@ -94,22 +98,42 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             val alarmCode = random.random()
                             setAlarm(alarmCode, content, alarm) // 알람 설정
                             withContext(Dispatchers.IO){
-                                viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, hour, minute, alarmCode, importance))
+                                viewModel.addSchedule(
+                                    ScheduleDataModel(
+                                        serialNum,
+                                        selectedDate,
+                                        content,
+                                        alarm,
+                                        hour,
+                                        minute,
+                                        alarmCode,
+                                        importance)
+                                )
                                 viewModel.addDate(EventDataModel(selectedDate))
                                 viewModel.addAlarm(AlarmDataModel(alarmCode, alarm, content))
                             }
                         }
                     }else { // alarm off
-                        setJob = lifecycleScope.launch {
+                        lifecycleScope.launch {
                             val alarm = ""
                             val alarmCode = -1
                             withContext(Dispatchers.IO){
-                                viewModel.addSchedule(ScheduleDataModel(serialNum, selectedDate, content, alarm, "null", "null", alarmCode, importance))
+                                viewModel.addSchedule(
+                                    ScheduleDataModel(
+                                        serialNum,
+                                        selectedDate,
+                                        content,
+                                        alarm,
+                                        "null",
+                                        "null",
+                                        alarmCode,
+                                        importance)
+                                )
                                 viewModel.addDate(EventDataModel(selectedDate))
                             }
                         }
                     }
-                    context?.let { StyleableToast.makeText(it, "저장", R.style.saveToast).show() }
+                    StyleableToast.makeText(requireContext(), "저장", R.style.saveToast).show()
                     this.dismiss()
                 }
             }
@@ -121,32 +145,6 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
 
     private fun setAlarm(alarmCode : Int, content : String, alarm : String){
         alarmFunctions.callAlarm(alarm, alarmCode, content)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.e(TAG, "onPause()")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        getJob?.cancel()
-        setJob?.cancel()
-        Log.e(TAG, "onStop()")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.e(TAG, "onDestroyView()")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e(TAG, "onDestroy()")
-    }
-
-    companion object{
-        const val TAG = "AddDialogFragment"
     }
 
 }

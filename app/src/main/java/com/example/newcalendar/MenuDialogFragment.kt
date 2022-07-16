@@ -12,6 +12,7 @@ import com.example.newcalendar.databinding.MenuDialogBinding
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 // 일정을 삭제 or 수정 할 수 있는 다이얼로그
 class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
@@ -23,8 +24,7 @@ class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
 
     private val binding by viewBinding(MenuDialogBinding::bind)
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
-    private var job : Job? = null
-    private val viewModel : ViewModel by inject()
+    private val viewModel : ViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +44,7 @@ class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
     override fun onClick(v: View?) {
         val id = v?.id
         if (id == R.id.deleteOkBtn){ // 일정 삭제
-            job = lifecycleScope.launch {
+            lifecycleScope.launch {
                 withContext(Dispatchers.IO){
                     viewModel.deleteSchedule(serialNum)
                     viewModel.deleteAlarm(alarmCode)
@@ -54,7 +54,7 @@ class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
                 }
             }
             alarmFunctions.cancelAlarm(alarmCode) // 알람 취소
-            context?.let { StyleableToast.makeText(it, "삭제", R.style.deleteToast).show() }
+            StyleableToast.makeText(requireContext(), "삭제", R.style.deleteToast).show()
             this.dismiss()
         }
         if (id == R.id.modifyBtn){ // 일정 변경 다이얼로그 호출
@@ -64,15 +64,5 @@ class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
             }
             this.dismiss()
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        job?.cancel()
-        Log.e(TAG, "onStop()")
-    }
-
-    companion object{
-        const val TAG = "MenuDialogFragment"
     }
 }
