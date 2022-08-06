@@ -1,4 +1,4 @@
-package com.example.newcalendar
+package com.example.newcalendar.view.ui.memo
 
 import androidx.recyclerview.widget.RecyclerView
 

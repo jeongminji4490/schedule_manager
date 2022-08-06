@@ -1,4 +1,4 @@
-package com.example.newcalendar
+package com.example.newcalendar.view.ui.calendar
 
 import android.graphics.Color
 import android.text.style.ForegroundColorSpan

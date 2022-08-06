@@ -1,18 +1,19 @@
-package com.example.newcalendar
+package com.example.newcalendar.view.ui.calendar
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.newcalendar.*
+import com.example.newcalendar.alarm.AlarmFunctions
 import com.example.newcalendar.databinding.MenuDialogBinding
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.newcalendar.viewmodel.*
 
 // 일정을 삭제 or 수정 할 수 있는 다이얼로그
 class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
@@ -24,7 +25,9 @@ class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
 
     private val binding by viewBinding(MenuDialogBinding::bind)
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
-    private val viewModel : ViewModel by viewModel()
+    private val scheduleViewModel : ScheduleViewModel by viewModel()
+    private val alarmViewModel : AlarmViewModel by viewModel()
+    private val eventViewModel : EventViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,10 +49,10 @@ class MenuDialogFragment()  : DialogFragment(), View.OnClickListener{
         if (id == R.id.deleteOkBtn){ // 일정 삭제
             lifecycleScope.launch {
                 withContext(Dispatchers.IO){
-                    viewModel.deleteSchedule(serialNum)
-                    viewModel.deleteAlarm(alarmCode)
+                    scheduleViewModel.deleteSchedule(serialNum)
+                    alarmViewModel.deleteAlarm(alarmCode)
                     if (size == 1){ // 일정이 하나만 남았다면
-                        viewModel.deleteDate(selectedDate) // 도트 삭제
+                        eventViewModel.deleteDate(selectedDate) // 도트 삭제
                     }
                 }
             }

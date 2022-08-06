@@ -1,18 +1,12 @@
-package com.example.newcalendar
+package com.example.newcalendar.di
 
 import android.app.Application
 import androidx.room.Room
 import org.koin.android.ext.koin.androidApplication
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import com.example.newcalendar.db.*
 
-val module = module {
-    single {
-        DateSaveModule(androidApplication())
-    }
-}
-
-val scheduleModule = module {
+val databaseModule = module {
 
     fun provideDatabase(application: Application) : AppDatabase {
         return Room.databaseBuilder(application, AppDatabase::class.java, "SCHEDULE_DB")
@@ -54,11 +48,5 @@ val scheduleModule = module {
 
     single {
         provideAlarmDao(get())
-    }
-}
-
-val viewModel = module {
-    viewModel {
-        ViewModel(get(), get(), get(), get())
     }
 }

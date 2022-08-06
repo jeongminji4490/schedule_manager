@@ -15,12 +15,12 @@
         android:name=".App"
         android:theme="@style/Theme.Newcalendar">
         <receiver
-            android:name=".AlarmReceiver"
+            android:name=".alarm.receiver.AlarmReceiver"
             android:enabled="true"
             android:exported="false">
         </receiver>
         <receiver
-            android:name=".RestartAlarmReceiver"
+            android:name=".alarm.receiver.RestartAlarmReceiver"
             android:enabled="true"
             android:exported="false" >
             <intent-filter>

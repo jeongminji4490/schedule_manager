@@ -1,7 +1,6 @@
-package com.example.newcalendar
+package com.example.newcalendar.view.ui.calendar
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,20 +8,28 @@ import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.newcalendar.*
+import com.example.newcalendar.alarm.AlarmFunctions
 import com.example.newcalendar.databinding.ModifyScheduleDialogBinding
+import com.example.newcalendar.model.entity.Alarm
+import com.example.newcalendar.model.entity.Event
+import com.example.newcalendar.model.entity.Schedule
 import com.shashank.sony.fancytoastlib.FancyToast
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.newcalendar.viewmodel.*
 
 class ScheduleModifyFragment(
     private var serialNum: Int // 일정 일련번호
 ) : DialogFragment() {
 
     private val binding by viewBinding(ModifyScheduleDialogBinding::bind)
-    private val viewModel : ViewModel by viewModel()
-    private lateinit var schedule : ScheduleDataModel
+    //private val viewModel : ViewModel by viewModel()
+    private val scheduleViewModel : ScheduleViewModel by viewModel()
+    private val alarmViewModel : AlarmViewModel by viewModel()
+    private val eventViewModel : EventViewModel by viewModel()
+    private lateinit var schedule : Schedule
 
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
     private var alarmCode = -1 // 알람 코드, 기본값 : -1 (기존에 알람이 설정되지 않았을 때)
@@ -81,15 +88,15 @@ class ScheduleModifyFragment(
                         if (alarmCode != -1){ // 기존에 설정된 알림이 있다면 취소하고 재설정
                             cancelAlarm(alarmCode) // 알람 취소
                             withContext(Dispatchers.IO){
-                                viewModel.deleteAlarm(alarmCode) // 테이블에서 알람코드 삭제
+                                alarmViewModel.deleteAlarm(alarmCode) // 테이블에서 알람코드 삭제
                             }
                         }
                         val random = (1..100000) // 1~10000 범위에서 알람코드 랜덤으로 생성
                         val alarmCode = random.random()
                         setAlarm(alarmCode, content, alarm) // 알람 설정
                         withContext(Dispatchers.IO){
-                            viewModel.addSchedule(
-                                ScheduleDataModel(
+                            scheduleViewModel.addSchedule(
+                                Schedule(
                                     serialNum,
                                     date,
                                     content,
@@ -99,16 +106,16 @@ class ScheduleModifyFragment(
                                     alarmCode,
                                     importance)
                             )
-                            viewModel.addDate(EventDataModel(date))
-                            viewModel.addAlarm(AlarmDataModel(alarmCode, alarm, content))
+                            eventViewModel.addDate(Event(date))
+                            alarmViewModel.addAlarm(Alarm(alarmCode, alarm, content))
                         }
                     }
                 }else { // alarm off
                     lifecycleScope.launch {
                         val alarm = ""
                         withContext(Dispatchers.IO){
-                            viewModel.addSchedule(
-                                ScheduleDataModel(
+                            scheduleViewModel.addSchedule(
+                                Schedule(
                                     serialNum,
                                     date,
                                     content,
@@ -122,7 +129,7 @@ class ScheduleModifyFragment(
                         if (alarmCode != -1){ // 기존에 설정된 알림이 있다면 취소
                             cancelAlarm(alarmCode) // 알람 취소
                             withContext(Dispatchers.IO){
-                                viewModel.deleteAlarm(alarmCode) // 테이블에서 삭제
+                                alarmViewModel.deleteAlarm(alarmCode) // 테이블에서 삭제
                             }
                         }
                     }
@@ -146,7 +153,7 @@ class ScheduleModifyFragment(
         // 기존 내용으로 일정 변경화면 세팅
         lifecycleScope.launch() {
             withContext(Dispatchers.IO) {
-                schedule = viewModel.getSchedule(serialNum) // 일정 내용 가져오기
+                schedule = scheduleViewModel.getSchedule(serialNum) // 일정 내용 가져오기
             }
             if (schedule.hour!="null"){ // 알람 시간이 null 아니면 타임피커 셋팅
                 with(binding) {

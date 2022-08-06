@@ -7,7 +7,7 @@
     <data>
         <variable
             name="schedule"
-            type="com.example.newcalendar.ScheduleDataModel" />
+            type="com.example.newcalendar.model.entity.Schedule" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

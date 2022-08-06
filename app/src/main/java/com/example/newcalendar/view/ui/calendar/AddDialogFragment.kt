@@ -1,4 +1,4 @@
-package com.example.newcalendar
+package com.example.newcalendar.view.ui.calendar
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,19 +8,27 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.newcalendar.*
+import com.example.newcalendar.alarm.AlarmFunctions
 import com.example.newcalendar.databinding.AddScheduleDialogBinding
+import com.example.newcalendar.model.entity.Alarm
+import com.example.newcalendar.model.entity.Event
+import com.example.newcalendar.model.entity.Schedule
 import com.shashank.sony.fancytoastlib.FancyToast
 import io.github.muddz.styleabletoast.StyleableToast
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.newcalendar.viewmodel.*
 
 class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다이얼로그
 
     private val binding by viewBinding(AddScheduleDialogBinding::bind)
     private val dateSaveModule : DateSaveModule by inject()
-    private val viewModel : ViewModel by viewModel()
+    private val scheduleViewModel : ScheduleViewModel by viewModel()
+    private val alarmViewModel : AlarmViewModel by viewModel()
+    private val eventViewModel : EventViewModel by viewModel()
     private val alarmFunctions by lazy { AlarmFunctions(requireContext()) }
 
     // 알람 데이터
@@ -98,8 +106,8 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             val alarmCode = random.random()
                             setAlarm(alarmCode, content, alarm) // 알람 설정
                             withContext(Dispatchers.IO){
-                                viewModel.addSchedule(
-                                    ScheduleDataModel(
+                                scheduleViewModel.addSchedule(
+                                    Schedule(
                                         serialNum,
                                         selectedDate,
                                         content,
@@ -109,8 +117,8 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                                         alarmCode,
                                         importance)
                                 )
-                                viewModel.addDate(EventDataModel(selectedDate))
-                                viewModel.addAlarm(AlarmDataModel(alarmCode, alarm, content))
+                                eventViewModel.addDate(Event(selectedDate))
+                                alarmViewModel.addAlarm(Alarm(alarmCode, alarm, content))
                             }
                         }
                     }else { // alarm off
@@ -118,8 +126,8 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                             val alarm = ""
                             val alarmCode = -1
                             withContext(Dispatchers.IO){
-                                viewModel.addSchedule(
-                                    ScheduleDataModel(
+                                scheduleViewModel.addSchedule(
+                                    Schedule(
                                         serialNum,
                                         selectedDate,
                                         content,
@@ -129,7 +137,7 @@ class AddDialogFragment : DialogFragment(), View.OnClickListener { // 수정 다
                                         alarmCode,
                                         importance)
                                 )
-                                viewModel.addDate(EventDataModel(selectedDate))
+                                eventViewModel.addDate(Event(selectedDate))
                             }
                         }
                     }

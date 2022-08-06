@@ -1,4 +1,4 @@
-package com.example.newcalendar
+package com.example.newcalendar.alarm.service
 
 import android.app.Service
 import android.content.Intent

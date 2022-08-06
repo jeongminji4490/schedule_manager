@@ -6,11 +6,8 @@
 
     <data>
         <variable
-            name="vm"
-            type="com.example.newcalendar.ViewModel" />
-        <variable
             name="memo"
-            type="com.example.newcalendar.MemoDataModel" />
+            type="com.example.newcalendar.model.entity.Memo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
