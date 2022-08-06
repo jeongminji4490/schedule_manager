@@ -1,25 +1,24 @@
-package com.example.newcalendar
+package com.example.newcalendar.view.ui.memo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.newcalendar.viewmodel.*
+import com.example.newcalendar.R
 import com.example.newcalendar.databinding.ModifyMemoDialogBinding
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MemoModifyFragment() : DialogFragment() {
 
     private val binding by viewBinding(ModifyMemoDialogBinding::bind)
-    private val viewModel : ViewModel by viewModel()
+    private val memoViewModel : MemoViewModel by viewModel()
     var content: String = "" // 메모 내용
     var serialNum : Int = 0 // 메모 일련번호
 
@@ -39,7 +38,7 @@ class MemoModifyFragment() : DialogFragment() {
             val newContent = binding.contentEdit.text.toString() // 변경된 메모 내용
             lifecycleScope.launch {
                 withContext(Dispatchers.IO){
-                    viewModel.changeContent(newContent, serialNum) // 메모 수정
+                    memoViewModel.changeContent(newContent, serialNum) // 메모 수정
                 }
             }
             this.dismiss()

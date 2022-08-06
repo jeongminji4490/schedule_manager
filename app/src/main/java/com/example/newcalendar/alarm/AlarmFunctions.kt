@@ -1,4 +1,4 @@
-package com.example.newcalendar
+package com.example.newcalendar.alarm
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import com.example.newcalendar.alarm.receiver.AlarmReceiver
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*

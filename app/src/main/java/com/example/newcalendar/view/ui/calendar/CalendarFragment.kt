@@ -1,4 +1,4 @@
-package com.example.newcalendar
+package com.example.newcalendar.view.ui.calendar
 
 import android.os.Bundle
 import android.util.Log
@@ -13,9 +13,12 @@ import kotlin.collections.ArrayList
 import android.graphics.Color
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.newcalendar.*
 import com.example.newcalendar.databinding.FragmentCalendarBinding
-import kotlinx.coroutines.Job
+import com.example.newcalendar.model.entity.Schedule
+import com.example.newcalendar.view.adapter.ScheduleAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.newcalendar.viewmodel.*
 
 class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListener {
 
@@ -27,7 +30,8 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
     private lateinit var selectedDate: String // 달력에서 선택한 날짜
     private val scheduleAdapter by lazy { ScheduleAdapter() }
     private val dateSaveModule : DateSaveModule by inject() // 날짜를 저장하는 DataStore
-    private val viewModel : ViewModel by viewModel()
+    private val scheduleViewModel : ScheduleViewModel by viewModel()
+    private val eventViewModel : EventViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +63,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
         }
 
         // 일정 있는 날짜에 도트 찍기
-        viewModel.getAllDates().observe(viewLifecycleOwner, androidx.lifecycle.Observer { list ->
+        eventViewModel.getAllDates().observe(viewLifecycleOwner, androidx.lifecycle.Observer { list ->
             for (i in list.indices){
                 val eventDate = list[i].date.split("-")
                 val year = Integer.parseInt(eventDate[0])
@@ -69,13 +73,14 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
                     .addDecorator(
                         EventDecorator(
                             Color.parseColor("#0E406B"),
-                            Collections.singleton(CalendarDay.from(year, month-1, day))))
+                            Collections.singleton(CalendarDay.from(year, month-1, day)))
+                    )
             }
         })
 
         // recyclerview item click -> open MenuDialog
         scheduleAdapter.itemClick = object : ScheduleAdapter.ItemClick{
-            override fun onClick(view: View, position: Int, list: ArrayList<ScheduleDataModel>) {
+            override fun onClick(view: View, position: Int, list: ArrayList<Schedule>) {
                 val dialog = MenuDialogFragment().apply {
                     serialNum = list[position].serialNum
                     alarmCode = list[position].alarm_code
@@ -92,13 +97,13 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), View.OnClickListe
 
     // 선택된 날짜에 해당하는 일정 목록 가져오기
     private fun callList(){
-        viewModel.getAllSchedule(selectedDate).observe(viewLifecycleOwner, androidx.lifecycle.Observer { list ->
+        scheduleViewModel.getAllSchedule(selectedDate).observe(viewLifecycleOwner, androidx.lifecycle.Observer { list ->
             scheduleAdapter.removeAll()
             if (list.isEmpty()){ // 해당 날짜에 목록이 없을 때 "이벤트 없음" 표시
                 binding.emptyText.visibility = View.VISIBLE
             }else{
                 binding.emptyText.visibility = View.GONE
-                scheduleAdapter.list = list as ArrayList<ScheduleDataModel>
+                scheduleAdapter.list = list as ArrayList<Schedule>
             }
             binding.scheduleListview.apply {
                 adapter = scheduleAdapter
