@@ -7,6 +7,8 @@ import com.example.newcalendar.model.entity.Alarm
 class AlarmViewModel(
     private val aDao : AlarmDao
 ): ViewModel() {
+    fun getAllAlarm() : List<Alarm> = aDao.getAllAlarms()
+
     fun addAlarm(data : Alarm){ // 날짜 추가
         aDao.addAlarm(data)
     }

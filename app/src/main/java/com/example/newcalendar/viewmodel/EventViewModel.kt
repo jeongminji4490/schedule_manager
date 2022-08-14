@@ -9,8 +9,7 @@ class EventViewModel(
     private val eDao : EventDao
 ): ViewModel() {
 
-    fun getAllDates() : LiveData<List<Event>>
-            = eDao.getAllDates()
+    fun getAllDates() : LiveData<List<Event>> = eDao.getAllDates()
 
     fun addDate(data : Event){ // 날짜 추가
         eDao.addDate(data)

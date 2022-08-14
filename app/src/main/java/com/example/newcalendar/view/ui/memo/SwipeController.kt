@@ -104,23 +104,21 @@ class SwipeController() : ItemTouchHelper.Callback() {
         val buttonWidthWithOutPadding = buttonWidth - 10
         val corners = 5f
         val itemView: View = viewHolder.itemView
-        val p = Paint() //Paint 객체 p 생성
+        val p = Paint()
         buttonInstance = null
 
-        //오른쪽으로 스와이프 했을 때, 왼쪽 버튼(수정)이 나와야 함
-        //rectF 클래스로 버튼 형태 구현
         if (buttonsShowedState === ButtonState.LEFT_VISIBLE) {
             val leftButton = RectF(
                 (itemView.left + 10).toFloat(),
                 (itemView.top + 10).toFloat(),
                 itemView.left + buttonWidthWithOutPadding,
                 (itemView.bottom - 10).toFloat()
-            ) //rectF : top, bottom, left, right 에 대한4가지 정보를 가지고 있는 직사각형 클래스 (rect : int, rectF : float)
-            p.color = Color.parseColor("#34568B") //Paint 객체 컬러 지정, setColor 메서드는 int형 인자를 매개변수로 받기 때문에 string 형태의 색상을 Color 클래스의 parseColor 메서드를 이용해 int형으로 바꿔줌
-            c.drawRoundRect(leftButton, corners, corners, p) //drawRoundRect : 원 그리기
+            )
+            p.color = Color.parseColor("#34568B")
+            c.drawRoundRect(leftButton, corners, corners, p)
             drawText("수정", c, leftButton, p)
             buttonInstance = leftButton
-        } else if (buttonsShowedState === ButtonState.RIGHT_VISIBLE) { //왼쪽으로 스와이프 했을 때, 오른쪽 버튼(삭제)이 나와야 함
+        } else if (buttonsShowedState === ButtonState.RIGHT_VISIBLE) {
             val rightButton = RectF(
                 itemView.right - buttonWidthWithOutPadding, (itemView.top + 10).toFloat(),
                 (itemView.right - 10).toFloat(), (itemView.bottom - 10).toFloat()
@@ -137,13 +135,13 @@ class SwipeController() : ItemTouchHelper.Callback() {
         p.color = Color.WHITE
         p.isAntiAlias = true
         p.textSize = textSize
-        val textWidth = p.measureText(text) //measureText : 글자의 너비 리턴
+        val textWidth = p.measureText(text)
         c.drawText(
             text,
             button.centerX() - textWidth / 2,
             button.centerY() + textSize / 2,
             p
-        ) //Canvas 객체의 drawText : 글자의 구체적인 속성 정의
+        )
     }
 
     override fun convertToAbsoluteDirection(flags: Int, layoutDirection: Int): Int {

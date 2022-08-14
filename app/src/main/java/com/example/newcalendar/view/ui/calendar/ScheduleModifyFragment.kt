@@ -25,7 +25,6 @@ class ScheduleModifyFragment(
 ) : DialogFragment() {
 
     private val binding by viewBinding(ModifyScheduleDialogBinding::bind)
-    //private val viewModel : ViewModel by viewModel()
     private val scheduleViewModel : ScheduleViewModel by viewModel()
     private val alarmViewModel : AlarmViewModel by viewModel()
     private val eventViewModel : EventViewModel by viewModel()

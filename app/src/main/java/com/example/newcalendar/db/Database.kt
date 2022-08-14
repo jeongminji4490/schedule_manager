@@ -11,11 +11,7 @@ import com.example.newcalendar.model.entity.Memo
 import com.example.newcalendar.model.entity.Schedule
 
 @Database(
-    entities = [
-        Memo::class,
-        Schedule::class,
-        Event::class,
-        Alarm::class],
+    entities = [Memo::class, Schedule::class, Event::class, Alarm::class],
     version = 11,
     exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
@@ -23,22 +19,4 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val scheduleDao : ScheduleDao
     abstract val eventDao : EventDao
     abstract val alarmDao : AlarmDao
-
-    companion object{
-        private var instance: AppDatabase?=null
-
-        @Synchronized
-        fun getInstance(context: Context): AppDatabase? {
-            if (instance == null){
-                synchronized(AppDatabase::class){
-                    instance =Room.databaseBuilder(
-                        context.applicationContext,
-                        AppDatabase::class.java,
-                        "SCHEDULE_DB"
-                    ).build()
-                }
-            }
-            return instance
-        }
-    }
 }
