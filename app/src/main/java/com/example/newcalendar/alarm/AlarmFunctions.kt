@@ -19,16 +19,17 @@ class AlarmFunctions(private val context: Context?){
     fun callAlarm(time : String, alarm_code : Int, content : String){
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val receiverIntent = Intent(context, AlarmReceiver::class.java) //리시버로 전달될 인텐트 설정
+
         receiverIntent.apply {
             putExtra("alarm_rqCode", alarm_code) //요청 코드를 리시버에 전달
             putExtra("content", content) //수정_일정 제목을 리시버에 전달
         }
 
-        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
             PendingIntent.getBroadcast(context,alarm_code,receiverIntent,PendingIntent.FLAG_IMMUTABLE)
-        }else{
+        else
             PendingIntent.getBroadcast(context,alarm_code,receiverIntent,PendingIntent.FLAG_UPDATE_CURRENT)
-        }
+
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd H:mm:ss")
         var datetime = Date()
@@ -50,11 +51,10 @@ class AlarmFunctions(private val context: Context?){
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmReceiver::class.java)
 
-        pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+        pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
             PendingIntent.getBroadcast(context,alarm_code,intent,PendingIntent.FLAG_IMMUTABLE)
-        }else{
+        else
             PendingIntent.getBroadcast(context,alarm_code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-        }
 
         alarmManager.cancel(pendingIntent)
     }

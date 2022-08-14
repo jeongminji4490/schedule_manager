@@ -23,8 +23,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MemoFragment : Fragment(R.layout.fragment_memo) {
 
     private val binding by viewBinding(FragmentMemoBinding::bind,
-        onViewDestroyed = { fragmentMemoBinding ->
-            fragmentMemoBinding.todoListView.adapter = null
+        onViewDestroyed = { binding ->
+            binding.todoListView.adapter = null
         })
 
     private val memoViewModel : MemoViewModel by viewModel()
@@ -71,9 +71,5 @@ class MemoFragment : Fragment(R.layout.fragment_memo) {
             binding.todoListView.adapter = adapter
             binding.todoListView.layoutManager = LinearLayoutManager(requireContext())
         })
-    }
-
-    companion object{
-        const val TAG = "MemoFragment"
     }
 }

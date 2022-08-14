@@ -14,14 +14,18 @@ import androidx.core.app.NotificationCompat
 import com.example.newcalendar.alarm.service.AlarmService
 import com.example.newcalendar.alarm.AlarmFunctions
 import com.example.newcalendar.db.AppDatabase
+import com.example.newcalendar.viewmodel.AlarmViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 
-class AlarmReceiver() : BroadcastReceiver() {
+class AlarmReceiver() : BroadcastReceiver(), KoinComponent {
 
     private val coroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
+    private val viewModel: AlarmViewModel by inject()
     private lateinit var functions: AlarmFunctions
 
     private lateinit var manager: NotificationManager
@@ -52,19 +56,18 @@ class AlarmReceiver() : BroadcastReceiver() {
         val requestCode = intent?.extras!!.getInt("alarm_rqCode")
         val title = intent.extras!!.getString("content")
 
-        Log.e("AlarmReceiver is Called", requestCode.toString());
+        Log.e("AlarmReceiver is Called", requestCode.toString())
 
         functions = AlarmFunctions(context)
         coroutineScope.launch {
-            val db = AppDatabase.getInstance(context)
-            db?.alarmDao?.deleteAlarm(requestCode)
+            viewModel.deleteAlarm(requestCode)
         }
 
-        val pendingIntent = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
-            PendingIntent.getActivity(context,requestCode,intent2,PendingIntent.FLAG_IMMUTABLE); //Activity를 시작하는 인텐트 생성
-        }else {
-            PendingIntent.getActivity(context,requestCode,intent2,PendingIntent.FLAG_UPDATE_CURRENT);
-        }
+        val pendingIntent = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.S)
+            PendingIntent.getActivity(context,requestCode,intent2,PendingIntent.FLAG_IMMUTABLE)
+        else
+            PendingIntent.getActivity(context,requestCode,intent2,PendingIntent.FLAG_UPDATE_CURRENT)
+
 
         val notification = builder.setContentTitle(title)
             .setContentText("SCHEDULE MANAGER")

@@ -24,7 +24,7 @@ class MemoViewModel(
     }
 
     fun changeCompletion(completion: Boolean, serialNum: Int)
-            = viewModelScope.launch {
+    = viewModelScope.launch {
         withContext(Dispatchers.IO){
             mDao.changeCompletion(completion, serialNum)
         }
