@@ -12,7 +12,7 @@
 + 개인 프로젝트
 
 ## Development Environment
-+ Android Studio Bumblebee 7.1.0
++ Android Studio Bumblebee 
 + Kotlin 1.6.10
 
 ## Application Version
