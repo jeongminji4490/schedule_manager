@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/62979330/176619485-7398a432-f83d-44ea-a25b-615c52ad4b7d.PNG" width=15% height=15%>
+  <img src="https://user-images.githubusercontent.com/62979330/185958337-61deaaa0-dec8-4fd0-b689-f7da004bcf3a.png" width=75% height=75%>
 </p>
+
 <div align="center">
   <h1>Schedule Manager</h1>
 </div>
