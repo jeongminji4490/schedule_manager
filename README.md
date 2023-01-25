@@ -6,7 +6,7 @@
   <h1>Schedule Manager</h1>
 </div>
 <div align="center">
-하루 일과를 체크하고, 달력을 통해 일정을 관리할 수 있도록 기능을 제공하는 일정관리 목적의 안드로이드 앱
+Calendar app for schedule management that provides functions to check daily routine and manage schedule through calendar
 </div>
 
 ## Project Type
@@ -52,23 +52,23 @@
 </p>
 
 ### 1. TODO
-+ 할 일 추가
-  + 원하는 내용으로 할 일 추가
-+ 할 일 완료
-  + 할 일 완료 시 체크박스를 클릭하여 완료되었음을 표시
-+ 할 일 변경 및 삭제
-  + 할 일 아이템을 양 옆으로 스와이프하여 변경하거나 삭제
++ Add
+  + You can add todo items with the content you want
++ Complete
+  + When the task is completed, click the checkbox to mark it as completed
++ Edit or Delete
+  + Swipe a todo item from side to side to edit or delete it
 
 ### 2. Calendar
-+ 달력
-  + 일정이 있는 날짜는 도트로 표시 
-+ 일정 추가
-  + 달력에서 원하는 날짜를 클릭한 후 상단의 + 버튼을 클릭하여 추가
-  + 알람 유무 & 일정 중요도 선택 가능
-+ 일정 변경 및 삭제
-  + 일정 아이템을 클릭하면 변경 또는 삭제 가능
-+ 알람
-  + 알람 설정 시 설정한 시간에 Notification 발생
++ View Calendar
+  + The date with event is marked with a dot 
++ Add event
+  + Click the date & ‘+’ button at the top to add a event
+  + You can select the importance of event, alarm status
++ Edit or Delete
+  + You can edit or delete the event to click it
++ Alarm
+  + if you set alarm on the event, notification will occurs at the time you set
   
 ## Version Test
 |API Level|Test|
