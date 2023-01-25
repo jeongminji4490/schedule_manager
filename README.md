@@ -10,7 +10,7 @@ Calendar app for schedule management that provides functions to check daily rout
 </div>
 
 ## Project Type
-+ 개인 프로젝트
++ Toy project
 
 ## Development Environment
 + Android Studio Bumblebee 
